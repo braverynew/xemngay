@@ -36,9 +36,18 @@
         .result {
             margin-top: 20px;
         }
+        .blue {
+            background-color: #00f;
+            color: white;
+        }
+        .red {
+            background-color: #f00;
+            color: white;
+        }
     </style>
 </head>
 <body>
+
     <div class="container">
         <h2>Tra cứu Ngày Đẹp Xấu</h2>
         <label for="day">Nhập Ngày âm:</label>
@@ -47,12 +56,46 @@
         <label for="month">Nhập Tháng âm:</label>
         <input type="number" id="month" min="1" max="12" required>
 
-        <button onclick="lookupDate()">Tra cứu</button>
+        <button onclick="lookupBoth()">Tra cứu</button>
 
         <div class="result" id="result"></div>
+        <table>
+            <tr>
+                <th>Khung Giờ</th>
+                <th>Diễn Giải</th>
+            </tr>
+            <tr>
+                <td>Từ 11:00 đến 01:00</td>
+                <td id="explanation-1"></td>
+            </tr>
+            <tr>
+                <td>Từ 1:00 đến 03:00</td>
+                <td id="explanation-2"></td>
+            </tr>
+            <tr>
+                <td>Từ 3:00 đến 05:00</td>
+                <td id="explanation-3"></td>
+            </tr>
+            <tr>
+                <td>Từ 5:00 đến 07:00</td>
+                <td id="explanation-4"></td>
+            </tr>
+            <tr>
+                <td>Từ 7:00 đến 09:00</td>
+                <td id="explanation-5"></td>
+            </tr>
+            <tr>
+                <td>Từ 9:00 đến 11:00</td>
+                <td id="explanation-6"></td>
+            </tr>
+        </table>
     </div>
 
     <script>
+    function lookupBoth() {
+        lookupDate();
+        lookupDate1();
+    }
         const data = [
             { name: "Bảo Thương", days: [6, 12, 18, 24, 30], months: [1, 4, 7, 10], description: "Ngày đẹp, xuất hành thuận lợi, làm được việc như mong muốn, gặp người lớn vừa lòng." },
             { name: "Đường Phong", days: [1, 7, 13, 19, 25], months: [1, 4, 7, 10], description: "Ngày đẹp, xuất hành thuận lợi, gặp được quý nhân phù trợ và cầu tài được như ý." },
@@ -92,6 +135,71 @@
                     <p><strong>Diễn Giải:</strong> ${result.description}</p>`;
             } else {
                 resultDiv.innerHTML = "<p>Không tìm thấy kết quả phù hợp cho ngày và tháng đã nhập.</p>";
+            }
+        }
+        function lookupDate1() {
+            // Lấy giá trị ngày và tháng từ input
+            let ngay = parseInt(document.getElementById('day').value);
+            let thang = parseInt(document.getElementById('month').value);
+            
+            if (isNaN(ngay) || isNaN(thang)) {
+                alert("Vui lòng nhập cả ngày và tháng!");
+                return;
+            }
+
+            // Tính số dư theo công thức (Ngày + Tháng + Hệ số Khung Giờ - 2) % 6
+            function calculateSoDu(ngay, thang, heSoKhungGio) {
+                return (ngay + thang + heSoKhungGio - 2) % 6;
+            }
+
+            // Hàm xác định giải thích và màu sắc
+            function setColorAndExplain(soDu, elementId, explanationId) {
+                let cell = document.getElementById(elementId);
+                let explanationCell = document.getElementById(explanationId);
+                let explanation = '';
+                let colorClass = 'red';
+
+                switch (soDu) {
+                    case 1:
+                        explanation = 'Đại an: Mọi việc đều tốt, cầu tài đi hướng Tây, Nam. Nhà cửa yên lành, người xuất hành đều bình yên.';
+                        colorClass = 'blue';
+                        break;
+                    case 2:
+                        explanation = 'Tốc hỷ: Vui sắp tới. Cầu tài đi hướng Nam, đi việc quan nhiều may mắn. Người xuất hành đều bình yên. Chăn nuôi đều thuận lợi, người đi có tin vui về.';
+                        colorClass = 'blue';
+                        break;
+                    case 3:
+                        explanation = 'Lưu miền: Nghiệp khó thành, cầu tài mờ mịt, kiện cáo nên hoãn lại. Người đi chưa có tin về. Đi hướng Nam tìm nhanh mới thấy, nên phòng ngừa cãi cọ, miệng tiếng rất tầm thường. Việc làm chậm, lâu la nhưng việc gì cũng chắc chắn.';
+                        break;
+                    case 4:
+                        explanation = 'Xích khẩu: Hay cãi cọ, gây chuyện đói kém, phải nên đề phòng, người đi nên hoãn lại, phòng người nguyền rủa, tránh lây bệnh.';
+                        break;
+                    case 5:
+                        explanation = 'Tiểu các: Rất tốt lành, đi thường gặp may mắn. Buôn bán có lời, phụ nữ báo tin vui mừng, người đi sắp về nhà, mọi việc đều hòa hợp, có bệnh cầu tài sẽ khỏi, người nhà đều mạnh khỏe.';
+                        colorClass = 'blue';
+                        break;
+                    case 6:
+                        explanation = 'Tuyệt hỷ: Cầu tài không có lợi hay bị trái ý, ra đi gặp hạn, việc quan phải đòn, gặp ma quỷ cúng lễ mới an.';
+                        break;
+                    case 0:
+                        explanation = 'Tuyệt hỷ: Cầu tài không có lợi hay bị trái ý, ra đi gặp hạn, việc quan phải đòn, gặp ma quỷ cúng lễ mới an.';
+                        break;
+                }
+
+                explanationCell.innerHTML = explanation;
+                explanationCell.className = colorClass;
+            }
+
+            // Tính và cập nhật kết quả cho từng khung giờ
+            setColorAndExplain(calculateSoDu(ngay, thang, 1), 'so-du-1', 'explanation-1');
+            setColorAndExplain(calculateSoDu(ngay, thang, 2), 'so-du-2', 'explanation-2');
+            setColorAndExplain(calculateSoDu(ngay, thang, 3), 'so-du-3', 'explanation-3');
+            setColorAndExplain(calculateSoDu(ngay, thang, 4), 'so-du-4', 'explanation-4');
+            setColorAndExplain(calculateSoDu(ngay, thang, 5), 'so-du-5', 'explanation-5');
+            setColorAndExplain(calculateSoDu(ngay, thang, 6), 'so-du-6', 'explanation-6');
+            function combinedLookup() {
+                lookupDate();  // Gọi hàm lookupDate đầu tiên
+                lookupDate1(); // Sau đó gọi hàm lookupDate1
             }
         }
     </script>
