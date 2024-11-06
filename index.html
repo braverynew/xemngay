@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tra cứu Tên Ngày và Diễn Giải</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Tra cứu Tên Ngày và Diễn Giải</h2>
+        <label for="day">Nhập Ngày trong tháng:</label>
+        <input type="number" id="day" min="1" max="31" required>
+
+        <label for="month">Nhập Tháng:</label>
+        <input type="number" id="month" min="1" max="12" required>
+
+        <button onclick="lookupDate()">Tra cứu</button>
+
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        const data = [
+            { name: "Hảo Dương", days: [6, 12, 18, 24, 30], months: [1, 4, 7, 10], description: "Hảo Dương: Ngày đẹp, xuất hành thuận lợi, làm được việc như mong muốn, gặp người lớn vừa lòng." },
+            { name: "Đường Phong", days: [1, 7, 13, 19, 25], months: [1, 4, 7, 10], description: "Đường Phong: Ngày đẹp, xuất hành thuận lợi, gặp được quý nhân phù trợ và cầu tài được như ý." },
+            { name: "Kim Dương", days: [3, 9, 15, 21, 27], months: [1, 4, 7, 10], description: "Kim Dương: Xuất hành và lúc về đều tốt, gặp được nhiều thuận lợi, nhận được sự giúp đỡ từ người khác, gặp may mắn trong các cuộc tranh luận, cầu tài được như ý." },
+            { name: "Thuần Dương", days: [4, 10, 16, 22, 29], months: [1, 4, 7, 10], description: "Thuần Dương: Xuất hành và lúc về đều tốt, gặp được nhiều thuận lợi, nhận được sự giúp đỡ từ người khác, gặp may mắn trong các cuộc tranh luận, cầu tài được như ý." },
+            { name: "Đạo Tặc", days: [5, 11, 17, 23, 29], months: [1, 4, 7, 10], description: "Đạo Tặc: Là ngày xấu, nếu xuất hành sẽ bị hại, dễ bị mất của." },
+            // Thêm dữ liệu tương tự cho các ngày khác
+        ];
+
+        function lookupDate() {
+            const day = parseInt(document.getElementById("day").value);
+            const month = parseInt(document.getElementById("month").value);
+            const resultDiv = document.getElementById("result");
+
+            const result = data.find(item => item.days.includes(day) && item.months.includes(month));
+
+            if (result) {
+                resultDiv.innerHTML = `<h3>Kết quả:</h3>
+                    <p><strong>Tên Ngày:</strong> ${result.name}</p>
+                    <p><strong>Diễn Giải:</strong> ${result.description}</p>`;
+            } else {
+                resultDiv.innerHTML = "<p>Không tìm thấy kết quả phù hợp cho ngày và tháng đã nhập.</p>";
+            }
+        }
+    </script>
+</body>
+</html>
