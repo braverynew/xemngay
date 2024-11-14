@@ -5,36 +5,152 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DCA Calculator</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        label { display: block; margin-top: 10px; }
-        input { margin-bottom: 10px; }
-        button { margin-top: 10px; }
-        .result { margin-top: 20px; }
+        /* Reset các thuộc tính mặc định của trình duyệt */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            margin: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #3e5f6f;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            margin: 10px 0;
+            font-weight: bold;
+        }
+
+        input, button {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        input[type="number"] {
+            text-align: right;
+        }
+
+        button {
+            background-color: #5c8a8a;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #467575;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #5c8a8a;
+            color: white;
+        }
+
+        /* Media Queries cho màn hình nhỏ */
+        @media (max-width: 600px) {
+            body {
+                margin: 10px;
+            }
+
+            .container {
+                padding: 10px;
+            }
+
+            input, button {
+                font-size: 14px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            table th, table td {
+                font-size: 14px;
+                padding: 8px;
+            }
+        }
     </style>
 </head>
 <body>
-    <h1>DCA Calculator</h1>
-    <label for="entryPrice">Gia vao lenh dau:</label>
-    <input type="number" id="entryPrice" step="0.001">
 
-    <label for="dcaOrders">So lenh DCA:</label>
-    <input type="number" id="dcaOrders">
+    <div class="container">
+        <h1>DCA Calculator</h1>
+        
+        <label for="entryPrice">Entry dau:</label>
+        <input type="number" id="entryPrice" step="0.001">
 
-    <label for="xLot">He so khoi luong (xLot):</label>
-    <input type="number" id="xLot" step="0.01">
+        <label for="dcaOrders">So lenh DCA:</label>
+        <input type="number" id="dcaOrders">
 
-    <label for="atr">ATR tai thoi diem vao lenh dau:</label>
-    <input type="number" id="atr" step="0.001">
+        <label for="xLot">He so(xLot):</label>
+        <input type="number" id="xLot" step="0.01">
 
-    <label for="tpMultiplier">TPxATR (Thuan=2.5, Nghich=2, Hoa=0):</label>
-    <input type="number" id="tpMultiplier" step="0.1">
+        <label for="atr">ATR lenh dau:</label>
+        <input type="number" id="atr" step="0.001">
 
-    <label for="volume">Volume lenh dau:</label>
-    <input type="number" id="volume" step="0.01">
+        <label for="atrDca">Buoc Dca(Thuan=1.6, Nghich=2):</label>
+        <input type="number" id="atrDca" step="0.1">
 
-    <button onclick="calculateDCA()">Ket qua</button>
+        <label for="tpMultiplier">TP(Thuan=2.5, Nghich=2, Hoa=0):</label>
+        <input type="number" id="tpMultiplier" step="0.1">
 
-    <div class="result" id="result"></div>
+        <label for="volume">Khoi luong lenh dau:</label>
+        <input type="number" id="volume" step="0.001">
+
+        <!-- Lựa chọn loại lệnh (Mua hoặc Bán) -->
+        <label>Chon loai lenh:</label>
+        <div>
+            <input type="radio" id="buyOrder" name="orderType" value="buy" checked> Mua
+            <input type="radio" id="sellOrder" name="orderType" value="sell"> Ban
+        </div>
+
+        <button onclick="calculateDCA()">Ket qua</button>
+
+        <div class="result" id="result"></div>
+    </div>
 
     <script>
         function calculateDCA() {
@@ -42,26 +158,58 @@
             const numOrders = parseInt(document.getElementById('dcaOrders').value);
             const xLot = parseFloat(document.getElementById('xLot').value);
             const atr = parseFloat(document.getElementById('atr').value);
+            const atrDca = parseFloat(document.getElementById('atrDca').value);
             const tpMultiplier = parseFloat(document.getElementById('tpMultiplier').value);
             const initialVolume = parseFloat(document.getElementById('volume').value);
-            const priceGap = 2 * atr;
+            const isBuyOrder = document.getElementById('buyOrder').checked; // Kiểm tra loại lệnh (Mua hoặc Bán)
 
-            let totalVolume = 0;
-            let weightedSum = 0;
-
-            for (let i = 0; i < numOrders; i++) {
-                const price = entryPrice - i * priceGap;
-                const volume = initialVolume * Math.pow(xLot, i);
-                totalVolume += volume;
-                weightedSum += price * volume;
+            let priceGap = atrDca * atr;
+            if (priceGap === 0) {
+                alert("Price gap bằng 0, vui lòng kiểm tra lại giá trị ATR hoặc ATR DCA.");
+                return; // Dừng hàm nếu priceGap không hợp lệ
             }
 
-            const averagePrice = weightedSum / totalVolume;
-            const tpPrice = averagePrice + tpMultiplier * atr;
+            let totalVolume = initialVolume;
+            let weightedSum = entryPrice * initialVolume; // Khởi tạo weightedSum với giá trị lệnh đầu tiên
+            let dcaTable = '<table><tr><th>Order</th><th>Price</th><th>Volume</th></tr>';
+            let currentPrice = entryPrice; // Giá của lệnh đầu tiên sẽ là giá nhập vào
 
+            // Tính toán các giá trị DCA
+            for (let i = 1; i <= numOrders; i++) {
+                let volume = i === 1 ? initialVolume : initialVolume * Math.pow(xLot, i - 1); // Lệnh đầu tiên giữ nguyên volume
+
+                // Làm tròn volume chỉ 2 chữ số sau dấu thập phân
+                volume = volume.toFixed(2);
+
+                // Điều chỉnh giá theo chiến lược Mua/Bán (từ lệnh thứ 2 trở đi)
+                if (i > 1) {
+                    if (isBuyOrder) {
+                        currentPrice -= priceGap;  // Lệnh Mua giảm giá
+                    } else {
+                        currentPrice += priceGap;  // Lệnh Bán tăng giá
+                    }
+                }
+
+                totalVolume += parseFloat(volume);
+                weightedSum += currentPrice * parseFloat(volume);
+
+                dcaTable += `<tr><td>${i}</td><td>${currentPrice.toFixed(3)}</td><td>${volume}</td></tr>`;
+            }
+
+            dcaTable += '</table>';
+            const avgPrice = weightedSum / totalVolume;
+            const tpPrice = parseFloat((avgPrice + tpMultiplier * atr).toFixed(3));
+
+            // Tính lợi nhuận USD
+            const profit = (tpPrice - avgPrice) * totalVolume * 100;
+            const profitUSD = profit.toFixed(2); // Lợi nhuận USD
+
+            // Hiển thị kết quả
             document.getElementById('result').innerHTML = `
-                <p>Average Price: ${averagePrice.toFixed(2)}</p>
-                <p>Take Profit Price: ${tpPrice.toFixed(2)}</p>
+                ${dcaTable}
+                <p>Gia trung binh: ${avgPrice.toFixed(3)}</p>
+                <p>TP: ${tpPrice}</p>
+                <p>Lợi nhuận: ${profitUSD} USD</p>
             `;
         }
     </script>
