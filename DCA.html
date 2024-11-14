@@ -150,9 +150,37 @@
         <button onclick="calculateDCA()">Ket qua</button>
 
         <div class="result" id="result"></div>
+
+        <!-- Hiển thị giá vàng -->
+        <div class="result" id="goldPrice">Đang tải giá vàng...</div>
     </div>
 
     <script>
+        // Hàm lấy giá vàng từ API
+        async function fetchGoldPrice() {
+            const url = 'https://www.goldapi.io/api/XAU/USD';
+            const token = 'goldapi-2vnbnsm3gzgekp-io';  // Thay bằng token của bạn
+
+            try {
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'x-access-token': token
+                    }
+                });
+
+                const data = await response.json();
+                const goldPrice = data.price;  // Lấy giá vàng từ dữ liệu trả về
+
+                document.getElementById('goldPrice').innerText = `Gia Vang: ${goldPrice} USD`;
+                window.currentGoldPrice = parseFloat(goldPrice);
+            } catch (error) {
+                console.error('Lỗi khi lấy dữ liệu:', error);
+                document.getElementById('goldPrice').innerText = 'Không thể lấy giá vàng.';
+            }
+        }
+
+        // Hàm tính toán DCA
         function calculateDCA() {
             const entryPrice = parseFloat(document.getElementById('entryPrice').value);
             const numOrders = parseInt(document.getElementById('dcaOrders').value);
@@ -198,11 +226,12 @@
             }
 
             dcaTable += '</table>';
-            const avgPrice = weightedSum / (totalVolume + initialVolume);
+            const avgPrice = (weightedSum - (initialVolume * entryPrice)) / totalVolume;
             const tpPrice = parseFloat((avgPrice + tpMultiplier * atr).toFixed(3));
 
             // Tính lợi nhuận USD
             const profit = (tpPrice - avgPrice) * (totalVolume + initialVolume) * 100;
+            const profitcurrent= (window.currentGoldPrice.toFixed(3) - avgPrice) * (totalVolume + initialVolume) * 100;
             const profitUSD = profit.toFixed(2); // Lợi nhuận USD
 
             // Hiển thị kết quả
@@ -211,9 +240,14 @@
                 <p>Gia trung binh: ${avgPrice.toFixed(3)}</p>
                 <p>Tong khoi luong: ${totalVolume.toFixed(2)}</p>
                 <p>TP: ${tpPrice}</p>
-                <p>Loi nhuan: ${profitUSD} USD</p>
+                <p>Loi nhuan du kien: ${profitUSD} USD</p>
+                <p>Loi nhuan hien tai: ${profitcurrent.toFixed(2)} USD</p>
             `;
         }
+
+        // Gọi hàm fetchGoldPrice khi trang được tải
+        window.onload = fetchGoldPrice;
     </script>
+
 </body>
 </html>
