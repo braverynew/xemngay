@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DCA Calculator</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        label { display: block; margin-top: 10px; }
+        input { margin-bottom: 10px; }
+        button { margin-top: 10px; }
+        .result { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>DCA Calculator</h1>
+    <label for="entryPrice">Gia vao lenh dau:</label>
+    <input type="number" id="entryPrice" step="0.001">
+
+    <label for="dcaOrders">So lenh DCA:</label>
+    <input type="number" id="dcaOrders">
+
+    <label for="xLot">He so khoi luong (xLot):</label>
+    <input type="number" id="xLot" step="0.01">
+
+    <label for="atr">ATR tai thoi diem vao lenh dau:</label>
+    <input type="number" id="atr" step="0.001">
+
+    <label for="tpMultiplier">TPxATR (Thuan=2.5, Nghich=2, Hoa=0):</label>
+    <input type="number" id="tpMultiplier" step="0.1">
+
+    <label for="volume">Volume lenh dau:</label>
+    <input type="number" id="volume" step="0.01">
+
+    <button onclick="calculateDCA()">Ket qua</button>
+
+    <div class="result" id="result"></div>
+
+    <script>
+        function calculateDCA() {
+            const entryPrice = parseFloat(document.getElementById('entryPrice').value);
+            const numOrders = parseInt(document.getElementById('dcaOrders').value);
+            const xLot = parseFloat(document.getElementById('xLot').value);
+            const atr = parseFloat(document.getElementById('atr').value);
+            const tpMultiplier = parseFloat(document.getElementById('tpMultiplier').value);
+            const initialVolume = parseFloat(document.getElementById('volume').value);
+            const priceGap = 2 * atr;
+
+            let totalVolume = 0;
+            let weightedSum = 0;
+
+            for (let i = 0; i < numOrders; i++) {
+                const price = entryPrice - i * priceGap;
+                const volume = initialVolume * Math.pow(xLot, i);
+                totalVolume += volume;
+                weightedSum += price * volume;
+            }
+
+            const averagePrice = weightedSum / totalVolume;
+            const tpPrice = averagePrice + tpMultiplier * atr;
+
+            document.getElementById('result').innerHTML = `
+                <p>Average Price: ${averagePrice.toFixed(2)}</p>
+                <p>Take Profit Price: ${tpPrice.toFixed(2)}</p>
+            `;
+        }
+    </script>
+</body>
+</html>
