@@ -189,27 +189,29 @@
                         currentPrice += priceGap;  // Lệnh Bán tăng giá
                     }
                 }
-
-                totalVolume += parseFloat(volume);
+                if (i > 1) {
+                    totalVolume += parseFloat(volume); // Cộng thêm volume của lệnh vào totalVolume
+                }
                 weightedSum += currentPrice * parseFloat(volume);
 
                 dcaTable += `<tr><td>${i}</td><td>${currentPrice.toFixed(3)}</td><td>${volume}</td></tr>`;
             }
 
             dcaTable += '</table>';
-            const avgPrice = weightedSum / totalVolume;
+            const avgPrice = weightedSum / (totalVolume + initialVolume);
             const tpPrice = parseFloat((avgPrice + tpMultiplier * atr).toFixed(3));
 
             // Tính lợi nhuận USD
-            const profit = (tpPrice - avgPrice) * totalVolume * 100;
+            const profit = (tpPrice - avgPrice) * (totalVolume + initialVolume) * 100;
             const profitUSD = profit.toFixed(2); // Lợi nhuận USD
 
             // Hiển thị kết quả
             document.getElementById('result').innerHTML = `
                 ${dcaTable}
                 <p>Gia trung binh: ${avgPrice.toFixed(3)}</p>
+                <p>Tong khoi luong: ${totalVolume}</p>
                 <p>TP: ${tpPrice}</p>
-                <p>Lợi nhuận: ${profitUSD} USD</p>
+                <p>Loi nhuan: ${profitUSD} USD</p>
             `;
         }
     </script>
