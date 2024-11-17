@@ -13,8 +13,8 @@ double gda_88[];
 
 int init() {
     SetIndexStyle(0, DRAW_HISTOGRAM, STYLE_SOLID, 4);
-    SetIndexStyle(1, DRAW_HISTOGRAM, STYLE_DOT, 1);
-    SetIndexStyle(2, DRAW_HISTOGRAM, STYLE_DOT, 1);
+    SetIndexStyle(1, DRAW_HISTOGRAM, STYLE_DOT, 2);
+    SetIndexStyle(2, DRAW_HISTOGRAM, STYLE_DOT, 2);
     IndicatorDigits(Digits + 1);
     SetIndexBuffer(0, gda_80);
     SetIndexBuffer(1, gda_84);
