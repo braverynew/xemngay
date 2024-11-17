@@ -11,21 +11,21 @@
 
 #property indicator_chart_window
 #property indicator_buffers 17
-#property indicator_color1   clrDimGray
-#property indicator_color2   clrHotPink
-#property indicator_color3   clrSpringGreen
-#property indicator_color4   clrHotPink
-#property indicator_color5   clrSpringGreen
-#property indicator_color6   clrHotPink
-#property indicator_color7   clrSpringGreen
-#property indicator_color8   clrHotPink
-#property indicator_color9   clrSpringGreen
-#property indicator_color10  clrHotPink
-#property indicator_color11  clrSpringGreen
-#property indicator_color12  clrHotPink
-#property indicator_color13  clrSpringGreen
-#property indicator_color14  clrHotPink
-#property indicator_color15  clrSpringGreen
+#property indicator_color1   None
+#property indicator_color2   None
+#property indicator_color3   None
+#property indicator_color4   None
+#property indicator_color5   None
+#property indicator_color6   None
+#property indicator_color7   None
+#property indicator_color8   None
+#property indicator_color9   None
+#property indicator_color10  None
+#property indicator_color11  None
+#property indicator_color12  None
+#property indicator_color13  None
+#property indicator_color14  None
+#property indicator_color15  None
 #property indicator_color16  clrLime
 #property indicator_color17  clrRed
 #property indicator_style1     STYLE_DOT
@@ -58,8 +58,8 @@
 #property  indicator_width13 1
 #property  indicator_width14 2
 #property  indicator_width15 2
-#property  indicator_width16 1
-#property  indicator_width17 1
+#property  indicator_width16 2
+#property  indicator_width17 2
 /*
 enum enPrices
 {
@@ -107,8 +107,8 @@ extern double BandsDeviations5    = 2.618;
 extern double BandsDeviations6    = 3.0;
 extern double BandsDeviations7    = 3.236;
 extern bool   DrawArrows          = true;
-extern int    UpArrowSymbolCode   = 246;
-extern int    DownArrowSymbolCode = 248;
+extern int    UpArrowSymbolCode   = 233;
+extern int    DownArrowSymbolCode = 234;
 extern bool   alertsOn            = false;
 extern bool   alertsOnCurrent     = false;
 extern bool   alertsOnHighLow     = false;
