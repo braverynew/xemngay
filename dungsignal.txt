@@ -11,21 +11,21 @@
 
 #property indicator_chart_window
 #property indicator_buffers 17
-#property indicator_color1   None
-#property indicator_color2   None
-#property indicator_color3   None
-#property indicator_color4   None
-#property indicator_color5   None
-#property indicator_color6   None
-#property indicator_color7   None
-#property indicator_color8   None
-#property indicator_color9   None
-#property indicator_color10  None
-#property indicator_color11  None
-#property indicator_color12  None
-#property indicator_color13  None
-#property indicator_color14  None
-#property indicator_color15  None
+#property indicator_color1   clrNONE
+#property indicator_color2   clrNONE
+#property indicator_color3   clrNONE
+#property indicator_color4   clrNONE
+#property indicator_color5   clrNONE
+#property indicator_color6   clrNONE
+#property indicator_color7   clrNONE
+#property indicator_color8   clrNONE
+#property indicator_color9   clrNONE
+#property indicator_color10  clrNONE
+#property indicator_color11  clrNONE
+#property indicator_color12  clrNONE
+#property indicator_color13  clrNONE
+#property indicator_color14  clrNONE
+#property indicator_color15  clrNONE
 #property indicator_color16  clrLime
 #property indicator_color17  clrRed
 #property indicator_style1     STYLE_DOT
