@@ -7,9 +7,9 @@
 #property indicator_chart_window
 #property indicator_buffers 4
 #property indicator_color1 Lime
-#property indicator_color2 None
+#property indicator_color2 clrNONE
 #property indicator_color3 Red
-#property indicator_color4 None
+#property indicator_color4 clrNONE
 #property indicator_width1  2
 #property indicator_width2  2
 #property indicator_width3  2
