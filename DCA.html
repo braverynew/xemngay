@@ -182,7 +182,6 @@
 
         // Hàm tính toán DCA
         function calculateDCA() {
-          fetchGoldPrice().then(() => {
             const entryPrice = parseFloat(document.getElementById('entryPrice').value);
             const numOrders = parseInt(document.getElementById('dcaOrders').value);
             const xLot = parseFloat(document.getElementById('xLot').value);
