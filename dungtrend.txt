@@ -6,12 +6,14 @@
 #property indicator_color2 Lime
 #property indicator_color3 HotPink
 
+// Danh sách tài khoản hợp lệ
+int allowedAccounts[] = {14638776, 87654321};
+
+// Khai báo các biến toàn cục
 extern int period = 5;
 double gda_80[];
 double gda_84[];
 double gda_88[];
-// Danh sách tài khoản được cấp phép
-int allowedAccounts[] = {12345678, 87654321}; // Thay số tài khoản hợp lệ của bạn ở đây
 
 // Hàm kiểm tra tài khoản
 bool IsAccountAllowed() {
@@ -26,10 +28,11 @@ bool IsAccountAllowed() {
 int init() {
     // Kiểm tra giấy phép tài khoản
     if (!IsAccountAllowed()) {
-        Alert("Tài khoản không được phép sử dụng chỉ báo này.");
-        return (INIT_FAILED); // Dừng chạy nếu không được cấp phép
+        Alert("Khong dung duoc chi bao nay nhe. Hay lien he voi Mr Dung");
+        return (INIT_FAILED); // Dừng khởi tạo nếu không được phép
     }
-int init() {
+
+    // Cấu hình chỉ báo
     SetIndexStyle(0, DRAW_HISTOGRAM, STYLE_SOLID, 4);
     SetIndexStyle(1, DRAW_HISTOGRAM, STYLE_DOT, 2);
     SetIndexStyle(2, DRAW_HISTOGRAM, STYLE_DOT, 2);
@@ -38,6 +41,7 @@ int init() {
     SetIndexBuffer(1, gda_84);
     SetIndexBuffer(2, gda_88);
     IndicatorShortName("DUNGTREND");
+
     return (0);
 }
 
@@ -48,18 +52,16 @@ int start() {
     int limit = Bars - counted_bars;
     if (counted_bars == 0) limit -= 1;
 
-    // Tính toán chỉ nến mới nhất để tiết kiệm hiệu suất
+    // Tính toán chỉ báo
     for (int i = limit - 1; i >= 0; i--) {
         double highVal = High[iHighest(NULL, 0, MODE_HIGH, period, i)];
         double lowVal = Low[iLowest(NULL, 0, MODE_LOW, period, i)];
         double midVal = (High[i] + Low[i]) / 2.0;
 
-        // Tính toán các giá trị chỉ báo và tránh chia 0
         double ld_48 = (highVal - lowVal > 0) ? 0.66 * ((midVal - lowVal) / (highVal - lowVal) - 0.5) : 0;
         ld_48 = MathMin(MathMax(ld_48, -0.999), 0.999);
         gda_80[i] = MathLog((ld_48 + 1.0) / (1 - ld_48)) / 2.0;
 
-        // Cập nhật buffer cho màu chỉ báo
         if (gda_80[i] > 0.0) {
             gda_84[i] = gda_80[i];
             gda_88[i] = 0.0;
@@ -70,3 +72,4 @@ int start() {
     }
     return (0);
 }
+
