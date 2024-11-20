@@ -10,7 +10,25 @@ extern int period = 5;
 double gda_80[];
 double gda_84[];
 double gda_88[];
+// Danh sách tài khoản được cấp phép
+int allowedAccounts[] = {12345678, 87654321}; // Thay số tài khoản hợp lệ của bạn ở đây
 
+// Hàm kiểm tra tài khoản
+bool IsAccountAllowed() {
+    for (int i = 0; i < ArraySize(allowedAccounts); i++) {
+        if (AccountNumber() == allowedAccounts[i]) {
+            return true;
+        }
+    }
+    return false;
+}
+
+int init() {
+    // Kiểm tra giấy phép tài khoản
+    if (!IsAccountAllowed()) {
+        Alert("Tài khoản không được phép sử dụng chỉ báo này.");
+        return (INIT_FAILED); // Dừng chạy nếu không được cấp phép
+    }
 int init() {
     SetIndexStyle(0, DRAW_HISTOGRAM, STYLE_SOLID, 4);
     SetIndexStyle(1, DRAW_HISTOGRAM, STYLE_DOT, 2);
