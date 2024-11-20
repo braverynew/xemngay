@@ -60,6 +60,8 @@
 #property  indicator_width15 2
 #property  indicator_width16 2
 #property  indicator_width17 2
+// Danh sách tài khoản hợp lệ
+int allowedAccounts[] = {14638776, 87654321};
 /*
 enum enPrices
 {
@@ -127,9 +129,22 @@ string IndicatorFileName;
 bool   calculatingTma = false;
 bool   returningBars  = false;
 int    timeFrame;
+// Hàm kiểm tra tài khoản
+bool IsAccountAllowed() {
+    for (int i = 0; i < ArraySize(allowedAccounts); i++) {
+        if (AccountNumber() == allowedAccounts[i]) {
+            return true;
+        }
+    }
+    return false;
+}
 //-------------------------------------------------------------------
 int OnInit()
 {
+    if (!IsAccountAllowed()) {
+        Alert("Khong dung duoc chi bao nay nhe. Hay lien he voi Mr Dung");
+        return (INIT_FAILED); // Dừng khởi tạo nếu không được phép
+    }
 //  timeFrame         = fmax(TimeFrame,_Period);
    timeFrame  = stringToTimeFrame(TimeFrame);
    HalfLength = MathMax(HalfLength,1);
