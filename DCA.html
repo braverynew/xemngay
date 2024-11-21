@@ -119,60 +119,56 @@
     <div class="container">
         <h1>DCA Calculator</h1>
         
-        <label for="entryPrice">Entry dau:</label>
+        <label for="entryPrice">Entry đầu:</label>
         <input type="number" id="entryPrice" step="0.001">
 
-        <label for="dcaOrders">So lenh DCA:</label>
+        <label for="dcaOrders">Số lệnh DCA:</label>
         <input type="number" id="dcaOrders">
 
-        <label for="xLot">He so(xLot):</label>
+        <label for="xLot">Hệ số (xLot):</label>
         <input type="number" id="xLot" step="0.01">
 
-        <label for="atr">ATR lenh dau:</label>
+        <label for="atr">ATR lệnh đầu:</label>
         <input type="number" id="atr" step="0.001">
 
-        <label for="atrDca">Buoc Dca(Thuan=1.6, Nghich=2):</label>
+        <label for="atrDca">Bước DCA (Thuận=1.6, Nghịch=2):</label>
         <input type="number" id="atrDca" step="0.1">
 
-        <label for="tpMultiplier">TP(Thuan=2.5, Nghich=2, Hoa=0.01):</label>
+        <label for="tpMultiplier">TP (Thuận=2.5, Nghịch=2, Hòa=0.01):</label>
         <input type="number" id="tpMultiplier" step="0.1">
 
-        <label for="volume">Khoi luong lenh dau:</label>
+        <label for="volume">Khối lượng lệnh đầu:</label>
         <input type="number" id="volume" step="0.001">
 
-        <!-- Lựa chọn loại lệnh (Mua hoặc Bán) -->
-        <label>Chon loai lenh:</label>
+        <label>Chọn loại lệnh:</label>
         <div>
             <input type="radio" id="buyOrder" name="orderType" value="buy" checked> Mua
-            <input type="radio" id="sellOrder" name="orderType" value="sell"> Ban
+            <input type="radio" id="sellOrder" name="orderType" value="sell"> Bán
         </div>
 
-        <button onclick="calculateDCA()">Ket qua</button>
+        <button onclick="calculateDCA()">Kết quả</button>
 
         <div class="result" id="result"></div>
 
-        <!-- Hiển thị giá vàng -->
         <div class="result" id="goldPrice">Đang tải giá vàng...</div>
     </div>
 
     <script>
-        // Hàm lấy giá vàng từ API
+        // Lấy giá vàng từ API
         async function fetchGoldPrice() {
             const url = 'https://www.goldapi.io/api/XAU/USD';
-            const token = 'goldapi-2vnbnsm3gzgekp-io';  // Thay bằng token của bạn
+            const token = 'goldapi-2vnbnsm3gzgekp-io'; // Thay bằng token của bạn
 
             try {
                 const response = await fetch(url, {
                     method: 'GET',
-                    headers: {
-                        'x-access-token': token
-                    }
+                    headers: { 'x-access-token': token }
                 });
 
                 const data = await response.json();
-                const goldPrice = data.price;  // Lấy giá vàng từ dữ liệu trả về
+                const goldPrice = data.price;
 
-                document.getElementById('goldPrice').innerText = `Gia Vang: ${goldPrice} USD`;
+                document.getElementById('goldPrice').innerText = `Giá Vàng: ${goldPrice} USD`;
                 window.currentGoldPrice = parseFloat(goldPrice);
             } catch (error) {
                 console.error('Lỗi khi lấy dữ liệu:', error);
@@ -180,7 +176,6 @@
             }
         }
 
-        // Hàm tính toán DCA
         function calculateDCA() {
             const entryPrice = parseFloat(document.getElementById('entryPrice').value);
             const numOrders = parseInt(document.getElementById('dcaOrders').value);
@@ -189,71 +184,61 @@
             const atrDca = parseFloat(document.getElementById('atrDca').value);
             const tpMultiplier = parseFloat(document.getElementById('tpMultiplier').value);
             const initialVolume = parseFloat(document.getElementById('volume').value);
-            const isBuyOrder = document.getElementById('buyOrder').checked; // Kiểm tra loại lệnh (Mua hoặc Bán)
+            const isBuyOrder = document.getElementById('buyOrder').checked;
 
             let priceGap = atrDca * atr;
             if (priceGap === 0) {
                 alert("Price gap bằng 0, vui lòng kiểm tra lại giá trị ATR hoặc ATR DCA.");
-                return; // Dừng hàm nếu priceGap không hợp lệ
+                return;
             }
 
             let totalVolume = initialVolume;
-            let weightedSum = entryPrice * initialVolume; // Khởi tạo weightedSum với giá trị lệnh đầu tiên
+            let weightedSum = entryPrice * initialVolume;
             let dcaTable = '<table><tr><th>Order</th><th>Price</th><th>Volume</th></tr>';
-            let currentPrice = entryPrice; // Giá của lệnh đầu tiên sẽ là giá nhập vào
+            let currentPrice = entryPrice;
 
-            // Tính toán các giá trị DCA
             for (let i = 1; i <= numOrders; i++) {
-                let volume = i === 1 ? initialVolume : initialVolume * Math.pow(xLot, i - 1); // Lệnh đầu tiên giữ nguyên volume
+                let volume = i === 1 ? initialVolume : initialVolume * Math.pow(xLot, i - 1);
+                volume = parseFloat(volume.toFixed(2));
 
-                // Làm tròn volume chỉ 2 chữ số sau dấu thập phân
-                volume = volume.toFixed(2);
-
-                // Điều chỉnh giá theo chiến lược Mua/Bán (từ lệnh thứ 2 trở đi)
                 if (i > 1) {
-                    if (isBuyOrder) {
-                        currentPrice -= priceGap;  // Lệnh Mua giảm giá
-                    } else {
-                        currentPrice += priceGap;  // Lệnh Bán tăng giá
-                    }
+                    currentPrice = isBuyOrder
+                        ? currentPrice - priceGap // Giá giảm cho lệnh Mua
+                        : currentPrice + priceGap; // Giá tăng cho lệnh Bán
                 }
-                if (i > 1) {
-                    totalVolume += parseFloat(volume); // Cộng thêm volume của lệnh vào totalVolume
-                }
-                weightedSum += currentPrice * parseFloat(volume);
 
+                weightedSum += currentPrice * volume;
+                totalVolume += volume;
                 dcaTable += `<tr><td>${i}</td><td>${currentPrice.toFixed(3)}</td><td>${volume}</td></tr>`;
             }
 
             dcaTable += '</table>';
-            const avgPrice = (weightedSum - (initialVolume * entryPrice)) / totalVolume;
-            // Điều chỉnh TP dựa trên loại lệnh (Mua/Bán)
-            let tpPrice;
-            if (isBuyOrder) {
-                tpPrice = parseFloat((avgPrice + tpMultiplier * atr).toFixed(3)); // Lệnh Mua
-            } else {
-                tpPrice = parseFloat((avgPrice - tpMultiplier * atr).toFixed(3)); // Lệnh Bán
-            }
+            const avgPrice = weightedSum / totalVolume;
 
-            // Tính lợi nhuận USD
-            const profit = (tpPrice - avgPrice) * (totalVolume + initialVolume) * 100;
-            const profitcurrent= (window.currentGoldPrice.toFixed(3) - avgPrice) * (totalVolume + initialVolume) * 100;
-            const profitUSD = profit.toFixed(2); // Lợi nhuận USD
+            let tpPrice = isBuyOrder
+                ? avgPrice + tpMultiplier * atr
+                : avgPrice - tpMultiplier * atr;
+            tpPrice = parseFloat(tpPrice.toFixed(3));
 
-            // Hiển thị kết quả
+            const profit = isBuyOrder
+                ? (tpPrice - avgPrice) * totalVolume * 100
+                : (avgPrice - tpPrice) * totalVolume * 100;
+
+            const profitCurrent = isBuyOrder
+                ? (window.currentGoldPrice - avgPrice) * totalVolume * 100
+                : (avgPrice - window.currentGoldPrice) * totalVolume * 100;
+
             document.getElementById('result').innerHTML = `
                 ${dcaTable}
-                <p>Gia trung binh: ${avgPrice.toFixed(3)}</p>
-                <p>Tong khoi luong: ${totalVolume.toFixed(2)}</p>
+                <p>Giá trung bình: ${avgPrice.toFixed(3)}</p>
+                <p>Tổng khối lượng: ${totalVolume.toFixed(2)}</p>
                 <p>TP: ${tpPrice}</p>
-                <p>Loi nhuan du kien: ${profitUSD} USD</p>
-                <p>Loi nhuan hien tai: ${profitcurrent.toFixed(2)} USD</p>
+                <p>Lợi nhuận dự kiến: ${profit.toFixed(2)} USD</p>
+                <p>Lợi nhuận hiện tại: ${profitCurrent.toFixed(2)} USD</p>
             `;
         }
 
-        // Gọi hàm fetchGoldPrice khi trang được tải
         window.onload = fetchGoldPrice;
     </script>
-
 </body>
 </html>
