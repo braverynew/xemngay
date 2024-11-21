@@ -227,7 +227,13 @@
 
             dcaTable += '</table>';
             const avgPrice = (weightedSum - (initialVolume * entryPrice)) / totalVolume;
-            const tpPrice = parseFloat((avgPrice + tpMultiplier * atr).toFixed(3));
+            // Điều chỉnh TP dựa trên loại lệnh (Mua/Bán)
+            let tpPrice;
+            if (isBuyOrder) {
+                tpPrice = parseFloat((avgPrice + tpMultiplier * atr).toFixed(3)); // Lệnh Mua
+            } else {
+                tpPrice = parseFloat((avgPrice - tpMultiplier * atr).toFixed(3)); // Lệnh Bán
+            }
 
             // Tính lợi nhuận USD
             const profit = (tpPrice - avgPrice) * (totalVolume + initialVolume) * 100;
