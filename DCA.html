@@ -3,179 +3,195 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tinh DCA</title>
+    <title>DCA Calculator</title>
     <style>
-        /* Reset các thuộc tính mặc định của trình duyệt */
+        /* Reset và định dạng CSS */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f7f6;
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
             color: #333;
-            margin: 20px;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         h1 {
             text-align: center;
-            color: #3e5f6f;
-        }
-
-        .container {
-            display: flex;
-            flex-direction: column;
-            max-width: 600px;
-            margin: 0 auto;
-            background-color: #fff;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            color: #004d4d;
         }
 
         label {
-            margin: 10px 0;
+            display: block;
+            margin-bottom: 5px;
             font-weight: bold;
+            color: #555;
         }
 
-        input, button {
+        input, button, select {
+            width: 100%;
             padding: 10px;
             margin-bottom: 15px;
             border: 1px solid #ddd;
             border-radius: 5px;
             font-size: 16px;
-            width: 100%;
-        }
-
-        input[type="number"] {
             text-align: right;
         }
 
         button {
-            background-color: #5c8a8a;
-            color: white;
+            background-color: #00796b;
+            color: #ffffff;
+            font-size: 18px;
+            border: none;
             cursor: pointer;
-            font-weight: bold;
+            transition: background-color 0.3s;
+            text-align: center;
         }
 
         button:hover {
-            background-color: #467575;
+            background-color: #005a4e;
+        }
+
+        .radio-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .radio-group label {
+            margin: 0;
         }
 
         .result {
             margin-top: 20px;
-            padding: 10px;
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
+            background: #f1f1f1;
+            padding: 15px;
             border-radius: 5px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
+            background: #fff;
+            border-radius: 5px;
+            overflow: hidden;
         }
 
         th, td {
-            padding: 12px;
+            padding: 10px;
             text-align: center;
-            border: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
         }
 
         th {
-            background-color: #5c8a8a;
-            color: white;
+            background-color: #00796b;
+            color: #ffffff;
         }
 
-        /* Media Queries cho màn hình nhỏ */
+        td {
+            color: #555;
+        }
+
+        td:last-child {
+            font-weight: bold;
+        }
+
         @media (max-width: 600px) {
             body {
-                margin: 10px;
-            }
-
-            .container {
                 padding: 10px;
             }
 
-            input, button {
+            table, th, td {
                 font-size: 14px;
             }
 
             h1 {
-                font-size: 20px;
+                font-size: 24px;
             }
 
-            table th, table td {
-                font-size: 14px;
-                padding: 8px;
+            button {
+                font-size: 16px;
             }
         }
     </style>
 </head>
 <body>
-
     <div class="container">
         <h1>DCA Calculator</h1>
         
-        <label for="entryPrice">Entry đầu:</label>
-        <input type="number" id="entryPrice" step="0.001">
+        <label for="entryPrice">Giá vào:</label>
+        <input type="number" id="entryPrice" step="0.001" placeholder="Nhập giá vào lệnh">
 
         <label for="dcaOrders">Số lệnh DCA:</label>
-        <input type="number" id="dcaOrders">
+        <input type="number" id="dcaOrders" placeholder="Nhập số lệnh DCA">
 
         <label for="xLot">Hệ số (xLot):</label>
-        <input type="number" id="xLot" step="0.01">
+        <input type="number" id="xLot" step="0.01" placeholder="Nhập hệ số nhân khối lượng">
 
         <label for="atr">ATR lệnh đầu:</label>
-        <input type="number" id="atr" step="0.001">
+        <input type="number" id="atr" step="0.001" placeholder="Nhập ATR khi mở lệnh đầu">
 
-        <label for="atrDca">Bước DCA (Thuận=1.6, Nghịch=2):</label>
-        <input type="number" id="atrDca" step="0.1">
+        <label for="atrDca">Bước DCA:</label>
+        <input type="number" id="atrDca" step="0.1" placeholder="Nhập bước DCA theo ATR. Thuận=1.6 Nghịch=2.2">
 
-        <label for="tpMultiplier">TP (Thuận=2.5, Nghịch=2, Hòa=0.01):</label>
-        <input type="number" id="tpMultiplier" step="0.1">
+        <label for="tpMultiplier">Hệ số TP:</label>
+        <input type="number" id="tpMultiplier" step="0.1" placeholder="Nhập TP theo ATR, Thuận=2.5 Nghịch=1.8 Hòa=0.01">
 
         <label for="volume">Khối lượng lệnh đầu:</label>
-        <input type="number" id="volume" step="0.001">
+        <input type="number" id="volume" step="0.001" placeholder="Nhập khối lượng lệnh đầu">
 
-        <label>Chọn loại lệnh:</label>
-        <div>
-            <input type="radio" id="buyOrder" name="orderType" value="buy" checked> Mua
-            <input type="radio" id="sellOrder" name="orderType" value="sell"> Bán
+        <div class="radio-group">
+            <label>
+                <input type="radio" id="buyOrder" name="orderType" value="buy" checked>
+                Mua
+            </label>
+            <label>
+                <input type="radio" id="sellOrder" name="orderType" value="sell">
+                Bán
+            </label>
         </div>
 
-        <button onclick="calculateDCA()">Kết quả</button>
+        <button onclick="calculateDCA()">Tính toán</button>
 
-        <div class="result" id="result"></div>
+        <div id="result" class="result"></div>
 
-        <div class="result" id="goldPrice">Đang tải giá vàng...</div>
+        <div id="goldPrice" class="result">Đang tải giá vàng...</div>
     </div>
-
     <script>
-        // Lấy giá vàng từ API
+        // Fetch current gold price
         async function fetchGoldPrice() {
             const url = 'https://www.goldapi.io/api/XAU/USD';
-            const token = 'goldapi-2vnbnsm3gzgekp-io'; // Thay bằng token của bạn
-
+            const token = 'goldapi-2vnbnsm3gzgekp-io'; // Replace with your token
             try {
                 const response = await fetch(url, {
-                    method: 'GET',
                     headers: { 'x-access-token': token }
                 });
-
                 const data = await response.json();
-                const goldPrice = data.price;
-
-                document.getElementById('goldPrice').innerText = `Giá Vàng: ${goldPrice} USD`;
-                window.currentGoldPrice = parseFloat(goldPrice);
+                document.getElementById('goldPrice').innerText = `Gold Price: ${data.price} USD`;
+                window.currentGoldPrice = parseFloat(data.price);
             } catch (error) {
-                console.error('Lỗi khi lấy dữ liệu:', error);
-                document.getElementById('goldPrice').innerText = 'Không thể lấy giá vàng.';
+                document.getElementById('goldPrice').innerText = 'Failed to fetch gold price.';
             }
         }
 
+        // Calculate DCA details
         function calculateDCA() {
             const entryPrice = parseFloat(document.getElementById('entryPrice').value);
             const numOrders = parseInt(document.getElementById('dcaOrders').value);
@@ -185,55 +201,62 @@
             const tpMultiplier = parseFloat(document.getElementById('tpMultiplier').value);
             const initialVolume = parseFloat(document.getElementById('volume').value);
             const isBuyOrder = document.getElementById('buyOrder').checked;
-
-            let priceGap = atrDca * atr;
-            if (priceGap === 0) {
-                alert("Price gap bằng 0, vui lòng kiểm tra lại giá trị ATR hoặc ATR DCA.");
-                return;
-            }
-
-            let totalVolume = initialVolume;
-            let weightedSum = entryPrice * initialVolume;
+        
+            let priceGap = atrDca * atr; // Khoảng cách giá giữa các lệnh
+            let totalVolume = 0;        // Tổng khối lượng ban đầu là 0
+            let weightedSum = 0;        // Tổng trọng số giá và khối lượng
             let dcaTable = '<table><tr><th>Order</th><th>Price</th><th>Volume</th></tr>';
             let currentPrice = entryPrice;
-
+        
             for (let i = 1; i <= numOrders; i++) {
-                let volume = i === 1 ? initialVolume : initialVolume * Math.pow(xLot, i - 1);
-                volume = parseFloat(volume.toFixed(2));
-
-                if (i > 1) {
-                    currentPrice = isBuyOrder
-                        ? currentPrice - priceGap // Giá giảm cho lệnh Mua
-                        : currentPrice + priceGap; // Giá tăng cho lệnh Bán
+                let volume;
+        
+                // Tính khối lượng từng lệnh
+                if (i === 1) {
+                    volume = initialVolume; // Lệnh đầu tiên sử dụng khối lượng nhập
+                } else {
+                    volume = initialVolume * Math.pow(xLot, i - 1); // Lệnh sau tính theo hệ số
                 }
-
-                weightedSum += currentPrice * volume;
-                totalVolume += volume;
+        
+                volume = parseFloat(volume.toFixed(2)); // Làm tròn khối lượng
+        
+                // Điều chỉnh giá nếu không phải lệnh đầu
+                if (i > 1) {
+                    currentPrice += isBuyOrder ? -priceGap : priceGap;
+                }
+        
+                totalVolume += volume; // Cộng dồn khối lượng
+                weightedSum += currentPrice * volume; // Tổng trọng số để tính giá trung bình
+        
                 dcaTable += `<tr><td>${i}</td><td>${currentPrice.toFixed(3)}</td><td>${volume}</td></tr>`;
             }
-
+        
             dcaTable += '</table>';
+        
+            // Tính giá trung bình
             const avgPrice = weightedSum / totalVolume;
-
+        
+            // Tính TP
             let tpPrice = isBuyOrder
                 ? avgPrice + tpMultiplier * atr
                 : avgPrice - tpMultiplier * atr;
-            tpPrice = parseFloat(tpPrice.toFixed(3));
-
-            const profit = isBuyOrder
+        
+            // Tính lợi nhuận dự kiến và lợi nhuận hiện tại
+            const profitExpected = isBuyOrder
                 ? (tpPrice - avgPrice) * totalVolume * 100
                 : (avgPrice - tpPrice) * totalVolume * 100;
-
+        
             const profitCurrent = isBuyOrder
                 ? (window.currentGoldPrice - avgPrice) * totalVolume * 100
                 : (avgPrice - window.currentGoldPrice) * totalVolume * 100;
-
+        
+            // Hiển thị kết quả
             document.getElementById('result').innerHTML = `
                 ${dcaTable}
                 <p>Giá trung bình: ${avgPrice.toFixed(3)}</p>
                 <p>Tổng khối lượng: ${totalVolume.toFixed(2)}</p>
-                <p>TP: ${tpPrice}</p>
-                <p>Lợi nhuận dự kiến: ${profit.toFixed(2)} USD</p>
+                <p>TP: ${tpPrice.toFixed(3)}</p>
+                <p>Lợi nhuận dự kiến: ${profitExpected.toFixed(2)} USD</p>
                 <p>Lợi nhuận hiện tại: ${profitCurrent.toFixed(2)} USD</p>
             `;
         }
@@ -242,3 +265,4 @@
     </script>
 </body>
 </html>
+
