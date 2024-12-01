@@ -9,10 +9,9 @@
             margin: 0;
             display: flex;
             height: 100vh;
-            
         }
         iframe {
-            flex: 1; /* Mỗi iframe chiếm 50% chiều rộng */
+            flex: 1; /* Mỗi iframe chiếm đều chiều rộng */
             border: none; /* Loại bỏ viền iframe */
         }
     </style>
@@ -21,8 +20,11 @@
     <!-- iframe bên trái -->
     <iframe id="iframeLeft" src="DCAfixprice.html"></iframe>
 
+    <!-- iframe giữa -->
+    <iframe id="iframeMiddle" src="margin.html"></iframe>
+
     <!-- iframe bên phải -->
-    <iframe id="iframeRight" src="margin.html"></iframe>
+    <iframe id="iframeRight" src="BTC.html"></iframe>
 
     <script>
         // Tự động điều chỉnh chiều cao iframe dựa trên nội dung
@@ -30,8 +32,11 @@
             iframe.style.height = iframe.contentWindow.document.body.scrollHeight + "px";
         }
 
-        // Gọi hàm resize khi iframe đã tải xong
+        // Gọi hàm resize khi mỗi iframe đã tải xong
         document.getElementById("iframeLeft").onload = function() {
+            resizeIframe(this);
+        };
+        document.getElementById("iframeMiddle").onload = function() {
             resizeIframe(this);
         };
         document.getElementById("iframeRight").onload = function() {
@@ -40,7 +45,3 @@
     </script>
 </body>
 </html>
-
-
-
-
