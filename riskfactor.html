@@ -50,15 +50,15 @@
     <div class="container">
         <h2>Lot Calculator</h2>
         <!-- Input for Master Account -->
-        <label for="masterBalance">Số vốn tài khoản Master (USD):</label>
-        <input type="number" id="masterBalance" placeholder="Nhập vốn tài khoản Master 5000">
+        <label for="masterBalance">Số vốn tài khoản Master (USD cent):</label>
+        <input type="number" id="masterBalance" placeholder="Nhập vốn tài khoản Master 10000 cent">
 
         <label for="masterLot">Số lot giao dịch của Master:</label>
         <input type="number" id="masterLot" placeholder="Nhập số lot của Master 0.11">
 
         <!-- Input for Copy Account -->
         <label for="copyBalance">Số vốn tài khoản Copy (USD):</label>
-        <input type="number" id="copyBalance" placeholder="Nhập vốn tài khoản Copy theo USD">
+        <input type="number" id="copyBalance" placeholder="Nhập vốn tài khoản Copy theo USD cent">
 
         <label for="riskFactor">Risk Factor (Hệ số rủi ro):</label>
         <input type="number" id="riskFactor" step="0.01" placeholder="Nhập Risk Factor...">
@@ -87,8 +87,8 @@
             const resultDiv = document.getElementById('result');
             resultDiv.style.display = 'block';
             resultDiv.innerHTML = `
-                Số lot cho tài khoản Copy USD: <strong>${copyLot.toFixed(2)}</strong><br>
-                Số lot cho tài khoản Copy CENT: <strong>${(copyLot * 100).toFixed(2)}</strong>
+                Số lot cho tài khoản Copy CENT: <strong>${copyLot.toFixed(2)}</strong><br>
+                Số lot cho tài khoản Copy CENT: <strong>${(copyLot).toFixed(2)}</strong>
             `;
         }
     </script>
