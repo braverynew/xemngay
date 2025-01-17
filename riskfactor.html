@@ -51,17 +51,17 @@
         <h2>Lot Calculator</h2>
         <!-- Input for Master Account -->
         <label for="masterBalance">Số vốn tài khoản Master (USD cent):</label>
-        <input type="number" id="masterBalance" placeholder="Nhập vốn tài khoản Master 10000 cent">
+        <input type="number" id="masterBalance" placeholder="Nhập vốn tài khoản Master Caylot 50000 va ONESHOT 10000 ">
 
         <label for="masterLot">Số lot giao dịch của Master:</label>
-        <input type="number" id="masterLot" placeholder="Nhập số lot của Master 0.11">
+        <input type="number" id="masterLot" placeholder="Nhập số lot của Master Caylot 0.01 va ONESHOT 0.1 (THUAN) 0.5 (NGHICH)">
 
         <!-- Input for Copy Account -->
-        <label for="copyBalance">Số vốn tài khoản Copy (USD):</label>
+        <label for="copyBalance">Số vốn tài khoản Copy (USD cent):</label>
         <input type="number" id="copyBalance" placeholder="Nhập vốn tài khoản Copy theo USD cent">
 
         <label for="riskFactor">Risk Factor (Hệ số rủi ro):</label>
-        <input type="number" id="riskFactor" step="0.01" placeholder="Nhập Risk Factor...">
+        <input type="number" id="riskFactor" step="0.01" placeholder="Khuyến nghị Caylot 2 Và Oneshot 0.8 ">
 
         <button onclick="calculateCopyLot()">Tính số lot tài khoản Copy</button>
 
@@ -88,7 +88,12 @@
             resultDiv.style.display = 'block';
             resultDiv.innerHTML = `
                 Số lot cho tài khoản Copy CENT: <strong>${copyLot.toFixed(2)}</strong><br>
-                Số lot cho tài khoản Copy CENT: <strong>${(copyLot).toFixed(2)}</strong>
+                Lưu ý: Cách tính này khác so với binh thường, nó sẽ tự tăng lot khi tài khoản tăng,
+                cách tính trước đây là xlot so với Master, còn đây tính theo tỷ lệ vốn.
+                VD: Trước đây x5 với gốc là 300 đánh 0.01 thì sẽ thành 0.05 lot đầu không quan tâm
+                đến số vốn của tài khoản copy, khi tài khoản copy tăng vốn thì rủi ro sẽ giảm dần, 
+                còn bây giờ nếu nhập hệ số rủi ro thì 5 thì luôn sẽ là x5 dù vốn có tăng lên 
+                hay giảm xuống (luôn tỷ lệ theo vốn)
             `;
         }
     </script>
