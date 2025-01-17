@@ -83,18 +83,16 @@
             // Tính khối lượng lệnh của tài khoản Copy
             const copyLot = (copyBalance / masterBalance) * masterLot * riskFactor;
 
-            // Hiển thị kết quả
-            const resultDiv = document.getElementById('result');
-            resultDiv.style.display = 'block';
-            resultDiv.innerHTML = `
-                Số lot cho tài khoản Copy CENT: <strong>${copyLot.toFixed(2)}</strong><br>
-                Lưu ý: Cách tính này khác so với binh thường, nó sẽ tự tăng lot khi tài khoản tăng,
-                cách tính trước đây là xlot so với Master, còn đây tính theo tỷ lệ vốn.
-                VD: Trước đây x5 với gốc là 300 đánh 0.01 thì sẽ thành 0.05 lot đầu không quan tâm
-                đến số vốn của tài khoản copy, khi tài khoản copy tăng vốn thì rủi ro sẽ giảm dần, 
-                còn bây giờ nếu nhập hệ số rủi ro thì 5 thì luôn sẽ là x5 dù vốn có tăng lên 
-                hay giảm xuống (luôn tỷ lệ theo vốn)
-            `;
+// Hiển thị kết quả
+const resultDiv = document.getElementById('result');
+resultDiv.style.display = 'block';
+resultDiv.innerHTML = `
+    Số lot cho tài khoản Copy CENT: <strong>${copyLot.toFixed(2)}</strong><br>
+    <br>
+    <strong>Lưu ý:</strong><br>
+    Cách tính này khác so với bình thường, nó sẽ tự tăng lot khi tài khoản tăng, cách tính trước đây là xlot so với Master, còn đây tính theo tỷ lệ vốn.<br>
+    VD: Trước đây x5 với gốc là 300 đánh 0.01 thì sẽ thành 0.05 lot đầu không quan tâm đến số vốn của tài khoản copy, khi tài khoản copy tăng vốn thì rủi ro sẽ giảm dần, còn bây giờ nếu nhập hệ số rủi ro thì 5 thì luôn sẽ là x5 dù vốn có tăng lên hay giảm xuống (luôn tỷ lệ theo vốn).
+`;
         }
     </script>
 </body>
