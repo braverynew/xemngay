@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Máy tính lãi kép</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+        .container { max-width: 400px; margin: auto; padding: 20px; border: 1px solid #ccc; border-radius: 10px; }
+        input, button { margin: 10px 0; padding: 10px; width: 100%; }
+        button { background-color: #28a745; color: white; border: none; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Tính lãi kép</h2>
+        <label for="initial">Số vốn ban đầu (USD):</label>
+        <input type="number" id="initial" placeholder="Nhập số vốn" required>
+        
+        <label for="rate">Lãi suất hàng ngày (%):</label>
+        <input type="number" id="rate" step="0.01" placeholder="Nhập lãi suất" required>
+        
+        <label for="days">Số ngày giao dịch:</label>
+        <input type="number" id="days" placeholder="Nhập số ngày" required>
+        
+        <button onclick="calculateCompoundInterest()">Tính toán</button>
+        
+        <h3>Kết quả: <span id="result">---</span></h3>
+    </div>
+
+    <script>
+        function calculateCompoundInterest() {
+            let initial = parseFloat(document.getElementById("initial").value);
+            let rate = parseFloat(document.getElementById("rate").value) / 100;
+            let days = parseInt(document.getElementById("days").value);
+            
+            if (isNaN(initial) || isNaN(rate) || isNaN(days) || initial <= 0 || days <= 0) {
+                alert("Vui lòng nhập giá trị hợp lệ!");
+                return;
+            }
+            
+            let finalAmount = initial * Math.pow((1 + rate), days);
+            document.getElementById("result").innerText = finalAmount.toFixed(2) + " USD";
+        }
+    </script>
+</body>
+</html>
