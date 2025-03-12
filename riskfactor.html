@@ -11,7 +11,7 @@
             background-color: #f9f9f9;
         }
         .container {
-            max-width: 400px;
+            max-width: 600px;
             margin: auto;
             padding: 20px;
             background: white;
@@ -44,71 +44,77 @@
             border: 1px solid #4CAF50;
             border-radius: 4px;
         }
-        .note {
+        table {
+            width: 100%;
             margin-top: 20px;
-            padding: 10px;
-            background: #f9f9f9;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 22px;
-            color: #333;
-            line-height: 1.2;
-            text-align: justify;
+            border-collapse: collapse;
+        }
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h2>Lot Calculator</h2>
-        <!-- Input for Master Account -->
         <label for="masterBalance">Số vốn tài khoản Master (USD cent):</label>
-        <input type="number" id="masterBalance" placeholder="Caylot 50000 va oneshot 10000 ">
+        <input type="number" id="masterBalance" placeholder="Nhập vốn TK Master">
 
-        <label for="masterLot">Số lot giao dịch của Master:</label>
-        <input type="number" id="masterLot" placeholder="Caylot 0.01 Oneshot 0.1(Thuan) 0.5(Nghich)">
-
-        <!-- Input for Copy Account -->
         <label for="copyBalance">Số vốn tài khoản Copy (USD cent):</label>
-        <input type="number" id="copyBalance" placeholder="Nhập vốn TK Copy theo USD cent">
+        <input type="number" id="copyBalance" placeholder="Nhập vốn TK Copy">
 
         <label for="riskFactor">Risk Factor (Hệ số rủi ro):</label>
-        <input type="number" id="riskFactor" step="0.01" placeholder="Khuyến nghị Caylot 1.6 Và Oneshot 0.8 ">
+        <input type="number" id="riskFactor" step="0.01" placeholder="Nhập hệ số rủi ro">
 
         <button onclick="calculateCopyLot()">Tính số lot tài khoản Copy</button>
 
         <div id="result" class="result" style="display: none;"></div>
-        <div class="note">       
-                <strong>Lưu ý:</strong><br>
-                Cách tính này khác so với bình thường, nó sẽ tự tăng lot khi tài khoản tăng, cách tính trước đây là xlot so với Master, còn đây tính theo tỷ lệ vốn.<br>
-                VD: Trước đây x5 với gốc là 300 đánh 0.01 thì sẽ thành 0.05 lot đầu không quan tâm đến số vốn của tài khoản copy, 
-                khi tài khoản copy tăng vốn thì rủi ro sẽ giảm dần, Tỷ lệ rủi ro = 1.6 thì tương đương 1:1 và 3.2 sẽ là x2 cứ thế lấy hệ số nhân 1.6.
-                Nếu tài khoản copy tăng hay giảm tiền thì nó sẽ tự điều chỉnh lot theo số dư ví cùng với hệ số rủi ro đã fix sẵn!
-        </div>
         
+        <table>
+            <tbody id="lotTable"></tbody>
+        </table>
     </div>
 
     <script>
+        const lots = [
+            0.01, 0.01, 0.015, 0.02, 0.025, 0.03, 0.02, 0.08, 0.14, 0.20,
+            0.26, 0.05, 0.14, 0.23, 0.32, 0.41, 0.50, 0.59, 0.68, 0.77,
+            0.86, 0.95, 1.04, 1.13, 1.22, 1.31, 1.40, 1.49, 1.58, 1.67,
+            1.76, 0.23, 0.35, 0.47, 0.59, 0.71, 0.83, 0.95, 1.07, 1.19,
+            1.31, 1.43, 1.55, 1.67, 1.79, 1.91, 2.03, 2.15, 2.27, 2.39,
+            2.51, 2.63, 2.75, 2.87, 2.99, 3.11, 3.23, 3.35, 3.47, 3.59, 3.71
+        ];
+        
         function calculateCopyLot() {
             const masterBalance = parseFloat(document.getElementById('masterBalance').value);
-            const masterLot = parseFloat(document.getElementById('masterLot').value);
             const copyBalance = parseFloat(document.getElementById('copyBalance').value);
             const riskFactor = parseFloat(document.getElementById('riskFactor').value);
 
-            if (isNaN(masterBalance) || isNaN(masterLot) || isNaN(copyBalance) || isNaN(riskFactor)) {
+            if (isNaN(masterBalance) || isNaN(copyBalance) || isNaN(riskFactor)) {
                 alert('Vui lòng nhập đầy đủ các giá trị hợp lệ!');
                 return;
             }
 
-            // Tính khối lượng lệnh của tài khoản Copy
-            const copyLot = (copyBalance / masterBalance) * masterLot * riskFactor;
-
-            // Hiển thị kết quả
-            const resultDiv = document.getElementById('result');
-            resultDiv.style.display = 'block';
-            resultDiv.innerHTML = `
-                Số lot cho tài khoản Copy USD: <strong>${copyLot.toFixed(2)}</strong><br>
-
-            `;
+            let copyLots = lots.map(lot => (copyBalance / masterBalance) * lot * riskFactor);
+            
+            const tableBody = document.getElementById("lotTable");
+            tableBody.innerHTML = "";
+            let numRows = Math.ceil(copyLots.length / 5);
+            for (let i = 0; i < numRows; i++) {
+                let row = "<tr>";
+                for (let j = 0; j < 5; j++) {
+                    let index = i + j * numRows;
+                    if (index < copyLots.length) {
+                        row += `<td><strong>${index + 1}</strong></td><td>${copyLots[index].toFixed(2)}</td>`;
+                    }
+                }
+                row += "</tr>";
+                tableBody.innerHTML += row;
+            }
+            
+            document.getElementById('result').style.display = 'block';
         }
     </script>
 </body>
