@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tính toán Lot DCA</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2em;
+        }
+        .params {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 5px solid #007bff;
+        }
+        .result-box {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        th, td {
+            padding: 12px;
+            text-align: right;
+            border-bottom: 1px solid #eee;
+        }
+        th {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            color: white;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        tr:hover {
+            background: #e3f2fd;
+            transform: scale(1.01);
+            transition: all 0.2s ease;
+        }
+        .highlight {
+            background: #fff3cd !important;
+            color: #856404;
+            font-weight: bold;
+        }
+        .danger {
+            background: #f8d7da !important;
+            color: #721c24;
+            font-weight: bold;
+        }
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            color: #856404;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+        input, select {
+            transition: all 0.3s ease;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: #4facfe;
+            box-shadow: 0 0 10px rgba(79, 172, 254, 0.3);
+        }
+        label {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        .formula {
+            background: #e8f5e8;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-family: monospace;
+            border-left: 4px solid #28a745;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Tính toán Lot DCA </h1>
+        
+        <div class="params">
+            <h3>🔧 Thông số đầu vào:</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 15px 0;">
+                <div>
+                    <label for="initialLot"><strong>Initial Lot:</strong></label>
+                    <input type="number" id="initialLot" value="0.04" step="0.01" min="0.01" 
+                           style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-top: 5px;">
+                </div>
+                <div>
+                    <label for="multiplier"><strong>Lot Multiplier:</strong></label>
+                    <input type="number" id="multiplier" value="1.15" step="0.01" min="1.01" 
+                           style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-top: 5px;">
+                </div>
+                <div>
+                    <label for="maxOrders"><strong>Số lệnh tối đa:</strong></label>
+                    <input type="number" id="maxOrders" value="60" min="1" max="100" 
+                           style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-top: 5px;">
+                </div>
+                <div>
+                    <label for="mode"><strong>Chế độ:</strong></label>
+                    <select id="mode" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-top: 5px;">
+                        <option value="multiply">LOT_MULTIPLY</option>
+                        <option value="add">LOT_ADD</option>
+                    </select>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 15px;">
+                <button onclick="calculateLots()" 
+                        style="background: linear-gradient(135deg, #4facfe, #00f2fe); color: white; border: none; 
+                               padding: 12px 30px; border-radius: 25px; font-size: 16px; font-weight: bold; 
+                               cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: all 0.3s ease;">
+                    🔄 Tính toán lại
+                </button>
+            </div>
+        </div>
+
+
+
+        <div class="result-box">
+            🎯 <strong>KẾT QUẢ CHÍNH:</strong><br>
+            Lệnh thứ 60: <span id="order60lot"></span> lot<br>
+            Tổng 60 lệnh: <span id="total60lot"></span> lot
+        </div>
+
+        <table id="lotTable">
+            <thead>
+                <tr>
+                    <th>Lệnh thứ</th>
+                    <th>Lot Size</th>
+                    <th>Tổng Lot</th>
+                    <th>Tỷ lệ so với lệnh đầu</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function calculateLots() {
+            const initialLot = parseFloat(document.getElementById('initialLot').value);
+            const multiplier = parseFloat(document.getElementById('multiplier').value);
+            const maxOrders = parseInt(document.getElementById('maxOrders').value);
+            const mode = document.getElementById('mode').value;
+            
+            let totalLot = 0;
+            const tableBody = document.getElementById('tableBody');
+            tableBody.innerHTML = ''; // Clear previous results
+            
+            let finalOrderLot = 0;
+            
+            // Tính toán và hiển thị từng lệnh
+            for (let order = 1; order <= maxOrders; order++) {
+                let lotSize;
+                if (mode === 'multiply') {
+                    lotSize = initialLot * Math.pow(multiplier, order - 1);
+                } else {
+                    lotSize = initialLot + multiplier * (order - 1);
+                }
+                
+                totalLot += lotSize;
+                
+                if (order === maxOrders) {
+                    finalOrderLot = lotSize;
+                }
+                
+                // Hiển thị các lệnh quan trọng
+                if (order <= 10 || order % 5 === 0 || order === maxOrders) {
+                    const row = document.createElement('tr');
+                    const ratio = (lotSize / initialLot).toFixed(1);
+                    
+                    // Highlight lệnh cuối
+                    if (order === maxOrders) {
+                        row.className = 'danger';
+                    } else if (order >= Math.floor(maxOrders * 0.7)) {
+                        row.className = 'highlight';
+                    }
+                    
+                    row.innerHTML = `
+                        <td>${order}</td>
+                        <td>${lotSize.toFixed(2)}</td>
+                        <td>${totalLot.toFixed(2)}</td>
+                        <td>${ratio}x</td>
+                    `;
+                    tableBody.appendChild(row);
+                }
+            }
+            
+            // Cập nhật kết quả chính
+            document.getElementById('order60lot').textContent = finalOrderLot.toFixed(2);
+            document.getElementById('total60lot').textContent = totalLot.toFixed(2);
+            
+            // Cập nhật text kết quả
+            document.querySelector('.result-box').innerHTML = `
+                🎯 <strong>KẾT QUẢ CHÍNH:</strong><br>
+                Lệnh thứ ${maxOrders}: <span id="order60lot">${finalOrderLot.toFixed(2)}</span> lot<br>
+                Tổng ${maxOrders} lệnh: <span id="total60lot">${totalLot.toFixed(2)}</span> lot
+            `;
+        }
+        
+        // Chạy tính toán khi trang load
+        calculateLots();
+    </script>
+</body>
+</html>
