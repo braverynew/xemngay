@@ -18,6 +18,8 @@
             border-radius: 15px;
             padding: 30px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            max-height: 90vh;
+            overflow-y: auto;
         }
         h1 {
             color: #2c3e50;
@@ -50,6 +52,19 @@
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            max-height: 400px;
+            overflow-y: auto;
+            display: block;
+        }
+        thead, tbody {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+        }
+        thead {
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
         th, td {
             padding: 12px;
@@ -115,7 +130,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>📊 Tính toán Lot DCA </h1>
+        <h1>📊 Tính toán Lot DCA</h1>
         
         <div class="params">
             <h3>🔧 Thông số đầu vào:</h3>
@@ -126,9 +141,10 @@
                            style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-top: 5px;">
                 </div>
                 <div>
-                    <label for="multiplier"><strong>Lot Multiplier:</strong></label>
-                    <input type="number" id="multiplier" value="1.15" step="0.01" min="1.01" 
+                    <label for="multiplier"><strong>Lot Multiplier / Increment:</strong></label>
+                    <input type="number" id="multiplier" value="1.15" step="0.01" min="0.01" 
                            style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-top: 5px;">
+                    <small style="color: #666; font-size: 12px;">Multiply: hệ số nhân | Add: giá trị cộng</small>
                 </div>
                 <div>
                     <label for="maxOrders"><strong>Số lệnh tối đa:</strong></label>
@@ -194,6 +210,8 @@
                 if (mode === 'multiply') {
                     lotSize = initialLot * Math.pow(multiplier, order - 1);
                 } else {
+                    // LOT_ADD: mỗi lệnh cộng thêm LotIncrement (không phải multiplier - 1)
+                    // Trong EA: LotIncrement là input riêng, nhưng ở đây dùng multiplier làm increment
                     lotSize = initialLot + multiplier * (order - 1);
                 }
                 
@@ -203,26 +221,24 @@
                     finalOrderLot = lotSize;
                 }
                 
-                // Hiển thị các lệnh quan trọng
-                if (order <= 10 || order % 5 === 0 || order === maxOrders) {
-                    const row = document.createElement('tr');
-                    const ratio = (lotSize / initialLot).toFixed(1);
-                    
-                    // Highlight lệnh cuối
-                    if (order === maxOrders) {
-                        row.className = 'danger';
-                    } else if (order >= Math.floor(maxOrders * 0.7)) {
-                        row.className = 'highlight';
-                    }
-                    
-                    row.innerHTML = `
-                        <td>${order}</td>
-                        <td>${lotSize.toFixed(2)}</td>
-                        <td>${totalLot.toFixed(2)}</td>
-                        <td>${ratio}x</td>
-                    `;
-                    tableBody.appendChild(row);
+                // Hiển thị tất cả các lệnh
+                const row = document.createElement('tr');
+                const ratio = (lotSize / initialLot).toFixed(1);
+                
+                // Highlight lệnh cuối
+                if (order === maxOrders) {
+                    row.className = 'danger';
+                } else if (order >= Math.floor(maxOrders * 0.7)) {
+                    row.className = 'highlight';
                 }
+                
+                row.innerHTML = `
+                    <td>${order}</td>
+                    <td>${lotSize.toFixed(2)}</td>
+                    <td>${totalLot.toFixed(2)}</td>
+                    <td>${ratio}x</td>
+                `;
+                tableBody.appendChild(row);
             }
             
             // Cập nhật kết quả chính
