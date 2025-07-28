@@ -1,5 +1,875 @@
-<script>
-<!--
-document.write(unescape("%3C%21DOCTYPE%20html%3E%0A%3Chtml%20lang%3D%22vi%22%3E%0A%3Chead%3E%0A%20%20%20%20%3Cmeta%20charset%3D%22UTF-8%22%3E%0A%20%20%20%20%3Cmeta%20name%3D%22viewport%22%20content%3D%22width%3Ddevice-width%2C%20initial-scale%3D1.0%22%3E%0A%20%20%20%20%3Ctitle%3ETra%20c%u1EE9u%20Ng%E0y%3C/title%3E%0A%20%20%20%20%3Cstyle%3E%0A%20%20%20%20%20%20%20%20body%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20font-family%3A%20%27Arial%27%2C%20sans-serif%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20margin%3A%200%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20padding%3A%200%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20background-color%3A%20%23f4f4f4%3B%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20.container%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20max-width%3A%20100%25%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20width%3A%20600px%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20margin%3A%2040px%20auto%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20padding%3A%2020px%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20background-color%3A%20%23fff%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20border%3A%201px%20solid%20%23ccc%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20border-radius%3A%2010px%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20box-shadow%3A%200%202px%2010px%20rgba%280%2C%200%2C%200%2C%200.1%29%3B%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20h2%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20text-align%3A%20center%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20color%3A%20%23333%3B%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20label%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20display%3A%20block%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20margin-top%3A%2010px%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20font-weight%3A%20bold%3B%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20input%5Btype%3D%22number%22%5D%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20width%3A%20calc%28100%25%20-%2022px%29%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20padding%3A%2010px%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20margin-top%3A%205px%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20border%3A%201px%20solid%20%23ddd%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20border-radius%3A%205px%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20box-sizing%3A%20border-box%3B%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20button%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20width%3A%20100%25%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20padding%3A%2012px%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20margin-top%3A%2015px%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20background-color%3A%20%2328a745%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20color%3A%20%23fff%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20border%3A%20none%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20border-radius%3A%205px%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20cursor%3A%20pointer%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20font-size%3A%2016px%3B%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20button%3Ahover%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20background-color%3A%20%23218838%3B%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20.result%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20margin-top%3A%2020px%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20padding%3A%2010px%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20background-color%3A%20%23e8f5e9%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20border%3A%201px%20solid%20%23c8e6c9%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20border-radius%3A%205px%3B%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20table%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20width%3A%20100%25%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20margin-top%3A%2020px%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20border-collapse%3A%20collapse%3B%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20th%2C%20td%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20border%3A%201px%20solid%20%23ddd%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20padding%3A%2010px%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20text-align%3A%20center%3B%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20th%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20background-color%3A%20%23f0f0f0%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20font-weight%3A%20bold%3B%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20td%3Afirst-child%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20white-space%3A%20nowrap%3B%20/*%20Ng%u0103n%20ch%u1EB7n%20vi%u1EC7c%20xu%u1ED1ng%20d%F2ng%20trong%20c%u1ED9t%20khung%20gi%u1EDD%20*/%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20td%3Alast-child%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20white-space%3A%20normal%3B%20/*%20Cho%20ph%E9p%20xu%u1ED1ng%20d%F2ng%20trong%20c%u1ED9t%20di%u1EC5n%20gi%u1EA3i%20*/%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20.blue%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20background-color%3A%20%2300f%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20color%3A%20white%3B%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20.red%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20background-color%3A%20%23f00%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20color%3A%20white%3B%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20@media%20%28max-width%3A%20600px%29%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20.container%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20width%3A%2090%25%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20padding%3A%2015px%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20h2%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20font-size%3A%2018px%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20button%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20font-size%3A%2014px%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20padding%3A%2010px%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20th%2C%20td%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20padding%3A%208px%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20font-size%3A%2012px%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%3C/style%3E%0A%3C/head%3E%0A%3Cbody%3E%0A%20%20%20%20%3Cdiv%20class%3D%22container%22%3E%0A%20%20%20%20%20%20%20%20%3Ch2%3EXem%20Ng%E0y%20Gi%u1EDD%20%u0110%u1EB9p%20%3C/h2%3E%0A%20%20%20%20%20%20%20%20%3C%21--%20Th%EAm%20%u0111o%u1EA1n%20m%E3%20m%u1EDBi%20--%3E%0A%20%20%20%20%20%20%20%20%3Cscript%20src%3D%22https%3A//lichngaytot.com/Content/Js/Libs/jquery-3.4.1.min.js%22%3E%3C/script%3E%0A%20%20%20%20%20%20%20%20%3Cscript%20src%3D%22https%3A//lichngaytot.com/Content/Js/Libs/jquery-ui.min.js%22%3E%3C/script%3E%0A%20%20%20%20%20%20%20%20%3Cscript%20src%3D%22https%3A//lichngaytot.com/Content/Js/Widget/widgetlichthang.js%22%3E%3C/script%3E%0A%20%20%20%20%20%20%20%20%3Cscript%20type%3D%22text/javascript%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20document.write%28%27%3Cdiv%20id%3D%22widgetlichthang-lvsicsoft%22%20style%3D%22width%3A100%25%3B%22%20data-urlimage%3D%22%22%20data-startin%3D%221%22%20data-amduongshow%3D%222%22%20data-colorbackground%3D%22%23aec1d5%22%20data-colortoday%3D%22%23ffff00%22%20data-colorborder%3D%22%23dddddd%22%20data-coloram%3D%22%230008ff%22%20data-colorduong%3D%22%23000000%22%3E%3Cdiv%20class%3D%22css-style-widget%22%3E%3C/div%3E%3Cdiv%20class%3D%22anh-lich-img%22%20style%3D%22100%25%22%3E%3Cimg%20style%3D%22width%3A%20100%25%3B%20height%3A100%25%3B%22%20src%3D%22%22%20/%3E%3C/div%3E%20%3Cdiv%20id%3D%22calendar-widget-lvs%22%20class%3D%22lvs-calendar-container%22%20style%3D%22width%3A%20100%25%3B%20float%3A%20left%3B%22%3E%3C/div%3E%27%29%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20getWidgetLichThang%28%22css-style-widget%22%2C%20%22widgetlichthang-lvsicsoft%22%29%3B%0A%20%20%20%20%20%20%20%20%3C/script%3E%0A%20%20%20%20%20%20%20%20%3Clabel%20for%3D%22day%22%3ENh%u1EADp%20Ng%E0y%20%E2m%3A%3C/label%3E%0A%20%20%20%20%20%20%20%20%3Cinput%20type%3D%22number%22%20id%3D%22day%22%20min%3D%221%22%20max%3D%2231%22%20required%3E%0A%0A%20%20%20%20%20%20%20%20%3Clabel%20for%3D%22month%22%3ENh%u1EADp%20Th%E1ng%20%E2m%3A%3C/label%3E%0A%20%20%20%20%20%20%20%20%3Cinput%20type%3D%22number%22%20id%3D%22month%22%20min%3D%221%22%20max%3D%2212%22%20required%3E%0A%0A%20%20%20%20%20%20%20%20%3Cbutton%20onclick%3D%22lookupBoth%28%29%22%3EXem%20ng%E0y%3C/button%3E%0A%0A%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22result%22%20id%3D%22result%22%3E%3C/div%3E%0A%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%3Ctable%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ctr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cth%3EKhung%20Gi%u1EDD%3C/th%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cth%3EDi%u1EC5n%20Gi%u1EA3i%3C/th%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C/tr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ctr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3E11%3A00%20-%2001%3A00%3C/td%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%20id%3D%22explanation-1%22%3E%3C/td%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C/tr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ctr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3E1%3A00%20-%2003%3A00%3C/td%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%20id%3D%22explanation-2%22%3E%3C/td%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C/tr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ctr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3E3%3A00%20-%2005%3A00%3C/td%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%20id%3D%22explanation-3%22%3E%3C/td%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C/tr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ctr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3E5%3A00%20-%2007%3A00%3C/td%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%20id%3D%22explanation-4%22%3E%3C/td%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C/tr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ctr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3E7%3A00%20-%2009%3A00%3C/td%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%20id%3D%22explanation-5%22%3E%3C/td%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C/tr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ctr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3E9%3A00%20-%2011%3A00%3C/td%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%20id%3D%22explanation-6%22%3E%3C/td%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C/tr%3E%0A%20%20%20%20%20%20%20%20%3C/table%3E%0A%20%20%20%20%3C/div%3E%0A%20%20%20%20%3Cscript%3E%0A%20%20%20%20function%20lookupBoth%28%29%20%7B%0A%20%20%20%20%20%20%20%20lookupDate%28%29%3B%0A%20%20%20%20%20%20%20%20lookupDate1%28%29%3B%0A%20%20%20%20%7D%0A%0A%20%20%20%20%20%20%20%20%20const%20data%20%3D%20%5B%0A%20%20%20%20%20%20%20%20%20%20%20%20%7B%20name%3A%20%22B%u1EA3o%20Th%u01B0%u01A1ng%20-%20Ng%E0y%20t%u1ED1t%22%2C%20days%3A%20%5B6%2C%2012%2C%2018%2C%2024%2C%2030%5D%2C%20months%3A%20%5B1%2C%204%2C%207%2C%2010%5D%2C%20description%3A%20%22Ng%E0y%20%u0111%u1EB9p%2C%20xu%u1EA5t%20h%E0nh%20thu%u1EADn%20l%u1EE3i%2C%20l%E0m%20%u0111%u01B0%u1EE3c%20vi%u1EC7c%20nh%u01B0%20mong%20mu%u1ED1n%2C%20g%u1EB7p%20ng%u01B0%u1EDDi%20l%u1EDBn%20v%u1EEBa%20l%F2ng.%22%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%7B%20name%3A%20%22%u0110%u01B0%u1EDDng%20Phong%20-%20Ng%E0y%20t%u1ED1t%22%2C%20days%3A%20%5B1%2C%207%2C%2013%2C%2019%2C%2025%5D%2C%20months%3A%20%5B1%2C%204%2C%207%2C%2010%5D%2C%20description%3A%20%22Ng%E0y%20%u0111%u1EB9p%2C%20xu%u1EA5t%20h%E0nh%20thu%u1EADn%20l%u1EE3i%2C%20g%u1EB7p%20%u0111%u01B0%u1EE3c%20qu%FD%20nh%E2n%20ph%F9%20tr%u1EE3%20v%E0%20c%u1EA7u%20t%E0i%20%u0111%u01B0%u1EE3c%20nh%u01B0%20%FD.%22%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%7B%20name%3A%20%22Kim%20D%u01B0%u01A1ng%20-%20Ng%E0y%20t%u1ED1t%22%2C%20days%3A%20%5B3%2C%209%2C%2015%2C%2021%2C%2027%5D%2C%20months%3A%20%5B1%2C%204%2C%207%2C%2010%5D%2C%20description%3A%20%22Xu%u1EA5t%20h%E0nh%20v%E0%20l%FAc%20v%u1EC1%20%u0111%u1EC1u%20t%u1ED1t%2C%20g%u1EB7p%20%u0111%u01B0%u1EE3c%20nhi%u1EC1u%20thu%u1EADn%20l%u1EE3i%2C%20nh%u1EADn%20%u0111%u01B0%u1EE3c%20s%u1EF1%20gi%FAp%20%u0111%u1EE1%20t%u1EEB%20ng%u01B0%u1EDDi%20kh%E1c%2C%20g%u1EB7p%20may%20m%u1EAFn%20trong%20c%E1c%20cu%u1ED9c%20tranh%20lu%u1EADn%2C%20c%u1EA7u%20t%E0i%20%u0111%u01B0%u1EE3c%20nh%u01B0%20%FD.%22%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%7B%20name%3A%20%22Thu%u1EA7n%20D%u01B0%u01A1ng%20-%20Ng%E0y%20t%u1ED1t%22%2C%20days%3A%20%5B4%2C%2010%2C%2016%2C%2022%2C%2028%5D%2C%20months%3A%20%5B1%2C%204%2C%207%2C%2010%5D%2C%20description%3A%20%22Xu%u1EA5t%20h%E0nh%20v%E0%20l%FAc%20v%u1EC1%20%u0111%u1EC1u%20t%u1ED1t%2C%20g%u1EB7p%20%u0111%u01B0%u1EE3c%20nhi%u1EC1u%20thu%u1EADn%20l%u1EE3i%2C%20nh%u1EADn%20%u0111%u01B0%u1EE3c%20s%u1EF1%20gi%FAp%20%u0111%u1EE1%20t%u1EEB%20ng%u01B0%u1EDDi%20kh%E1c%2C%20g%u1EB7p%20may%20m%u1EAFn%20trong%20c%E1c%20cu%u1ED9c%20tranh%20lu%u1EADn%2C%20c%u1EA7u%20t%E0i%20%u0111%u01B0%u1EE3c%20nh%u01B0%20%FD.%22%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%7B%20name%3A%20%22%u0110%u1EA1o%20T%u1EB7c%20-%20Ng%E0y%20x%u1EA5u%22%2C%20days%3A%20%5B5%2C%2011%2C%2017%2C%2023%2C%2029%5D%2C%20months%3A%20%5B1%2C%204%2C%207%2C%2010%5D%2C%20description%3A%20%22L%E0%20ng%E0y%20x%u1EA5u%2C%20n%u1EBFu%20xu%u1EA5t%20h%E0nh%20s%u1EBD%20b%u1ECB%20h%u1EA1i%2C%20d%u1EC5%20b%u1ECB%20m%u1EA5t%20c%u1EE7a.%22%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%7B%20name%3A%20%22Kim%20Th%u1ED5%20-%20Ng%E0y%20x%u1EA5u%22%2C%20days%3A%20%5B2%2C%208%2C%2014%2C%2020%2C%2026%5D%2C%20months%3A%20%5B1%2C%204%2C%207%2C%2010%5D%2C%20description%3A%20%22Xu%u1EA5t%20h%E0nh%20d%u1EC5%20b%u1ECB%20nh%u1EE1%20chuy%u1EBFn%20t%E0u%20xe%2C%20tr%EAn%20%u0111%u01B0%u1EDDng%20%u0111i%20d%u1EC5%20g%u1EB7p%20b%u1EA5t%20l%u1EE3i%2C%20b%u1ECB%20m%u1EA5t%20c%u1EE7a%2C%20kh%F3%20c%u1EA7u%20t%E0i.%22%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%7B%20name%3A%20%22Thi%EAn%20T%E0i%20-%20Ng%E0y%20t%u1ED1t%22%2C%20days%3A%20%5B4%2C%2012%2C%2020%2C%2028%5D%2C%20months%3A%20%5B2%2C%205%2C%208%2C%2011%5D%2C%20description%3A%20%22N%EAn%20xu%u1EA5t%20h%E0nh%2C%20c%u1EA7u%20t%E0i%20%u0111%u01B0%u1EE3c%20th%u1EAFng%20l%u1EE3i%20v%E0%20%u0111%u01B0%u1EE3c%20nhi%u1EC1u%20ng%u01B0%u1EDDi%20gi%FAp%20%u0111%u1EE1%2C%20c%F4ng%20vi%u1EC7c%20thu%u1EADn%20l%u1EE3i.%22%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%7B%20name%3A%20%22Thi%EAn%20D%u01B0%u01A1ng%20-%20Ng%E0y%20t%u1ED1t%22%2C%20days%3A%20%5B6%2C%2014%2C%2022%5D%2C%20months%3A%20%5B2%2C%205%2C%208%2C%2011%5D%2C%20description%3A%20%22Xu%u1EA5t%20h%E0nh%20t%u1ED1t%2C%20c%u1EA7u%20t%E0i%20%u0111%u01B0%u1EE3c%20t%E0i.%20H%u1ECFi%20v%u1EE3%20%u0111%u01B0%u1EE3c%20v%u1EE3.%20M%u1ECDi%20vi%u1EC7c%20%u0111%u1EC1u%20nh%u01B0%20%FD%20mu%u1ED1n.%22%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%7B%20name%3A%20%22Thi%EAn%20Th%u01B0%u01A1ng%20-%20Ng%E0y%20t%u1ED1t%22%2C%20days%3A%20%5B8%2C%2016%2C%2024%2C%2030%5D%2C%20months%3A%20%5B2%2C%205%2C%208%2C%2011%5D%2C%20description%3A%20%22Xu%u1EA5t%20h%E0nh%20%u0111%u1EC3%20g%u1EB7p%20c%u1EA5p%20tr%EAn%20th%EC%20tuy%u1EC7t%20v%u1EDDi%2C%20c%u1EA7u%20t%E0i%20th%EC%20%u0111%u01B0%u1EE3c%20t%E0i.%20M%u1ECDi%20vi%u1EC7c%20%u0111%u1EC1u%20thu%u1EADn%20l%u1EE3i.%22%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%7B%20name%3A%20%22Thi%EAn%20%u0110%u01B0%u1EDDng%20-%20Ng%E0y%20t%u1ED1t%22%2C%20days%3A%20%5B3%2C%2011%2C%2019%2C%2027%5D%2C%20months%3A%20%5B2%2C%205%2C%208%2C%2011%5D%2C%20description%3A%20%22%20Xu%u1EA5t%20h%E0nh%20t%u1ED1t%2C%20m%u1ECDi%20vi%u1EC7c%20%u0111%u01B0%u1EE3c%20nh%u01B0%20%FD%20v%E0%20g%u1EB7p%20%u0111%u01B0%u1EE3c%20qu%FD%20nh%E2n%20ph%F9%20tr%u1EE3%2C%20n%u1EBFu%20xu%u1EA5t%20h%E0nh%20bu%F4n%20b%E1n%20th%EC%20mua%20may%20v%E0%20b%E1n%20%u0111%u1EAFt.%22%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%7B%20name%3A%20%22Thi%EAn%20M%F4n%20-%20Ng%E0y%20t%u1ED1t%22%2C%20days%3A%20%5B2%2C%2010%2C%2018%2C%2026%5D%2C%20months%3A%20%5B2%2C%205%2C%208%2C%2011%5D%2C%20description%3A%20%22%20Xu%u1EA5t%20h%E0nh%20thu%u1EADn%20l%u1EE3i%2C%20c%u1EA7u%20%u0111%u01B0%u1EE3c%20%u01B0%u1EDBc%20th%u1EA5y%20v%E0%20m%u1ECDi%20vi%u1EC7c%20d%u1EC5%20th%E0nh%20c%F4ng.%22%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%7B%20name%3A%20%22Thi%EAn%20%u0110%u1EA1o%20-%20Ng%E0y%20x%u1EA5u%22%2C%20days%3A%20%5B1%2C%209%2C%2017%2C%2025%5D%2C%20months%3A%20%5B2%2C%205%2C%208%2C%2011%5D%2C%20description%3A%20%22%20N%u1EBFu%20l%E0%20xu%u1EA5t%20h%E0nh%20c%u1EA7u%20t%E0i%20th%EC%20n%EAn%20tr%E1nh%20v%EC%20d%F9%20%u0111%u01B0%u1EE3c%20th%EC%20c%u0169ng%20d%u1EC5%20b%u1ECB%20t%u1ED1n%20k%E9m%20ho%u1EB7c%20d%u1EC5%20b%u1ECB%20y%u1EBFu%20l%FD%20m%E0%20thua%20thi%u1EC7t.%22%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%7B%20name%3A%20%22Thi%EAn%20T%u1EB7c%20-%20Ng%E0y%20x%u1EA5u%22%2C%20days%3A%20%5B5%2C%2013%2C%2021%2C%2029%5D%2C%20months%3A%20%5B2%2C%205%2C%208%2C%2011%5D%2C%20description%3A%20%22Kh%F4ng%20t%u1ED1t%20%u0111%u1EC3%20xu%u1EA5t%20h%E0nh%2C%20m%u1ECDi%20chuy%u1EC7n%20g%u1EB7p%20ph%u1EA3i%20d%u1EC5%20r%u01A1i%20v%E0o%20t%ECnh%20hu%u1ED1ng%20x%u1EA5u%2C%20kh%F4ng%20th%EDch%20h%u1EE3p%20%u0111%u1EC3%20xu%u1EA5t%20h%E0nh%20c%u1EA7u%20t%E0i%22%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%7B%20name%3A%20%22Thi%EAn%20H%u1EA7u%20-%20Ng%E0y%20x%u1EA5u%22%2C%20days%3A%20%5B7%2C%2015%2C%2023%5D%2C%20months%3A%20%5B2%2C%205%2C%208%2C%2011%5D%2C%20description%3A%20%22N%u1EBFu%20xu%u1EA5t%20h%E0nh%20th%EC%20d%u1EC5%20r%u01A1i%20v%E0o%20t%ECnh%20tr%u1EA1ng%20c%E3i%20nhau%2C%20th%u1EADm%20ch%ED%20c%F3%20th%u1EC3%20x%u1EA3y%20ra%20tai%20n%u1EA1n%20%u0111%u1ED5%20m%E1u%22%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%7B%20name%3A%20%22B%u1EA1ch%20H%u1ED5%20%u0110%u1EA7u%20-%20Ng%E0y%20t%u1ED1t%22%2C%20days%3A%20%5B2%2C%2010%2C%2018%2C%2026%5D%2C%20months%3A%20%5B3%2C%206%2C%209%2C%2012%5D%2C%20description%3A%20%22Xu%u1EA5t%20h%E0nh%20c%u1EA7u%20t%E0i%20ho%u1EB7c%20%u0111i%20b%u1EA5t%20c%u1EE9%20%u0111%E2u%20%u0111%u1EC1u%20r%u1EA5t%20thu%u1EADn%20l%u1EE3i.%22%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%7B%20name%3A%20%22B%u1EA1ch%20H%u1ED5%20Ki%u1EBFp%20-%20Ng%E0y%20t%u1ED1t%22%2C%20days%3A%20%5B3%2C%2011%2C%2019%2C%2027%5D%2C%20months%3A%20%5B3%2C%206%2C%209%2C%2012%5D%2C%20description%3A%20%22Xu%u1EA5t%20h%E0nh%20%u0111i%20theo%20h%u01B0%u1EDBng%20B%u1EAFc%20ho%u1EB7c%20Nam%20%u0111%u1EC1u%20thu%u1EADn%20l%u1EE3i%2C%20c%F3%20th%u1EC3%20xu%u1EA5t%20h%E0nh%20c%u1EA7u%20t%E0i%20%u0111%u1EC3%20%u0111%u01B0%u1EE3c%20nh%u01B0%20%FD.%22%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%7B%20name%3A%20%22Thanh%20Long%20Ki%u1EBFp%20-%20Ng%E0y%20t%u1ED1t%22%2C%20days%3A%20%5B7%2C%2015%2C%2023%5D%2C%20months%3A%20%5B3%2C%206%2C%209%2C%2012%5D%2C%20description%3A%20%22Xu%u1EA5t%20h%E0nh%20%u0111i%203%20ph%u01B0%u01A1ng%204%20h%u01B0%u1EDBng%20%u0111%u1EC1u%20r%u1EA5t%20t%u1ED1t%2C%20m%u1ECDi%20s%u1EF1%20%u0111%u1EC1u%20su%F4n%20s%u1EBB%20nh%u01B0%20%FD.%22%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%7B%20name%3A%20%22Thanh%20Long%20%u0110%u1EA7u%20-%20Ng%E0y%20t%u1ED1t%22%2C%20days%3A%20%5B6%2C%2014%2C%2022%2C%2030%5D%2C%20months%3A%20%5B3%2C%206%2C%209%2C%2012%5D%2C%20description%3A%20%22N%u1EBFu%20xu%u1EA5t%20h%E0nh%20th%EC%20n%EAn%20%u0111i%20s%u1EDBm%20%u0111%u1EC3%20thu%u1EADn%20l%u1EE3i%20h%u01A1n%2C%20c%F3%20th%u1EC3%20%u0111i%20c%u1EA7u%20t%E0i%20v%EC%20m%u1ECDi%20vi%u1EC7c%20d%u1EC5%20th%E0nh%20c%F4ng.%22%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%7B%20name%3A%20%22Thanh%20Long%20T%FAc%20-%20Ng%E0y%20x%u1EA5u%22%2C%20days%3A%20%5B8%2C%2016%2C%2024%5D%2C%20months%3A%20%5B3%2C%206%2C%209%2C%2012%5D%2C%20description%3A%20%22Kh%F4ng%20n%EAn%20%u0111i%20xa%2C%20kh%F4ng%20n%EAn%20xu%u1EA5t%20h%E0nh%20v%EC%20kh%F4ng%20may%20m%u1EAFn%2C%20kh%F4ng%20nh%u1EADn%20%u0111%u01B0%u1EE3c%20t%E0i%20l%u1ED9c%20th%u1EADm%20ch%ED%20d%E2y%20d%u01B0a%20v%E0o%20ki%u1EC7n%20t%u1EE5ng%20c%F2n%20d%u1EC5%20b%u1ECB%20%u0111u%u1ED1i%20l%FD.%22%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%7B%20name%3A%20%22Chu%20T%u01B0%u1EDBc%20-%20Ng%E0y%20x%u1EA5u%22%2C%20days%3A%20%5B1%2C%209%2C%2017%2C%2025%5D%2C%20months%3A%20%5B3%2C%206%2C%209%2C%2012%5D%2C%20description%3A%20%22Xu%u1EA5t%20h%E0nh%20hay%20%u0111i%20c%u1EA7u%20t%E0i%20%u0111%u1EC1u%20x%u1EA5u%2C%20d%u1EC5%20b%u1ECB%20m%u1EA5t%20c%u1EE7a%20ho%u1EB7c%20b%u1ECB%20%u0111u%u1ED1i%20l%FD%20khi%20d%EDnh%20v%E0o%20ki%u1EC7n%20c%E1o.%22%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%7B%20name%3A%20%22B%u1EA1ch%20H%u1ED5%20T%FAc%20-%20Ng%E0y%20x%u1EA5u%22%2C%20days%3A%20%5B4%2C%2012%2C%2020%2C%2028%5D%2C%20months%3A%20%5B3%2C%206%2C%209%2C%2012%5D%2C%20description%3A%20%22M%u1ECDi%20chuy%u1EC7n%20%u0111%u1EC1u%20r%u1EA5t%20x%u1EA5u%2C%20kh%F4ng%20n%EAn%20%u0111i%20xa%2C%20kh%F4ng%20n%EAn%20ch%u1ECDn%20l%E0m%20ng%E0y%20xu%u1EA5t%20h%E0nh.%22%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%7B%20name%3A%20%22Huy%u1EC1n%20V%u0169%20-%20Ng%E0y%20x%u1EA5u%22%2C%20days%3A%20%5B5%2C%2013%2C%2021%2C%2029%5D%2C%20months%3A%20%5B3%2C%206%2C%209%2C%2012%5D%2C%20description%3A%20%22N%u1EBFu%20xu%u1EA5t%20h%E0nh%20ng%E0y%20n%E0y%20th%u01B0%u1EDDng%20d%u1EC5%20c%E3i%20nhau%2C%20kh%F4ng%20n%EAn%20%u0111i%20%u0111%E2u%2C%20d%u1EC5%20g%u1EB7p%20chuy%u1EC7n%20x%u1EA5u.%22%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20//%20Th%EAm%20d%u1EEF%20li%u1EC7u%20t%u01B0%u01A1ng%20t%u1EF1%20cho%20c%E1c%20ng%E0y%20kh%E1c%0A%20%20%20%20%20%20%20%20%5D%3B%0A%0A%20%20%20%20%20%20%20%20function%20lookupDate%28%29%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20const%20day%20%3D%20parseInt%28document.getElementById%28%22day%22%29.value%29%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20const%20month%20%3D%20parseInt%28document.getElementById%28%22month%22%29.value%29%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20const%20resultDiv%20%3D%20document.getElementById%28%22result%22%29%3B%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20const%20result%20%3D%20data.find%28item%20%3D%3E%20item.days.includes%28day%29%20%26%26%20item.months.includes%28month%29%29%3B%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20if%20%28result%29%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20resultDiv.innerHTML%20%3D%20%60%3Ch3%3EK%u1EBFt%20qu%u1EA3%3A%3C/h3%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cp%3E%3Cstrong%3ENg%E0y%3A%3C/strong%3E%20%24%7Bresult.name%7D%3C/p%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cp%3E%3Cstrong%3EDi%u1EC5n%20Gi%u1EA3i%3A%3C/strong%3E%20%24%7Bresult.description%7D%3C/p%3E%60%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D%20else%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20resultDiv.innerHTML%20%3D%20%22%3Cp%3EKh%F4ng%20t%ECm%20th%u1EA5y%20k%u1EBFt%20qu%u1EA3%20ph%F9%20h%u1EE3p%20cho%20ng%E0y%20v%E0%20th%E1ng%20%u0111%E3%20nh%u1EADp.%3C/p%3E%22%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20function%20lookupDate1%28%29%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20//%20L%u1EA5y%20gi%E1%20tr%u1ECB%20ng%E0y%20v%E0%20th%E1ng%20t%u1EEB%20input%0A%20%20%20%20%20%20%20%20%20%20%20%20let%20ngay%20%3D%20parseInt%28document.getElementById%28%27day%27%29.value%29%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20let%20thang%20%3D%20parseInt%28document.getElementById%28%27month%27%29.value%29%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%20%20%20%20if%20%28isNaN%28ngay%29%20%7C%7C%20isNaN%28thang%29%29%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20alert%28%22Vui%20l%F2ng%20nh%u1EADp%20c%u1EA3%20ng%E0y%20v%E0%20th%E1ng%21%22%29%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20return%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20//%20T%EDnh%20s%u1ED1%20d%u01B0%20theo%20c%F4ng%20th%u1EE9c%20%28Ng%E0y%20+%20Th%E1ng%20+%20H%u1EC7%20s%u1ED1%20Khung%20Gi%u1EDD%20-%202%29%20%25%206%0A%20%20%20%20%20%20%20%20%20%20%20%20function%20calculateSoDu%28ngay%2C%20thang%2C%20heSoKhungGio%29%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20return%20%28ngay%20+%20thang%20+%20heSoKhungGio%20-%202%29%20%25%206%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20//%20H%E0m%20x%E1c%20%u0111%u1ECBnh%20gi%u1EA3i%20th%EDch%20v%E0%20m%E0u%20s%u1EAFc%0A%20%20%20%20%20%20%20%20%20%20%20%20function%20setColorAndExplain%28soDu%2C%20elementId%2C%20explanationId%29%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20let%20cell%20%3D%20document.getElementById%28elementId%29%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20let%20explanationCell%20%3D%20document.getElementById%28explanationId%29%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20let%20explanation%20%3D%20%27%27%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20let%20colorClass%20%3D%20%27red%27%3B%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20switch%20%28soDu%29%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20case%201%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20explanation%20%3D%20%27%u0110%u1EA1i%20an%3A%20M%u1ECDi%20vi%u1EC7c%20%u0111%u1EC1u%20t%u1ED1t%2C%20c%u1EA7u%20t%E0i%20%u0111i%20h%u01B0%u1EDBng%20T%E2y%2C%20Nam.%20Nh%E0%20c%u1EEDa%20y%EAn%20l%E0nh%2C%20ng%u01B0%u1EDDi%20xu%u1EA5t%20h%E0nh%20%u0111%u1EC1u%20b%ECnh%20y%EAn.%27%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20colorClass%20%3D%20%27blue%27%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20break%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20case%202%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20explanation%20%3D%20%27T%u1ED1c%20h%u1EF7%3A%20Vui%20s%u1EAFp%20t%u1EDBi.%20C%u1EA7u%20t%E0i%20%u0111i%20h%u01B0%u1EDBng%20Nam%2C%20%u0111i%20vi%u1EC7c%20quan%20nhi%u1EC1u%20may%20m%u1EAFn.%20Ng%u01B0%u1EDDi%20xu%u1EA5t%20h%E0nh%20%u0111%u1EC1u%20b%ECnh%20y%EAn.%20Ch%u0103n%20nu%F4i%20%u0111%u1EC1u%20thu%u1EADn%20l%u1EE3i%2C%20ng%u01B0%u1EDDi%20%u0111i%20c%F3%20tin%20vui%20v%u1EC1.%27%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20colorClass%20%3D%20%27blue%27%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20break%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20case%203%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20explanation%20%3D%20%27L%u01B0u%20mi%u1EC1n%3A%20Nghi%u1EC7p%20kh%F3%20th%E0nh%2C%20c%u1EA7u%20t%E0i%20m%u1EDD%20m%u1ECBt%2C%20ki%u1EC7n%20c%E1o%20n%EAn%20ho%E3n%20l%u1EA1i.%20Ng%u01B0%u1EDDi%20%u0111i%20ch%u01B0a%20c%F3%20tin%20v%u1EC1.%20%u0110i%20h%u01B0%u1EDBng%20Nam%20t%ECm%20nhanh%20m%u1EDBi%20th%u1EA5y%2C%20n%EAn%20ph%F2ng%20ng%u1EEBa%20c%E3i%20c%u1ECD%2C%20mi%u1EC7ng%20ti%u1EBFng%20r%u1EA5t%20t%u1EA7m%20th%u01B0%u1EDDng.%20Vi%u1EC7c%20l%E0m%20ch%u1EADm%2C%20l%E2u%20la%20nh%u01B0ng%20vi%u1EC7c%20g%EC%20c%u0169ng%20ch%u1EAFc%20ch%u1EAFn.%27%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20break%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20case%204%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20explanation%20%3D%20%27X%EDch%20kh%u1EA9u%3A%20Hay%20c%E3i%20c%u1ECD%2C%20g%E2y%20chuy%u1EC7n%20%u0111%F3i%20k%E9m%2C%20ph%u1EA3i%20n%EAn%20%u0111%u1EC1%20ph%F2ng%2C%20ng%u01B0%u1EDDi%20%u0111i%20n%EAn%20ho%E3n%20l%u1EA1i%2C%20ph%F2ng%20ng%u01B0%u1EDDi%20nguy%u1EC1n%20r%u1EE7a%2C%20tr%E1nh%20l%E2y%20b%u1EC7nh.%27%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20break%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20case%205%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20explanation%20%3D%20%27Ti%u1EC3u%20c%E1c%3A%20R%u1EA5t%20t%u1ED1t%20l%E0nh%2C%20%u0111i%20th%u01B0%u1EDDng%20g%u1EB7p%20may%20m%u1EAFn.%20Bu%F4n%20b%E1n%20c%F3%20l%u1EDDi%2C%20ph%u1EE5%20n%u1EEF%20b%E1o%20tin%20vui%20m%u1EEBng%2C%20ng%u01B0%u1EDDi%20%u0111i%20s%u1EAFp%20v%u1EC1%20nh%E0%2C%20m%u1ECDi%20vi%u1EC7c%20%u0111%u1EC1u%20h%F2a%20h%u1EE3p%2C%20c%F3%20b%u1EC7nh%20c%u1EA7u%20t%E0i%20s%u1EBD%20kh%u1ECFi%2C%20ng%u01B0%u1EDDi%20nh%E0%20%u0111%u1EC1u%20m%u1EA1nh%20kh%u1ECFe.%27%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20colorClass%20%3D%20%27blue%27%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20break%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20case%206%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20explanation%20%3D%20%27Tuy%u1EC7t%20h%u1EF7%3A%20C%u1EA7u%20t%E0i%20kh%F4ng%20c%F3%20l%u1EE3i%20hay%20b%u1ECB%20tr%E1i%20%FD%2C%20ra%20%u0111i%20g%u1EB7p%20h%u1EA1n%2C%20vi%u1EC7c%20quan%20ph%u1EA3i%20%u0111%F2n%2C%20g%u1EB7p%20ma%20qu%u1EF7%20c%FAng%20l%u1EC5%20m%u1EDBi%20an.%27%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20break%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20case%200%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20explanation%20%3D%20%27Tuy%u1EC7t%20h%u1EF7%3A%20C%u1EA7u%20t%E0i%20kh%F4ng%20c%F3%20l%u1EE3i%20hay%20b%u1ECB%20tr%E1i%20%FD%2C%20ra%20%u0111i%20g%u1EB7p%20h%u1EA1n%2C%20vi%u1EC7c%20quan%20ph%u1EA3i%20%u0111%F2n%2C%20g%u1EB7p%20ma%20qu%u1EF7%20c%FAng%20l%u1EC5%20m%u1EDBi%20an.%27%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20break%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20explanationCell.innerHTML%20%3D%20explanation%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20explanationCell.className%20%3D%20colorClass%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20//%20T%EDnh%20v%E0%20c%u1EADp%20nh%u1EADt%20k%u1EBFt%20qu%u1EA3%20cho%20t%u1EEBng%20khung%20gi%u1EDD%0A%20%20%20%20%20%20%20%20%20%20%20%20setColorAndExplain%28calculateSoDu%28ngay%2C%20thang%2C%201%29%2C%20%27so-du-1%27%2C%20%27explanation-1%27%29%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20setColorAndExplain%28calculateSoDu%28ngay%2C%20thang%2C%202%29%2C%20%27so-du-2%27%2C%20%27explanation-2%27%29%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20setColorAndExplain%28calculateSoDu%28ngay%2C%20thang%2C%203%29%2C%20%27so-du-3%27%2C%20%27explanation-3%27%29%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20setColorAndExplain%28calculateSoDu%28ngay%2C%20thang%2C%204%29%2C%20%27so-du-4%27%2C%20%27explanation-4%27%29%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20setColorAndExplain%28calculateSoDu%28ngay%2C%20thang%2C%205%29%2C%20%27so-du-5%27%2C%20%27explanation-5%27%29%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20setColorAndExplain%28calculateSoDu%28ngay%2C%20thang%2C%206%29%2C%20%27so-du-6%27%2C%20%27explanation-6%27%29%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20function%20combinedLookup%28%29%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20lookupDate%28%29%3B%20%20//%20G%u1ECDi%20h%E0m%20lookupDate%20%u0111%u1EA7u%20ti%EAn%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20lookupDate1%28%29%3B%20//%20Sau%20%u0111%F3%20g%u1ECDi%20h%E0m%20lookupDate1%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%3C/script%3E%0A%3C/body%3E%0A%3C/html%3E"));
-//-->
-</script>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lịch Ngày Đẹp</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 10px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            padding: 30px 20px;
+            text-align: center;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.8);
+            flex-wrap: wrap;
+        }
+
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 12px 18px;
+            border-radius: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .control-group:hover {
+            transform: translateY(-2px);
+        }
+
+        .control-group label {
+            font-weight: 600;
+            color: #555;
+            font-size: 0.9rem;
+        }
+
+        select, input {
+            border: none;
+            background: transparent;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #333;
+            outline: none;
+            cursor: pointer;
+        }
+
+        input[type="number"] {
+            width: 80px;
+            text-align: center;
+        }
+
+        .btn-update {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3);
+        }
+
+        .btn-update:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(79, 172, 254, 0.4);
+        }
+
+        .calendar-container {
+            padding: 20px;
+        }
+
+        .current-month {
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #444;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .calendar-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px 5px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(102, 126, 234, 0.3);
+        }
+
+        .calendar-day {
+            background: white;
+            border-radius: 12px;
+            padding: 12px 8px;
+            text-align: center;
+            min-height: 90px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .calendar-day:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            border-color: #667eea;
+        }
+
+        .calendar-day.selected {
+            border-color: #e74c3c;
+            box-shadow: 0 8px 25px rgba(231, 76, 60, 0.3);
+        }
+
+        .calendar-day.empty {
+            background: transparent;
+            box-shadow: none;
+            cursor: default;
+        }
+
+        .calendar-day.empty:hover {
+            transform: none;
+        }
+
+        .solar-date {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .lunar-date {
+            font-size: 0.85rem;
+            color: #e74c3c;
+            font-weight: 600;
+            background: rgba(231, 76, 60, 0.1);
+            padding: 3px 8px;
+            border-radius: 12px;
+            line-height: 1.2;
+        }
+
+        .lunar-date.leap {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+            animation: pulse 2s infinite;
+        }
+
+        .good-day {
+            font-size: 1rem;
+            color: #f1c40f; /* Sao vàng */
+            margin-top: 5px;
+        }
+
+        .bad-day {
+            font-size: 1rem;
+            color: #000000; /* Sao đen */
+            margin-top: 5px;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .today {
+            background: linear-gradient(135deg, #ffeaa7, #fdcb6e) !important;
+            border-color: #e17055 !important;
+            box-shadow: 0 8px 25px rgba(225, 112, 85, 0.3) !important;
+        }
+
+        .today .solar-date {
+            color: #d63031;
+        }
+
+        .weekend {
+            background: linear-gradient(135deg, #fab1a0, #e17055);
+        }
+
+        .weekend .solar-date {
+            color: white;
+        }
+
+        .weekend .lunar-date {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        /* Day info styles */
+        .day-info-container {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            margin: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .day-info-container h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .day-info-container .day-info {
+            font-size: 1rem;
+            color: #555;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .day-info-container .hours-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .day-info-container .hours-table th,
+        .day-info-container .hours-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        .day-info-container .hours-table th {
+            background: #f4f4f4;
+            font-weight: 600;
+        }
+
+        .day-info-container .hours-table .good-hour {
+            background: rgba(52, 152, 219, 0.1);
+            color: #3498db;
+        }
+
+        .day-info-container .hours-table .bad-hour {
+            background: rgba(231, 76, 60, 0.1);
+            color: #e74c3c;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .controls {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .control-group {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .calendar {
+                gap: 4px;
+            }
+
+            .calendar-day {
+                min-height: 70px;
+                padding: 8px 4px;
+            }
+
+            .solar-date {
+                font-size: 1.2rem;
+            }
+
+            .lunar-date {
+                font-size: 0.75rem;
+                padding: 2px 6px;
+            }
+
+            .good-day, .bad-day {
+                font-size: 0.8rem;
+            }
+
+            .day-info-container {
+                margin: 10px;
+                padding: 15px;
+            }
+
+            .day-info-container h3 {
+                font-size: 1.3rem;
+            }
+
+            .day-info-container .day-info {
+                font-size: 0.9rem;
+            }
+
+            .day-info-container .hours-table th,
+            .day-info-container .hours-table td {
+                font-size: 0.8rem;
+                padding: 6px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 5px;
+            }
+
+            .header {
+                padding: 20px 15px;
+            }
+
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .calendar-day {
+                min-height: 60px;
+                padding: 6px 2px;
+            }
+
+            .solar-date {
+                font-size: 1rem;
+            }
+
+            .lunar-date {
+                font-size: 0.7rem;
+            }
+
+            .good-day, .bad-day {
+                font-size: 0.7rem;
+            }
+
+            .day-info-container {
+                margin: 5px;
+                padding: 10px;
+            }
+
+            .day-info-container h3 {
+                font-size: 1.2rem;
+            }
+
+            .day-info-container .day-info {
+                font-size: 0.85rem;
+            }
+
+            .day-info-container .hours-table th,
+            .day-info-container .hours-table td {
+                font-size: 0.75rem;
+                padding: 5px;
+            }
+        }
+
+        /* Animation cho loading */
+        .calendar-day {
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Stagger animation delay */
+        .calendar-day:nth-child(8) { animation-delay: 0.1s; }
+        .calendar-day:nth-child(9) { animation-delay: 0.2s; }
+        .calendar-day:nth-child(10) { animation-delay: 0.3s; }
+        .calendar-day:nth-child(11) { animation-delay: 0.4s; }
+        .calendar-day:nth-child(12) { animation-delay: 0.5s; }
+        .calendar-day:nth-child(13) { animation-delay: 0.6s; }
+        .calendar-day:nth-child(14) { animation-delay: 0.7s; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌙 Lịch Ngày Đẹp</h1>
+            <p>⭐ Ngày đẹp ★ Ngày xấu. Ấn vào ngày để xem diễn giải phía dưới lịch</p>
+        </div>
+        
+        <div class="controls">
+            <div class="control-group">
+                <label>📅 Tháng:</label>
+                <select id="month">
+                    <option value="1">Tháng 1</option>
+                    <option value="2">Tháng 2</option>
+                    <option value="3">Tháng 3</option>
+                    <option value="4">Tháng 4</option>
+                    <option value="5">Tháng 5</option>
+                    <option value="6">Tháng 6</option>
+                    <option value="7">Tháng 7</option>
+                    <option value="8">Tháng 8</option>
+                    <option value="9">Tháng 9</option>
+                    <option value="10">Tháng 10</option>
+                    <option value="11">Tháng 11</option>
+                    <option value="12">Tháng 12</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <label>🗓️ Năm:</label>
+                <input type="number" id="year" value="" min="1900" max="2100">
+            </div>
+            
+            <button class="btn-update" onclick="renderCalendar()">
+                ✨ Cập nhật lịch
+            </button>
+        </div>
+
+        <div class="calendar-container">
+            <div class="current-month" id="currentMonth"></div>
+            <div class="calendar" id="calendar"></div>
+            <div class="day-info-container" id="dayInfo">
+                <h3>Chọn một ngày</h3>
+                <p class="day-info">Vui lòng chọn một ngày trên lịch để xem thông tin ngày tốt/xấu và giờ tốt/xấu.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Danh sách ngày tốt/xấu
+        const goodBadDays = [
+            { name: "Bảo Thương - Ngày tốt", days: [6, 12, 18, 24, 30], months: [1, 4, 7, 10], description: "Ngày đẹp, xuất hành thuận lợi, làm được việc như mong muốn, gặp người lớn vừa lòng." },
+            { name: "Đường Phong - Ngày tốt", days: [1, 7, 13, 19, 25], months: [1, 4, 7, 10], description: "Ngày đẹp, xuất hành thuận lợi, gặp được quý nhân phù trợ và cầu tài được như ý." },
+            { name: "Kim Dương - Ngày tốt", days: [3, 9, 15, 21, 27], months: [1, 4, 7, 10], description: "Xuất hành và lúc về đều tốt, gặp được nhiều thuận lợi, nhận được sự giúp đỡ từ người khác, gặp may mắn trong các cuộc tranh luận, cầu tài được như ý." },
+            { name: "Thuần Dương - Ngày tốt", days: [4, 10, 16, 22, 28], months: [1, 4, 7, 10], description: "Xuất hành và lúc về đều tốt, gặp được nhiều thuận lợi, nhận được sự giúp đỡ từ người khác, gặp may mắn trong các cuộc tranh luận, cầu tài được như ý." },
+            { name: "Đạo Tặc - Ngày xấu", days: [5, 11, 17, 23, 29], months: [1, 4, 7, 10], description: "Là ngày xấu, nếu xuất hành sẽ bị hại, dễ bị mất của." },
+            { name: "Kim Thổ - Ngày xấu", days: [2, 8, 14, 20, 26], months: [1, 4, 7, 10], description: "Xuất hành dễ bị nhỡ chuyến tàu xe, trên đường đi dễ gặp bất lợi, bị mất của, khó cầu tài." },
+            { name: "Thiên Tài - Ngày tốt", days: [4, 12, 20, 28], months: [2, 5, 8, 11], description: "Nên xuất hành, cầu tài được thắng lợi và được nhiều người giúp đỡ, công việc thuận lợi." },
+            { name: "Thiên Dương - Ngày tốt", days: [6, 14, 22], months: [2, 5, 8, 11], description: "Xuất hành tốt, cầu tài được tài. Hỏi vợ được vợ. Mọi việc đều như ý muốn." },
+            { name: "Thiên Thương - Ngày tốt", days: [8, 16, 24, 30], months: [2, 5, 8, 11], description: "Xuất hành để gặp cấp trên thì tuyệt vời, cầu tài thì được tài. Mọi việc đều thuận lợi." },
+            { name: "Thiên Đường - Ngày tốt", days: [3, 11, 19, 27], months: [2, 5, 8, 11], description: "Xuất hành tốt, mọi việc được như ý và gặp được quý nhân phù trợ, nếu xuất hành buôn bán thì mua may và bán đắt." },
+            { name: "Thiên Môn - Ngày tốt", days: [2, 10, 18, 26], months: [2, 5, 8, 11], description: "Xuất hành thuận lợi, cầu được ước thấy và mọi việc dễ thành công." },
+            { name: "Thiên Đạo - Ngày xấu", days: [1, 9, 17, 25], months: [2, 5, 8, 11], description: "Nếu là xuất hành cầu tài thì nên tránh vì dù được thì cũng dễ bị tốn kém hoặc dễ bị yếu lý mà thua thiệt." },
+            { name: "Thiên Tặc - Ngày xấu", days: [5, 13, 21, 29], months: [2, 5, 8, 11], description: "Không tốt để xuất hành, mọi chuyện gặp phải dễ rơi vào tình huống xấu, không thích hợp để xuất hành cầu tài." },
+            { name: "Thiên Hầu - Ngày xấu", days: [7, 15, 23], months: [2, 5, 8, 11], description: "Nếu xuất hành thì dễ rơi vào tình trạng cãi nhau, thậm chí có thể xảy ra tai nạn đổ máu." },
+            { name: "Bạch Hổ Đầu - Ngày tốt", days: [2, 10, 18, 26], months: [3, 6, 9, 12], description: "Xuất hành cầu tài hoặc đi bất cứ đâu đều rất thuận lợi." },
+            { name: "Bạch Hổ Kiếp - Ngày tốt", days: [3, 11, 19, 27], months: [3, 6, 9, 12], description: "Xuất hành đi theo hướng Bắc hoặc Nam đều thuận lợi, có thể xuất hành cầu tài để được như ý." },
+            { name: "Thanh Long Kiếp - Ngày tốt", days: [7, 15, 23], months: [3, 6, 9, 12], description: "Xuất hành đi 3 phương 4 hướng đều rất tốt, mọi sự đều suôn sẻ như ý." },
+            { name: "Thanh Long Đầu - Ngày tốt", days: [6, 14, 22, 30], months: [3, 6, 9, 12], description: "Nếu xuất hành thì nên đi sớm để thuận lợi hơn, có thể đi cầu tài vì mọi việc dễ thành công." },
+            { name: "Thanh Long Túc - Ngày xấu", days: [8, 16, 24], months: [3, 6, 9, 12], description: "Không nên đi xa, không nên xuất hành vì không may mắn, không nhận được tài lộc thậm chí dây dưa vào kiện tụng còn dễ bị đuối lý." },
+            { name: "Chu Tước - Ngày xấu", days: [1, 9, 17, 25], months: [3, 6, 9, 12], description: "Xuất hành hay đi cầu tài đều xấu, dễ bị mất của hoặc bị đuối lý khi dính vào kiện cáo." },
+            { name: "Bạch Hổ Túc - Ngày xấu", days: [4, 12, 20, 28], months: [3, 6, 9, 12], description: "Mọi chuyện đều rất xấu, không nên đi xa, không nên chọn làm ngày xuất hành." },
+            { name: "Huyền Vũ - Ngày xấu", days: [5, 13, 21, 29], months: [3, 6, 9, 12], description: "Nếu xuất hành ngày này thường dễ cãi nhau, không nên đi đâu, dễ gặp chuyện xấu." }
+        ];
+
+        // Hàm kiểm tra ngày tốt/xấu
+        function checkGoodBadDay(lunarDay, lunarMonth, lunarLeap) {
+            for (let item of goodBadDays) {
+                if (item.months.includes(lunarMonth) && item.days.includes(lunarDay)) {
+                    return {
+                        name: item.name,
+                        description: item.description,
+                        isGood: item.name.includes("Ngày tốt")
+                    };
+                }
+            }
+            return null;
+        }
+
+        // Hàm tính số dư giờ tốt/xấu
+        function calculateSoDu(ngay, thang, khac) {
+            return (ngay + thang + khac - 2) % 6;
+        }
+
+        // Hàm xác định trạng thái và diễn giải giờ
+        function getHourInfo(soDu) {
+            let name = '';
+            let explanation = '';
+            let isGood = false;
+
+            switch (soDu) {
+                case 1:
+                    name = 'Đại an';
+                    explanation = 'Mọi việc đều tốt, cầu tài đi hướng Tây, Nam. Nhà cửa yên lành, người xuất hành đều bình yên.';
+                    isGood = true;
+                    break;
+                case 2:
+                    name = 'Tốc hỷ';
+                    explanation = 'Vui sắp tới. Cầu tài đi hướng Nam, đi việc quan nhiều may mắn. Người xuất hành đều bình yên. Chăn nuôi đều thuận lợi, người đi có tin vui về.';
+                    isGood = true;
+                    break;
+                case 3:
+                    name = 'Lưu miền';
+                    explanation = 'Nghiệp khó thành, cầu tài mờ mịt, kiện cáo nên hoãn lại. Người đi chưa có tin về. Đi hướng Nam tìm nhanh mới thấy, nên phòng ngừa cãi cọ, miệng tiếng rất tầm thường. Việc làm chậm, lâu la nhưng việc gì cũng chắc chắn.';
+                    isGood = false;
+                    break;
+                case 4:
+                    name = 'Xích khẩu';
+                    explanation = 'Hay cãi cọ, gây chuyện đói kém, phải nên đề phòng, người đi nên hoãn lại, phòng người nguyền rủa, tránh lây bệnh.';
+                    isGood = false;
+                    break;
+                case 5:
+                    name = 'Tiểu cát';
+                    explanation = 'Rất tốt lành, đi thường gặp may mắn. Buôn bán có lời, phụ nữ báo tin vui mừng, người đi sắp về nhà, mọi việc đều hòa hợp, có bệnh cầu tài sẽ khỏi, người nhà đều mạnh khỏe.';
+                    isGood = true;
+                    break;
+                case 0:
+                case 6:
+                    name = 'Tuyệt hỷ';
+                    explanation = 'Cầu tài không có lợi hay bị trái ý, ra đi gặp hạn, việc quan phải đòn, gặp ma quỷ cúng lễ mới an.';
+                    isGood = false;
+                    break;
+            }
+            return { name, explanation, isGood };
+        }
+
+        // Thuật toán của Hồ Ngọc Đức
+        const TIME_ZONE = 7.0;
+
+        function jdFromDate(dd, mm, yy) {
+            let a = Math.floor((14 - mm) / 12);
+            let y = yy + 4800 - a;
+            let m = mm + 12 * a - 3;
+            let jd = dd + Math.floor((153 * m + 2) / 5) + 365 * y + Math.floor(y / 4) - Math.floor(y / 100) + Math.floor(y / 400) - 32045;
+            if (jd < 2299161) {
+                jd = dd + Math.floor((153 * m + 2) / 5) + 365 * y + Math.floor(y / 4) - 32083;
+            }
+            return jd;
+        }
+
+        function getNewMoonDay(k, timeZone = TIME_ZONE) {
+            let T = k / 1236.85;
+            let T2 = T * T;
+            let T3 = T2 * T;
+            let dr = Math.PI / 180;
+            let Jd1 = 2415020.75933 + 29.53058868 * k + 0.0001178 * T2 - 0.000000155 * T3;
+            Jd1 = Jd1 + 0.00033 * Math.sin((166.56 + 132.87 * T - 0.009173 * T2) * dr);
+            let M = 359.2242 + 29.10535608 * k - 0.0000333 * T2 - 0.00000347 * T3;
+            let Mpr = 306.0253 + 385.81691806 * k + 0.0107306 * T2 + 0.00001236 * T3;
+            let F = 21.2964 + 390.67050646 * k - 0.0016528 * T2 - 0.00000239 * T3;
+            let C1 = (0.1734 - 0.000393 * T) * Math.sin(M * dr) + 0.0021 * Math.sin(2 * dr * M);
+            C1 = C1 - 0.4068 * Math.sin(Mpr * dr) + 0.0161 * Math.sin(dr * 2 * Mpr);
+            C1 = C1 - 0.0004 * Math.sin(dr * 3 * Mpr);
+            C1 = C1 + 0.0104 * Math.sin(dr * 2 * F) - 0.0051 * Math.sin(dr * (M + Mpr));
+            C1 = C1 - 0.0074 * Math.sin(dr * (M - Mpr)) + 0.0004 * Math.sin(dr * (2 * F + M));
+            C1 = C1 - 0.0004 * Math.sin(dr * (2 * F - M)) - 0.0006 * Math.sin(dr * (2 * F + Mpr));
+            C1 = C1 + 0.0010 * Math.sin(dr * (2 * F - Mpr)) + 0.0005 * Math.sin(dr * (2 * Mpr + M));
+            let deltat;
+            if (T < -11) {
+                deltat = 0.001 + 0.000839 * T + 0.0002261 * T2 - 0.00000845 * T3 - 0.000000081 * T * T3;
+            } else {
+                deltat = -0.000278 + 0.000265 * T + 0.000262 * T2;
+            }
+            let JdNew = Jd1 + C1 - deltat;
+            return Math.floor(JdNew + 0.5 + timeZone / 24);
+        }
+
+        function getSunLongitude(jdn, timeZone = TIME_ZONE) {
+            let T = (jdn - 2451545.5 - timeZone / 24) / 36525;
+            let T2 = T * T;
+            let dr = Math.PI / 180;
+            let M = 357.52910 + 35999.05030 * T - 0.0001559 * T2 - 0.00000048 * T * T2;
+            let L0 = 280.46645 + 36000.76983 * T + 0.0003032 * T2;
+            let DL = (1.914600 - 0.004817 * T - 0.000014 * T2) * Math.sin(dr * M);
+            DL = DL + (0.019993 - 0.000101 * T) * Math.sin(dr * 2 * M) + 0.000290 * Math.sin(dr * 3 * M);
+            let L = L0 + DL;
+            L = L * dr;
+            L = L - Math.PI * 2 * Math.floor(L / (Math.PI * 2));
+            return Math.floor(L / Math.PI * 6);
+        }
+
+        function getLunarMonth11(yy, timeZone = TIME_ZONE) {
+            let off = jdFromDate(31, 12, yy) - 2415021;
+            let k = Math.floor(off / 29.530588853);
+            let nm = getNewMoonDay(k, timeZone);
+            let sunLong = getSunLongitude(nm, timeZone);
+            if (sunLong >= 9) {
+                nm = getNewMoonDay(k - 1, timeZone);
+            }
+            return nm;
+        }
+
+        function getLeapMonthOffset(a11, timeZone = TIME_ZONE) {
+            let k = Math.floor((a11 - 2415021.076998695) / 29.530588853 + 0.5);
+            let last = 0;
+            let i = 1;
+            let arc = getSunLongitude(getNewMoonDay(k + i, timeZone), timeZone);
+            do {
+                last = arc;
+                i++;
+                arc = getSunLongitude(getNewMoonDay(k + i, timeZone), timeZone);
+            } while (arc != last && i < 14);
+            return i - 1;
+        }
+
+        function convertSolar2Lunar(dd, mm, yy, timeZone = TIME_ZONE) {
+            let jd = jdFromDate(dd, mm, yy);
+            let k = Math.floor((jd - 2415021.076998695) / 29.530588853);
+            let monthStart = getNewMoonDay(k + 1, timeZone);
+            if (monthStart > jd) {
+                monthStart = getNewMoonDay(k, timeZone);
+            }
+            let a11 = getLunarMonth11(yy, timeZone);
+            let b11 = a11;
+            if (a11 >= monthStart) {
+                yy--;
+                a11 = getLunarMonth11(yy, timeZone);
+            } else {
+                b11 = getLunarMonth11(yy + 1, timeZone);
+            }
+            let lunarDay = jd - monthStart + 1;
+            let diff = Math.floor((monthStart - a11) / 29);
+            let lunarLeap = 0;
+            let lunarMonth = diff + 11;
+            if (b11 - a11 > 365) {
+                let leapMonthDiff = getLeapMonthOffset(a11, timeZone);
+                if (diff >= leapMonthDiff) {
+                    lunarMonth = diff + 10;
+                    if (diff == leapMonthDiff) {
+                        lunarLeap = 1;
+                    }
+                }
+            }
+            if (lunarMonth > 12) {
+                lunarMonth = lunarMonth - 12;
+            }
+            if (lunarMonth >= 11 && diff < 4) {
+                yy--;
+            }
+            return { day: lunarDay, month: lunarMonth, year: yy, leap: lunarLeap };
+        }
+
+        // Hàm hiển thị thông tin ngày và giờ dưới lịch
+        function showDayInfo(solarDate, lunarDate, title, dayDescription, lunarDay, lunarMonth) {
+            const dayInfoContainer = document.getElementById('dayInfo');
+            
+            dayInfoContainer.innerHTML = `
+                <h3>${solarDate} (Âm lịch: ${lunarDate})</h3>
+                <p class="day-info">${title ? `${title}: ${dayDescription}` : dayDescription}</p>
+                <table class="hours-table">
+                    <thead>
+                        <tr>
+                            <th>Giờ</th>
+                            <th>Trạng thái</th>
+                            <th>Diễn giải</th>
+                        </tr>
+                    </thead>
+                    <tbody id="hoursTableBody"></tbody>
+                </table>
+            `;
+
+            const hoursTableBody = document.getElementById('hoursTableBody');
+            const hours = [
+                { names: ['Tý', 'Ngọ'], times: ['23h00–01h00', '11h00–13h00'], khac: 1 },
+                { names: ['Sửu', 'Mùi'], times: ['01h00–03h00', '13h00–15h00'], khac: 2 },
+                { names: ['Dần', 'Thân'], times: ['03h00–05h00', '15h00–17h00'], khac: 3 },
+                { names: ['Mão', 'Dậu'], times: ['05h00–07h00', '17h00–19h00'], khac: 4 },
+                { names: ['Thìn', 'Tuất'], times: ['07h00–09h00', '19h00–21h00'], khac: 5 },
+                { names: ['Tỵ', 'Hợi'], times: ['09h00–11h00', '21h00–23h00'], khac: 6 }
+            ];
+
+            hours.forEach(hour => {
+                const soDu = calculateSoDu(lunarDay, lunarMonth, hour.khac);
+                const hourInfo = getHourInfo(soDu);
+                const row = document.createElement('tr');
+                row.className = hourInfo.isGood ? 'good-hour' : 'bad-hour';
+                row.innerHTML = `
+                    <td>${hour.names[0]} (${hour.times[0]}), ${hour.names[1]} (${hour.times[1]})</td>
+                    <td>${hourInfo.name}</td>
+                    <td>${hourInfo.explanation}</td>
+                `;
+                hoursTableBody.appendChild(row);
+            });
+        }
+
+        function renderCalendar() {
+            const month = parseInt(document.getElementById('month').value);
+            const year = parseInt(document.getElementById('year').value);
+            const calendar = document.getElementById('calendar');
+            const currentMonth = document.getElementById('currentMonth');
+            
+            calendar.innerHTML = '';
+            
+            // Update current month display
+            const monthNames = [
+                '', 'Tháng Một', 'Tháng Hai', 'Tháng Ba', 'Tháng Tư', 'Tháng Năm', 'Tháng Sáu',
+                'Tháng Bảy', 'Tháng Tám', 'Tháng Chín', 'Tháng Mười', 'Tháng Mười Một', 'Tháng Mười Hai'
+            ];
+            currentMonth.textContent = `${monthNames[month]} năm ${year}`;
+
+            // Create calendar headers
+            const daysOfWeek = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
+            daysOfWeek.forEach(day => {
+                const div = document.createElement('div');
+                div.className = 'calendar-header';
+                div.textContent = day;
+                calendar.appendChild(div);
+            });
+
+            // Calculate calendar data
+            const daysInMonth = new Date(year, month, 0).getDate();
+            const firstDay = new Date(year, month - 1, 1).getDay();
+            const today = new Date();
+            
+            // Add empty cells for days before the first day
+            for (let i = 0; i < firstDay; i++) {
+                const div = document.createElement('div');
+                div.className = 'calendar-day empty';
+                calendar.appendChild(div);
+            }
+
+            // Add days of the month
+            let selectedDayElement = null;
+
+            for (let day = 1; day <= daysInMonth; day++) {
+                const div = document.createElement('div');
+                const dayOfWeek = new Date(year, month - 1, day).getDay();
+                
+                div.className = 'calendar-day';
+                
+                // Add weekend class
+                if (dayOfWeek === 0 || dayOfWeek === 6) {
+                    div.classList.add('weekend');
+                }
+                
+                // Add today class
+                if (year === today.getFullYear() && month === today.getMonth() + 1 && day === today.getDate()) {
+                    div.classList.add('today');
+                }
+                
+                const lunarResult = convertSolar2Lunar(day, month, year);
+                const lunarText = lunarResult.leap ? 
+                    `${lunarResult.day}/${lunarResult.month} Nhuận` : 
+                    `${lunarResult.day}/${lunarResult.month}`;
+                
+                // Kiểm tra ngày tốt/xấu
+                const goodBadInfo = checkGoodBadDay(lunarResult.day, lunarResult.month, lunarResult.leap);
+                let starHtml = '';
+                let title = '';
+                let description = 'Ngày này không có thông tin đặc biệt về tốt/xấu.';
+                
+                if (goodBadInfo) {
+                    starHtml = goodBadInfo.isGood ? 
+                        '<span class="good-day">⭐</span>' : 
+                        '<span class="bad-day">★</span>';
+                    title = goodBadInfo.name;
+                    description = goodBadInfo.description;
+                }
+
+                div.innerHTML = `
+                    <div class="solar-date">${day}</div>
+                    <div class="lunar-date ${lunarResult.leap ? 'leap' : ''}">${lunarText}</div>
+                    ${starHtml}
+                `;
+                
+                // Thêm sự kiện nhấp chuột để hiển thị thông tin
+                div.onclick = () => {
+                    // Xóa lớp selected khỏi ngày đã chọn trước đó
+                    if (selectedDayElement) {
+                        selectedDayElement.classList.remove('selected');
+                    }
+                    // Thêm lớp selected cho ngày hiện tại
+                    div.classList.add('selected');
+                    selectedDayElement = div;
+                    showDayInfo(
+                        `${day}/${month}/${year}`, 
+                        lunarText, 
+                        title, 
+                        description, 
+                        lunarResult.day, 
+                        lunarResult.month
+                    );
+                };
+                
+                // Add stagger animation delay
+                div.style.animationDelay = `${(day - 1) * 0.02}s`;
+                
+                calendar.appendChild(div);
+            }
+        }
+
+        // Initialize calendar with current date
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date();
+            const currentMonth = today.getMonth() + 1;
+            const currentYear = today.getFullYear();
+            
+            document.getElementById('month').value = currentMonth;
+            document.getElementById('year').value = currentYear;
+            
+            renderCalendar();
+        });
+
+        // Add keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            const monthSelect = document.getElementById('month');
+            const yearInput = document.getElementById('year');
+            
+            if (e.key === 'ArrowLeft') {
+                let month = parseInt(monthSelect.value);
+                let year = parseInt(yearInput.value);
+                
+                if (month === 1) {
+                    month = 12;
+                    year--;
+                } else {
+                    month--;
+                }
+                
+                monthSelect.value = month;
+                yearInput.value = year;
+                renderCalendar();
+            } else if (e.key === 'ArrowRight') {
+                let month = parseInt(monthSelect.value);
+                let year = parseInt(yearInput.value);
+                
+                if (month === 12) {
+                    month = 1;
+                    year++;
+                } else {
+                    month++;
+                }
+                
+                monthSelect.value = month;
+                yearInput.value = year;
+                renderCalendar();
+            }
+        });
+    </script>
+</body>
+</html>
