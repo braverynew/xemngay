@@ -108,6 +108,7 @@
 
         .calendar-container {
             padding: 20px;
+            overflow-x: auto; /* Cho phép cuộn ngang trên mobile nếu cần */
         }
 
         .current-month {
@@ -121,29 +122,31 @@
 
         .calendar {
             display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 8px;
+            grid-template-columns: repeat(7, minmax(50px, 1fr)); /* Đảm bảo mỗi cột có min-width */
+            gap: 6px; /* Giảm gap cho mobile */
             max-width: 100%;
             margin: 0 auto;
+            min-width: 350px; /* Đảm bảo đủ chỗ cho 7 cột */
         }
 
         .calendar-header {
             background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
-            padding: 15px 5px;
+            padding: 10px 2px; /* Giảm padding cho mobile */
             text-align: center;
             font-weight: 700;
-            font-size: 1.1rem;
-            border-radius: 12px;
+            font-size: 0.9rem; /* Giảm font cho mobile */
+            border-radius: 8px;
             box-shadow: 0 4px 10px rgba(102, 126, 234, 0.3);
+            min-width: 50px; /* Đảm bảo cột không bị nén quá */
         }
 
         .calendar-day {
             background: white;
-            border-radius: 12px;
-            padding: 12px 8px;
+            border-radius: 8px;
+            padding: 8px 4px; /* Giảm padding cho mobile */
             text-align: center;
-            min-height: 90px;
+            min-height: 80px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -154,6 +157,7 @@
             position: relative;
             overflow: hidden;
             cursor: pointer;
+            min-width: 50px; /* Đảm bảo ô không bị nén quá */
         }
 
         .calendar-day:hover {
@@ -178,19 +182,19 @@
         }
 
         .solar-date {
-            font-size: 1.4rem;
+            font-size: 1.2rem; /* Giảm font cho mobile */
             font-weight: 700;
             color: #333;
-            margin-bottom: 5px;
+            margin-bottom: 3px;
         }
 
         .lunar-date {
-            font-size: 0.85rem;
+            font-size: 0.75rem; /* Giảm font cho mobile */
             color: #e74c3c;
             font-weight: 600;
             background: rgba(231, 76, 60, 0.1);
-            padding: 3px 8px;
-            border-radius: 12px;
+            padding: 2px 6px;
+            border-radius: 8px;
             line-height: 1.2;
         }
 
@@ -201,15 +205,15 @@
         }
 
         .good-day {
-            font-size: 1rem;
+            font-size: 0.9rem;
             color: #f1c40f; /* Sao vàng */
-            margin-top: 5px;
+            margin-top: 3px;
         }
 
         .bad-day {
-            font-size: 1rem;
+            font-size: 0.9rem;
             color: #000000; /* Sao đen */
-            margin-top: 5px;
+            margin-top: 3px;
         }
 
         @keyframes pulse {
@@ -310,20 +314,27 @@
 
             .calendar {
                 gap: 4px;
+                min-width: 320px; /* Đảm bảo đủ chỗ cho 7 cột */
+            }
+
+            .calendar-header {
+                font-size: 0.8rem;
+                padding: 8px 2px;
             }
 
             .calendar-day {
                 min-height: 70px;
-                padding: 8px 4px;
+                padding: 6px 2px;
+                min-width: 45px;
             }
 
             .solar-date {
-                font-size: 1.2rem;
+                font-size: 1.1rem;
             }
 
             .lunar-date {
-                font-size: 0.75rem;
-                padding: 2px 6px;
+                font-size: 0.7rem;
+                padding: 2px 4px;
             }
 
             .good-day, .bad-day {
@@ -363,9 +374,20 @@
                 font-size: 1.8rem;
             }
 
+            .calendar {
+                gap: 3px;
+                min-width: 300px; /* Đảm bảo đủ chỗ cho 7 cột */
+            }
+
+            .calendar-header {
+                font-size: 0.7rem;
+                padding: 6px 1px;
+            }
+
             .calendar-day {
                 min-height: 60px;
-                padding: 6px 2px;
+                padding: 4px 1px;
+                min-width: 40px;
             }
 
             .solar-date {
@@ -373,7 +395,8 @@
             }
 
             .lunar-date {
-                font-size: 0.7rem;
+                font-size: 0.65rem;
+                padding: 1px 3px;
             }
 
             .good-day, .bad-day {
@@ -428,7 +451,6 @@
     <div class="container">
         <div class="header">
             <h1>🌙 Lịch Ngày Đẹp</h1>
-            <p>⭐ Ngày đẹp ★ Ngày xấu. Ấn vào ngày để xem diễn giải phía dưới lịch</p>
         </div>
         
         <div class="controls">
