@@ -89,26 +89,9 @@
             text-align: center;
         }
 
-        .btn-update {
-            background: linear-gradient(135deg, #4facfe, #00f2fe);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 25px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3);
-        }
-
-        .btn-update:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(79, 172, 254, 0.4);
-        }
-
         .calendar-container {
             padding: 20px;
-            overflow-x: auto; /* Cho phép cuộn ngang trên mobile nếu cần */
+            overflow-x: auto;
         }
 
         .current-month {
@@ -122,31 +105,31 @@
 
         .calendar {
             display: grid;
-            grid-template-columns: repeat(7, minmax(50px, 1fr)); /* Đảm bảo mỗi cột có min-width */
-            gap: 6px; /* Giảm gap cho mobile */
+            grid-template-columns: repeat(7, minmax(50px, 1fr));
+            gap: 6px;
             max-width: 100%;
             margin: 0 auto;
-            min-width: 350px; /* Đảm bảo đủ chỗ cho 7 cột */
+            min-width: 350px;
         }
 
         .calendar-header {
             background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
-            padding: 10px 2px; /* Giảm padding cho mobile */
+            padding: 10px 2px;
             text-align: center;
             font-weight: 700;
-            font-size: 0.9rem; /* Giảm font cho mobile */
+            font-size: 0.9rem;
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(102, 126, 234, 0.3);
-            min-width: 50px; /* Đảm bảo cột không bị nén quá */
+            min-width: 50px;
         }
 
         .calendar-day {
             background: white;
             border-radius: 8px;
-            padding: 8px 4px; /* Giảm padding cho mobile */
+            padding: 8px 4px;
             text-align: center;
-            min-height: 80px;
+            min-height: 90px; /* Tăng chiều cao để chứa thêm Thiên Can, Địa Chi */
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -157,7 +140,7 @@
             position: relative;
             overflow: hidden;
             cursor: pointer;
-            min-width: 50px; /* Đảm bảo ô không bị nén quá */
+            min-width: 50px;
         }
 
         .calendar-day:hover {
@@ -182,20 +165,21 @@
         }
 
         .solar-date {
-            font-size: 1.2rem; /* Giảm font cho mobile */
+            font-size: 1.2rem;
             font-weight: 700;
             color: #333;
             margin-bottom: 3px;
         }
 
         .lunar-date {
-            font-size: 0.75rem; /* Giảm font cho mobile */
+            font-size: 0.75rem;
             color: #e74c3c;
             font-weight: 600;
             background: rgba(231, 76, 60, 0.1);
             padding: 2px 6px;
             border-radius: 8px;
             line-height: 1.2;
+            margin-bottom: 3px;
         }
 
         .lunar-date.leap {
@@ -204,15 +188,25 @@
             animation: pulse 2s infinite;
         }
 
+        .can-chi {
+            font-size: 0.7rem;
+            color: #2ecc71;
+            font-weight: 600;
+            background: rgba(46, 204, 113, 0.1);
+            padding: 2px 6px;
+            border-radius: 8px;
+            line-height: 1.2;
+        }
+
         .good-day {
             font-size: 0.9rem;
-            color: #f1c40f; /* Sao vàng */
+            color: #f1c40f;
             margin-top: 3px;
         }
 
         .bad-day {
             font-size: 0.9rem;
-            color: #000000; /* Sao đen */
+            color: #000000;
             margin-top: 3px;
         }
 
@@ -239,12 +233,11 @@
             color: white;
         }
 
-        .weekend .lunar-date {
+        .weekend .lunar-date, .weekend .can-chi {
             background: rgba(255, 255, 255, 0.2);
             color: white;
         }
 
-        /* Day info styles */
         .day-info-container {
             padding: 20px;
             background: rgba(255, 255, 255, 0.9);
@@ -296,7 +289,6 @@
             color: #e74c3c;
         }
 
-        /* Responsive Design */
         @media (max-width: 768px) {
             .header h1 {
                 font-size: 2rem;
@@ -314,7 +306,7 @@
 
             .calendar {
                 gap: 4px;
-                min-width: 320px; /* Đảm bảo đủ chỗ cho 7 cột */
+                min-width: 320px;
             }
 
             .calendar-header {
@@ -323,7 +315,7 @@
             }
 
             .calendar-day {
-                min-height: 70px;
+                min-height: 80px;
                 padding: 6px 2px;
                 min-width: 45px;
             }
@@ -332,7 +324,7 @@
                 font-size: 1.1rem;
             }
 
-            .lunar-date {
+            .lunar-date, .can-chi {
                 font-size: 0.7rem;
                 padding: 2px 4px;
             }
@@ -376,7 +368,7 @@
 
             .calendar {
                 gap: 3px;
-                min-width: 300px; /* Đảm bảo đủ chỗ cho 7 cột */
+                min-width: 300px;
             }
 
             .calendar-header {
@@ -385,7 +377,7 @@
             }
 
             .calendar-day {
-                min-height: 60px;
+                min-height: 70px;
                 padding: 4px 1px;
                 min-width: 40px;
             }
@@ -394,7 +386,7 @@
                 font-size: 1rem;
             }
 
-            .lunar-date {
+            .lunar-date, .can-chi {
                 font-size: 0.65rem;
                 padding: 1px 3px;
             }
@@ -423,7 +415,6 @@
             }
         }
 
-        /* Animation cho loading */
         .calendar-day {
             animation: fadeInUp 0.6s ease forwards;
             opacity: 0;
@@ -437,7 +428,6 @@
             }
         }
 
-        /* Stagger animation delay */
         .calendar-day:nth-child(8) { animation-delay: 0.1s; }
         .calendar-day:nth-child(9) { animation-delay: 0.2s; }
         .calendar-day:nth-child(10) { animation-delay: 0.3s; }
@@ -457,7 +447,7 @@
         <div class="controls">
             <div class="control-group">
                 <label>📅 Tháng:</label>
-                <select id="month">
+                <select id="month" onchange="renderCalendar()">
                     <option value="1">Tháng 1</option>
                     <option value="2">Tháng 2</option>
                     <option value="3">Tháng 3</option>
@@ -475,14 +465,10 @@
             
             <div class="control-group">
                 <label>🗓️ Năm:</label>
-                <input type="number" id="year" value="" min="1900" max="2100">
+                <input type="number" id="year" value="" min="1900" max="2100" onchange="renderCalendar()">
             </div>
-            
-            <button class="btn-update" onclick="renderCalendar()">
-                ✨ Cập nhật lịch
-            </button>
         </div>
-
+            
         <div class="calendar-container">
             <div class="current-month" id="currentMonth"></div>
             <div class="calendar" id="calendar"></div>
@@ -519,6 +505,38 @@
             { name: "Bạch Hổ Túc - Ngày xấu", days: [4, 12, 20, 28], months: [3, 6, 9, 12], description: "Mọi chuyện đều rất xấu, không nên đi xa, không nên chọn làm ngày xuất hành." },
             { name: "Huyền Vũ - Ngày xấu", days: [5, 13, 21, 29], months: [3, 6, 9, 12], description: "Nếu xuất hành ngày này thường dễ cãi nhau, không nên đi đâu, dễ gặp chuyện xấu." }
         ];
+
+        // Danh sách Thiên Can và Địa Chi
+        const thienCan = ['Giáp', 'Ất', 'Bính', 'Đinh', 'Mậu', 'Kỷ', 'Canh', 'Tân', 'Nhâm', 'Quý'];
+        const diaChi = ['Tý', 'Sửu', 'Dần', 'Mão', 'Thìn', 'Tỵ', 'Ngọ', 'Mùi', 'Thân', 'Dậu', 'Tuất', 'Hợi'];
+
+        // Hàm tính Thiên Can và Địa Chi
+        // Hàm tính Thiên Can và Địa Chi
+        function getCanChi(jd, type = 'day', year = null, month = null) {
+            if (type === 'day') {
+                // Tính Thiên Can của ngày
+                const canIndex = (jd + 9) % 10;
+                // Tính Địa Chi của ngày
+                const chiIndex = (jd + 1) % 12;
+                return `${thienCan[canIndex]} ${diaChi[chiIndex]}`;
+            } else if (type === 'month' && year !== null && month !== null) {
+                // Tính Thiên Can của năm
+                const yearJd = jdFromDate(1, 1, year);
+                const yearCanIndex = (yearJd + 9) % 10;
+                // Tính Địa Chi của tháng (bắt đầu từ Dần cho tháng 1 âm lịch)
+                const monthChiIndex = ((month - 1 + 2) % 12 + 12) % 12;
+                // Tính Thiên Can của tháng
+                const monthCanIndex = (2 * yearCanIndex + month + 3) % 10;
+                return `${thienCan[monthCanIndex]} ${diaChi[monthChiIndex]}`;
+            } else if (type === 'year' && year !== null) {
+                // Tính Thiên Can và Địa Chi của năm
+                const yearJd = jdFromDate(1, 1, year);
+                const yearCanIndex = (year + 6) % 10;
+                const yearChiIndex = (year + 8) % 12; // Địa Chi của năm, bắt đầu từ Tý cho năm 1984 (Giáp Tý)
+                return `${thienCan[yearCanIndex]} ${diaChi[yearChiIndex]}`;
+            }            
+            return 'Không xác định';
+        }
 
         // Hàm kiểm tra ngày tốt/xấu
         function checkGoodBadDay(lunarDay, lunarMonth, lunarLeap) {
@@ -694,15 +712,16 @@
             if (lunarMonth >= 11 && diff < 4) {
                 yy--;
             }
-            return { day: lunarDay, month: lunarMonth, year: yy, leap: lunarLeap };
+            return { day: lunarDay, month: lunarMonth, year: yy, leap: lunarLeap, jd: jd };
         }
 
         // Hàm hiển thị thông tin ngày và giờ dưới lịch
-        function showDayInfo(solarDate, lunarDate, title, dayDescription, lunarDay, lunarMonth) {
+        function showDayInfo(solarDate, lunarDate, title, dayDescription, lunarDay, lunarMonth, canChiDay, canChiMonth, canChiYear) {
             const dayInfoContainer = document.getElementById('dayInfo');
             
             dayInfoContainer.innerHTML = `
                 <h3>${solarDate} (Âm lịch: ${lunarDate})</h3>
+                <p class="day-info">Ngày: ${canChiDay}, Tháng: ${canChiMonth}, Năm: ${canChiYear}</p>
                 <p class="day-info">${title ? `${title}: ${dayDescription}` : dayDescription}</p>
                 <table class="hours-table">
                     <thead>
@@ -753,8 +772,9 @@
                 '', 'Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6',
                 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'
             ];
-            currentMonth.textContent = `${monthNames[month]} năm ${year}`;
-
+            const canChiYear = getCanChi(null, 'year', year);
+            currentMonth.textContent = `${monthNames[month]} năm ${year} (${canChiYear})`;
+        
             // Create calendar headers
             const daysOfWeek = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
             daysOfWeek.forEach(day => {
@@ -763,7 +783,7 @@
                 div.textContent = day;
                 calendar.appendChild(div);
             });
-
+        
             // Calculate calendar data
             const daysInMonth = new Date(year, month, 0).getDate();
             const firstDay = new Date(year, month - 1, 1).getDay();
@@ -775,10 +795,10 @@
                 div.className = 'calendar-day empty';
                 calendar.appendChild(div);
             }
-
+        
             // Add days of the month
             let selectedDayElement = null;
-
+        
             for (let day = 1; day <= daysInMonth; day++) {
                 const div = document.createElement('div');
                 const dayOfWeek = new Date(year, month - 1, day).getDay();
@@ -800,6 +820,10 @@
                     `${lunarResult.day}/${lunarResult.month} Nhuận` : 
                     `${lunarResult.day}/${lunarResult.month}`;
                 
+                // Tính Thiên Can và Địa Chi
+                const canChiDay = getCanChi(lunarResult.jd, 'day');
+                const canChiMonth = getCanChi(null, 'month', lunarResult.year, lunarResult.month);
+                
                 // Kiểm tra ngày tốt/xấu
                 const goodBadInfo = checkGoodBadDay(lunarResult.day, lunarResult.month, lunarResult.leap);
                 let starHtml = '';
@@ -813,10 +837,11 @@
                     title = goodBadInfo.name;
                     description = goodBadInfo.description;
                 }
-
+        
                 div.innerHTML = `
                     <div class="solar-date">${day}</div>
                     <div class="lunar-date ${lunarResult.leap ? 'leap' : ''}">${lunarText}</div>
+                    <div class="can-chi">${canChiDay}</div>
                     ${starHtml}
                 `;
                 
@@ -835,7 +860,10 @@
                         title, 
                         description, 
                         lunarResult.day, 
-                        lunarResult.month
+                        lunarResult.month,
+                        canChiDay,
+                        canChiMonth,
+                        canChiYear
                     );
                 };
                 
