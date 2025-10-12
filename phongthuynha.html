@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Phong Thủy Nhà Ở</title>
-    <style>
+<style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -95,13 +95,20 @@
             font-style: italic;
             margin-top: 8px;
         }
+        .compass-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
             <h1>🏠 Phong Thủy Nhà Ở 🏠</h1>
-            <p>Bố trí nhà cửa theo phong thủy Đông phương - Lê Tiến Dũng Biên soạn</p>
+            <p>Bố trí nhà cửa theo phong thủy Đông phương</p>
         </div>
 
         <div class="card">
@@ -116,6 +123,20 @@
                         <option value="">Chọn giới tính</option>
                         <option value="nam">Nam</option>
                         <option value="nu">Nữ</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="doorDir">Hướng cửa chính:</label>
+                    <select id="doorDir">
+                        <option value="">Chọn hướng</option>
+                        <option value="Bắc">Bắc</option>
+                        <option value="Đông Bắc">Đông Bắc</option>
+                        <option value="Đông">Đông</option>
+                        <option value="Đông Nam">Đông Nam</option>
+                        <option value="Nam">Nam</option>
+                        <option value="Tây Nam">Tây Nam</option>
+                        <option value="Tây">Tây</option>
+                        <option value="Tây Bắc">Tây Bắc</option>
                     </select>
                 </div>
             </div>
@@ -146,18 +167,17 @@
             }
         };
 
-        const STARS = ['Sinh Khí','Thiên Y','Diên Niên','Phục Vị'];
-        const BAD_STARS = ['Họa Hại','Lục Sát','Ngũ Quỷ','Tuyệt Mệnh'];
-        const STAR_DESC = ['Cực tốt - Vượng về tài lộc, sự nghiệp, con cái khỏe mạnh thông minh','Rất tốt - Sức khỏe dồi dào, gặp quý nhân phù trợ, bệnh tật tiêu tan','Tốt - Hôn nhân hạnh phúc, gia đạo hòa thuận, sống lâu','Khá tốt - Cuộc sống bình an, ổn định, không có biến cố lớn'];
-        const BAD_DESC = ['Xấu - Dễ gặp tai nạn nhỏ, tranh cãi trong gia đình','Rất xấu - Tranh chấp pháp lý, kiện tụng, tiêu tán tài sản','Cực xấu - Bệnh tật nghiêm trọng, hỏa hoạn, mất mát lớn','Hung nhất - Tai họa lớn, nguy hiểm tính mạng, phá sản'];
+        const STARS = ['Sinh Khí', 'Thiên Y', 'Diên Niên', 'Phục Vị'];
+        const BAD_STARS = ['Họa Hại', 'Lục Sát', 'Ngũ Quỷ', 'Tuyệt Mệnh'];
+        const STAR_DESC = ['Cực tốt - Vượng về tài lộc, sự nghiệp, con cái khỏe mạnh thông minh', 'Rất tốt - Sức khỏe dồi dào, gặp quý nhân phù trợ, bệnh tật tiêu tan', 'Tốt - Hôn nhân hạnh phúc, gia đạo hòa thuận, sống lâu', 'Khá tốt - Cuộc sống bình an, ổn định, không có biến cố lớn'];
+        const BAD_DESC = ['Xấu - Dễ gặp tai nạn nhỏ, tranh cãi trong gia đình', 'Rất xấu - Tranh chấp pháp lý, kiện tụng, tiêu tán tài sản', 'Cực xấu - Bệnh tật nghiêm trọng, hỏa hoạn, mất mát lớn', 'Hung nhất - Tai họa lớn, nguy hiểm tính mạng, phá sản'];
 
         function calcMenh(y) {
-            // Tính theo Nạp Âm Ngũ Hành đầy đủ (60 năm một giáp)
             const napAm = [
                 'Giáp Tý - Hải Trung Kim','Ất Sửu - Hải Trung Kim','Bính Dần - Lư Trung Hỏa','Đinh Mão - Lư Trung Hỏa','Mậu Thìn - Đại Lâm Mộc','Kỷ Tỵ - Đại Lâm Mộc',
                 'Canh Ngọ - Lộ Bàng Thổ','Tân Mùi - Lộ Bàng Thổ','Nhâm Thân - Kiếm Phong Kim','Quý Dậu - Kiếm Phong Kim','Giáp Tuất - Sơn Đầu Hỏa','Ất Hợi - Sơn Đầu Hỏa',
                 'Bính Tý - Giản Hạ Thủy','Đinh Sửu - Giản Hạ Thủy','Mậu Dần - Thành Đầu Thổ','Kỷ Mão - Thành Đầu Thổ','Canh Thìn - Bạch Lạp Kim','Tân Tỵ - Bạch Lạp Kim',
-                'Nhâm Ngọ - Dương Liễu Mộc','Quý Mùi - Dương Liễu Mộc','Giáp Thân - Tuyền Trung Thủy','Ất Dậu - Tuyền Trung Thủy','Bính Tuất -옥 Thượng Thổ','Đinh Hợi - Ốc Thượng Thổ',
+                'Nhâm Ngọ - Dương Liễu Mộc','Quý Mùi - Dương Liễu Mộc','Giáp Thân - Tuyền Trung Thủy','Ất Dậu - Tuyền Trung Thủy','Bính Tuất - Ốc Thượng Thổ','Đinh Hợi - Ốc Thượng Thổ',
                 'Mậu Tý - Tích Lịch Hỏa','Kỷ Sửu - Tích Lịch Hỏa','Canh Dần - Tùng Bách Mộc','Tân Mão - Tùng Bách Mộc','Nhâm Thìn - Trường Lưu Thủy','Quý Tỵ - Trường Lưu Thủy',
                 'Giáp Ngọ - Sa Trung Kim','Ất Mùi - Sa Trung Kim','Bính Thân - Sơn Hạ Hỏa','Đinh Dậu - Sơn Hạ Hỏa','Mậu Tuất - Bình Địa Mộc','Kỷ Hợi - Bình Địa Mộc',
                 'Canh Tý - Bích Thượng Thổ','Tân Sửu - Bích Thượng Thổ','Nhâm Dần - Kim Bạch Kim','Quý Mão - Kim Bạch Kim','Giáp Thìn - Phúc Đăng Hỏa','Ất Tỵ - Phúc Đăng Hỏa',
@@ -165,7 +185,6 @@
                 'Nhâm Tý - Tang Đố Mộc','Quý Sửu - Tang Đố Mộc','Giáp Dần - Đại Khê Thủy','Ất Mão - Đại Khê Thủy','Bính Thìn - Sa Trung Thổ','Đinh Tỵ - Sa Trung Thổ',
                 'Mậu Ngọ - Thiên Thượng Hỏa','Kỷ Mùi - Thiên Thượng Hỏa','Canh Thân - Thạch Lựu Mộc','Tân Dậu - Thạch Lựu Mộc','Nhâm Tuất - Đại Hải Thủy','Quý Hợi - Đại Hải Thủy'
             ];
-            // Năm 1984 là Giáp Tý (index 0)
             const baseYear = 1984;
             let index = (y - baseYear) % 60;
             if (index < 0) index += 60;
@@ -182,48 +201,72 @@
             return q[n];
         }
 
-        function drawCompass(q) {
+        function drawCompass(q, doorDir) {
             const dirs = ['Bắc','Đông Bắc','Đông','Đông Nam','Nam','Tây Nam','Tây','Tây Bắc'];
             const angs = [0,45,90,135,180,225,270,315];
-            const s = 400, cx = s/2, r = s/2-20;
+            const s = 500, cx = s/2, r = s/2-40;
             let svg = `<svg width="${s}" height="${s}"><circle cx="${cx}" cy="${cx}" r="${r}" fill="#f5f7fa" stroke="#667eea" stroke-width="3"/>`;
             
             dirs.forEach((d, i) => {
                 const a = (angs[i]-90)*Math.PI/180;
                 const good = DATA.quai[q].dirs.good.includes(d);
-                const col = good ? '#4CAF50' : '#f44336';
-                const fill = good ? '#e8f5e9' : '#ffebee';
+                const isDoor = d === doorDir;
+                const doorGood = isDoor && good;
+                const col = isDoor ? (doorGood ? '#228B22' : '#f44336') : (good ? '#4CAF50' : '#f44336');
+                const fill = isDoor ? (doorGood ? '#d4edda' : '#f8d7da') : (good ? '#e8f5e9' : '#ffebee');
                 
                 const a1 = (angs[i]-22.5-90)*Math.PI/180, a2 = (angs[i]+22.5-90)*Math.PI/180;
                 const x1 = cx+Math.cos(a1)*r, y1 = cx+Math.sin(a1)*r;
                 const x2 = cx+Math.cos(a2)*r, y2 = cx+Math.sin(a2)*r;
-                svg += `<path d="M${cx} ${cx}L${x1} ${y1}A${r} ${r} 0 0 1 ${x2} ${y2}Z" fill="${fill}" stroke="${col}" stroke-width="2" opacity="0.7"/>`;
+                svg += `<path d="M${cx} ${cx}L${x1} ${y1}A${r} ${r} 0 0 1 ${x2} ${y2}Z" fill="${fill}" stroke="${col}" stroke-width="3" opacity="0.7"/>`;
                 
                 const tx = cx+Math.cos(a)*r*0.75, ty = cx+Math.sin(a)*r*0.75;
-                svg += `<text x="${tx}" y="${ty}" text-anchor="middle" dominant-baseline="middle" font-size="16" font-weight="bold" fill="${col}">${d}</text>`;
+                svg += `<text x="${tx}" y="${ty}" text-anchor="middle" dominant-baseline="middle" font-size="18" font-weight="bold" fill="${col}">${d}</text>`;
                 
                 const ix = cx+Math.cos(a)*r*0.5, iy = cx+Math.sin(a)*r*0.5;
-                svg += `<text x="${ix}" y="${iy}" text-anchor="middle" dominant-baseline="middle" font-size="20" fill="${col}">${good?'★':'✕'}</text>`;
+                if (isDoor) {
+                    svg += `<text x="${ix}" y="${iy}" text-anchor="middle" dominant-baseline="middle" font-size="24" fill="${col}">🚪</text>`;
+                } else {
+                    const star = good ? STARS[DATA.quai[q].dirs.good.indexOf(d)] : BAD_STARS[DATA.quai[q].dirs.bad.indexOf(d)];
+                    svg += `<text x="${ix}" y="${iy}" text-anchor="middle" dominant-baseline="middle" font-size="16" fill="${col}">${star}</text>`;
+                }
             });
             
-            svg += `<circle cx="${cx}" cy="${cx}" r="40" fill="white" stroke="#667eea" stroke-width="3"/>`;
-            svg += `<text x="${cx}" y="${cx}" text-anchor="middle" dominant-baseline="middle" font-size="18" font-weight="bold" fill="#667eea">LA BÀN</text></svg>`;
+            svg += `<circle cx="${cx}" cy="${cx}" r="45" fill="white" stroke="#667eea" stroke-width="3"/>`;
+            svg += `<text x="${cx}" y="${cx}" text-anchor="middle" dominant-baseline="middle" font-size="16" font-weight="bold" fill="#667eea">LA BÀN</text></svg>`;
             return svg;
+        }
+
+        function getDoorExplanation(q, doorDir) {
+            const qd = DATA.quai[q];
+            const isGood = qd.dirs.good.includes(doorDir);
+            const idx = isGood ? qd.dirs.good.indexOf(doorDir) : qd.dirs.bad.indexOf(doorDir);
+            
+            if (isGood) {
+                const starNames = ['Sinh Khí (tài vận)', 'Thiên Y (sức khỏe)', 'Diên Niên (hôn nhân)', 'Phục Vị (bình an)'];
+                return `✅ <strong>HƯỚNG TỐT!</strong><br>Cửa chính hướng <span class="highlight">${doorDir}</span> là hướng <strong>${starNames[idx]}</strong><br>${STAR_DESC[idx]}<br><em style="color: #4CAF50;">Cửa này sẽ đón tài khí vào nhà, rất thuận lợi!</em>`;
+            } else {
+                const badNames = ['Họa Hại', 'Lục Sát', 'Ngũ Quỷ', 'Tuyệt Mệnh'];
+                return `⚠️ <strong>HƯỚNG XẤU!</strong><br>Cửa chính hướng <span class="highlight">${doorDir}</span> là hướng <strong>${badNames[idx]}</strong><br>${BAD_DESC[idx]}<br><em style="color: #f44336;">Nên xem xét thay đổi hoặc cải thiện bằng vật phong thủy.</em>`;
+            }
         }
 
         function calculateFengShui() {
             const y = parseInt(document.getElementById('year').value);
             const g = document.getElementById('gender').value;
-            if (!y || !g || y < 1900 || y > 2100) { alert('Vui lòng nhập đầy đủ thông tin hợp lệ!'); return; }
+            const doorDir = document.getElementById('doorDir').value;
+            
+            if (!y || !g || !doorDir || y < 1900 || y > 2100) { 
+                alert('Vui lòng nhập đầy đủ thông tin hợp lệ!'); 
+                return; 
+            }
 
             const m = calcMenh(y);
-            // Tách lấy ngũ hành chính (Kim, Mộc, Thủy, Hỏa, Thổ)
-            let mt = 'Thổ'; // Mặc định
+            let mt = 'Thổ';
             if (m.includes('Kim')) mt = 'Kim';
             else if (m.includes('Mộc')) mt = 'Mộc';
             else if (m.includes('Thủy')) mt = 'Thủy';
             else if (m.includes('Hỏa')) mt = 'Hỏa';
-            else if (m.includes('Thổ')) mt = 'Thổ';
             
             const q = calcQuai(y, g);
             const qd = DATA.quai[q];
@@ -235,20 +278,27 @@
                 <div class="info-box">
                     <strong>Mệnh của bạn:</strong> <span class="element-tag ${md.element}">${m}</span>
                     <br><strong>Quái số:</strong> ${q}
-                    <br><strong>Hướng:</strong> ${qd.group}
+                    <br><strong>Nhóm Tứ Trạch:</strong> ${qd.group}
                 </div>
                 <div class="detail-box"><strong>📖 Giải thích:</strong><br>${qd.explain}</div>
             </div>
 
             <div class="result-card">
-                <h2>🧭 La Bàn 8 Hướng</h2>
-                <div style="width: 100%; max-width: 400px; margin: 20px auto;">${drawCompass(q)}</div>
-                <div class="direction-note">★ = Hướng tốt (màu xanh) | ✕ = Hướng xấu (màu đỏ)</div>
+                <h2>🏠 Phong Thủy Cửa Chính Nhà Bạn</h2>
+                <div class="info-box" style="border-left-color: #FF6B00;">
+                    <strong>Hướng cửa chính:</strong> <span class="highlight" style="background: #FFE4D6; color: #FF6B00;">🚪 ${doorDir}</span>
+                    <br><br>${getDoorExplanation(q, doorDir)}
+                </div>
             </div>
 
             <div class="result-card">
-                <h2>⭐ Bát Trạch 8 Sao Chi Tiết</h2>
-                <h3>🌟 4 Sao Tốt (Tứ Cát Tinh):</h3>`;
+                <h2>🧭 La Bàn 8 Hướng & Vị Trí Cửa Chính</h2>
+                <div class="compass-section">
+                    <div style="width: 100%; max-width: 500px;">${drawCompass(q, doorDir)}</div>
+                    <div class="direction-note">
+                        🚪 = Vị trí cửa chính của bạn (cam) | Sinh Khí, Thiên Y, Diên Niên, Phục Vị = Hướng tốt (xanh) | Họa Hại, Lục Sát, Ngũ Quỷ, Tuyệt Mệnh = Hướng xấu (đỏ)
+                    </div>
+                    <h3>🌟 Tứ Cát Tinh (Hướng Tốt):</h3>`;
             
             for (let i=0; i<4; i++) {
                 html += `<div class="info-box" style="background:#f1f8f4;border-left-color:#4CAF50">
@@ -256,44 +306,30 @@
                 </div>`;
             }
             
-            html += `<h3>💀 4 Sao Xấu (Tứ Hung Tinh):</h3>`;
+            html += `<h3>💀 Tứ Hung Tinh (Hướng Xấu):</h3>`;
             for (let i=0; i<4; i++) {
                 html += `<div class="info-box" style="background:#fff5f5;border-left-color:#f44336">
                     <strong>💀 ${BAD_STARS[i]} - Hướng <span class="highlight">${qd.dirs.bad[i]}</span></strong><br>${BAD_DESC[i]}
                 </div>`;
             }
+            
             html += `</div>
-
-            <div class="result-card">
-                <h2>🛏️ Phong Thủy Phòng Ngủ</h2>
-                <div class="info-box"><strong>🎯 Hướng TỐT NHẤT:</strong> <span class="highlight">${qd.dirs.good[0]} (Sinh Khí)</span> hoặc <span class="highlight">${qd.dirs.good[1]} (Thiên Y)</span></div>
-                <div class="detail-box">
-                    <h4>📍 Vị trí đặt phòng ngủ:</h4>
-                    <strong>Hướng ưu tiên 1:</strong> Phòng ngủ đặt ở phía <span class="highlight">${qd.dirs.good[0]}</span> của nhà (Sinh Khí - tốt cho tài lộc, con cái)<br>
-                    <strong>Hướng ưu tiên 2:</strong> Phòng ngủ đặt ở phía <span class="highlight">${qd.dirs.good[1]}</span> của nhà (Thiên Y - tốt cho sức khỏe)<br>
-                    <strong>Hướng thay thế:</strong> Có thể chọn <span class="highlight">${qd.dirs.good[2]}</span> (Diên Niên - tốt cho vợ chồng)
-                    
-                    <h4>🛌 Hướng đầu giường nằm:</h4>
-                    <strong>Tốt nhất:</strong> Đầu giường hướng về <span class="highlight">${qd.dirs.good[0]}</span> (Sinh Khí)<br>
-                    <strong>Lựa chọn 2:</strong> Đầu giường hướng về <span class="highlight">${qd.dirs.good[1]}</span> (Thiên Y - nếu thường xuyên ốm đau)<br>
-                    <strong>Lựa chọn 3:</strong> Đầu giường hướng về <span class="highlight">${qd.dirs.good[2]}</span> (Diên Niên - tốt cho hôn nhân)<br>
-                    <em class="direction-note">Lưu ý: "Hướng đầu giường" là hướng đỉnh đầu bạn hướng về khi nằm trên giường</em>
-                    
-                    <h4>⚠️ Lưu ý quan trọng:</h4>
-                    <ul style="margin-left: 20px; margin-top: 5px;">
-                        <li>Không đặt gương soi trực diện giường</li>
-                        <li>Tránh dầm đè trực tiếp lên đầu giường</li>
-                        <li>Giường không nên chung tường với toilet</li>
-                        <li>Đầu giường nên tựa vào tường vững chắc</li>
-                        <li>Tránh cửa phòng đối thẳng chân giường</li>
-                    </ul>
-                </div>
             </div>
 
             <div class="result-card">
                 <h2>🍳 Phong Thủy Phòng Bếp</h2>
                 <div class="info-box"><strong>🎯 Hướng TỐT NHẤT:</strong> Đặt bếp ở hướng <span class="highlight">${qd.dirs.bad[2]}</span> hoặc <span class="highlight">${qd.dirs.bad[3]}</span> để ép hung khí</div>
                 <div class="detail-box">
+                    <h4>📏 Kích Thước Cửa Phòng Bếp (Theo Lỗ Ban 52.2cm - Dương Trạch):</h4>
+                    <strong>Chiều rộng (MAY):</strong><br>
+                    • <span class="highlight">52.2cm</span> - Phát lộc<br>
+                    • <span class="highlight">78.3cm</span> - Tài vận<br>
+                    • <span class="highlight">104.4cm</span> - Sinh khí (tốt nhất)<br>
+                    <strong>Chiều cao (MAY):</strong><br>
+                    • <span class="highlight">156.6cm</span> - Vượng<br>
+                    • <span class="highlight">208.8cm</span> - Sinh khí<br>
+                    <strong>✨ Kích thước TỐT NHẤT:</strong> <span style="background: #e8f5e9; padding: 5px 10px; border-radius: 5px; font-weight: bold;">104.4cm × 208.8cm</span>
+                    
                     <h4>📍 Vị trí đặt bếp:</h4>
                     <strong>Nguyên tắc:</strong> Bếp nên đặt ở hướng XẤU để "đốt cháy" hung khí<br>
                     <strong>Vị trí tốt nhất:</strong> Phòng bếp ở phía <span class="highlight">${qd.dirs.bad[2]}</span> hoặc <span class="highlight">${qd.dirs.bad[3]}</span> của nhà<br>
@@ -319,6 +355,15 @@
                 <h2>🚿 Phong Thủy Phòng Tắm & WC</h2>
                 <div class="info-box"><strong>🎯 Nguyên tắc:</strong> Đặt ở hướng XẤU để hóa giải hung khí</div>
                 <div class="detail-box">
+                    <h4>📏 Kích Thước Cửa Phòng Tắm/WC (Theo Lỗ Ban 52.2cm - Dương Trạch):</h4>
+                    <strong>Chiều rộng (MAY):</strong><br>
+                    • <span class="highlight">52.2cm</span> - Phát lộc<br>
+                    • <span class="highlight">78.3cm</span> - Tài vận<br>
+                    <strong>Chiều cao (MAY):</strong><br>
+                    • <span class="highlight">156.6cm</span> - Vượng<br>
+                    • <span class="highlight">208.8cm</span> - Sinh khí<br>
+                    <strong>✨ Kích thước TỐT NHẤT:</strong> <span style="background: #e8f5e9; padding: 5px 10px; border-radius: 5px; font-weight: bold;">78.3cm × 208.8cm</span>
+                    
                     <h4>📍 Vị trí phù hợp:</h4>
                     <strong>Vị trí tốt nhất:</strong> Đặt toilet/nhà tắm ở phía <span class="highlight">${qd.dirs.bad[2]}</span> hoặc <span class="highlight">${qd.dirs.bad[3]}</span><br>
                     <strong>Có thể chấp nhận:</strong> Đặt ở phía <span class="highlight">${qd.dirs.bad[0]}</span> hoặc <span class="highlight">${qd.dirs.bad[1]}</span><br>
@@ -339,6 +384,14 @@
                 <h2>📚 Phong Thủy Phòng Làm Việc</h2>
                 <div class="info-box"><strong>🎯 Hướng TỐT NHẤT:</strong> <span class="highlight">${qd.dirs.good[0]} (Sinh Khí)</span> - tốt nhất cho công việc, tài vận</div>
                 <div class="detail-box">
+                    <h4>📏 Kích Thước Cửa Phòng Làm Việc (Theo Lỗ Ban 52.2cm - Dương Trạch):</h4>
+                    <strong>Chiều rộng (MAY):</strong><br>
+                    • <span class="highlight">78.3cm</span> - Tài vận<br>
+                    • <span class="highlight">104.4cm</span> - Sinh khí (tốt nhất)<br>
+                    <strong>Chiều cao (MAY):</strong><br>
+                    • <span class="highlight">208.8cm</span> - Sinh khí<br>
+                    <strong>✨ Kích thước TỐT NHẤT:</strong> <span style="background: #e8f5e9; padding: 5px 10px; border-radius: 5px; font-weight: bold;">104.4cm × 208.8cm</span>
+                    
                     <h4>📍 Vị trí phòng làm việc:</h4>
                     <strong>Tốt nhất:</strong> Phòng làm việc ở phía <span class="highlight">${qd.dirs.good[0]}</span> của nhà (Sinh Khí - vượng sự nghiệp)<br>
                     <strong>Lựa chọn 2:</strong> Đặt ở phía <span class="highlight">${qd.dirs.good[1]}</span> (Thiên Y - tốt nếu công việc áp lực)<br>
@@ -348,6 +401,17 @@
                     <strong>Hướng ngồi tốt nhất:</strong> Ngồi hướng mặt về <span class="highlight">${qd.dirs.good[0]}</span> (Sinh Khí)<br>
                     <strong>Hướng ngồi thay thế:</strong> Có thể ngồi hướng về <span class="highlight">${qd.dirs.good[1]}</span> hoặc <span class="highlight">${qd.dirs.good[2]}</span><br>
                     <em class="direction-note">"Hướng ngồi" là hướng bạn nhìn về khi ngồi làm việc</em>
+                    
+                    <h4>📏 Kích Thước Bàn Làm Việc (Theo Lỗ Ban 42.9cm):</h4>
+                    <strong>Chiều rộng (MAY):</strong><br>
+                    • <span class="highlight">81.5cm</span> - Tài lộc<br>
+                    • <span class="highlight">107.2cm</span> - Vượng khí (tốt nhất)<br>
+                    <strong>Chiều sâu (MAY):</strong><br>
+                    • <span class="highlight">42.9cm</span> - Phát tài<br>
+                    • <span class="highlight">64.3cm</span> - Sinh khí<br>
+                    <strong>Chiều cao (MAY):</strong><br>
+                    • <span class="highlight">81.5cm</span> - Vượng<br>
+                    <strong>✨ Kích thước TỐT NHẤT:</strong> <span style="background: #e8f5e9; padding: 5px 10px; border-radius: 5px; font-weight: bold;">107.2cm × 64.3cm × 81.5cm</span>
                     
                     <h4>⚠️ Lưu ý quan trọng:</h4>
                     <ul style="margin-left: 20px; margin-top: 5px;">
@@ -364,6 +428,21 @@
                 <h2>🙏 Phong Thủy Phòng Thờ & Bàn Thờ</h2>
                 <div class="info-box"><strong>🎯 Hướng TỐT NHẤT:</strong> <span class="highlight">${qd.dirs.good[0]} (Sinh Khí)</span> hoặc <span class="highlight">${qd.dirs.good[1]} (Thiên Y)</span></div>
                 <div class="detail-box">
+                    <h4>📏 Kích Thước Bàn Thờ (Theo Lỗ Ban 38.8cm - Âm Trạch):</h4>
+                    <strong>Bàn thờ nhỏ:</strong><br>
+                    • Chiều rộng: <span class="highlight">48cm</span> - Hỷ sự<br>
+                    • Chiều sâu: <span class="highlight">48cm</span> - Hỷ sự<br>
+                    • Chiều cao: <span class="highlight">108cm</span> - Tài vượng<br>
+                    <strong>Bàn thờ trung bình (TỐT NHẤT):</strong><br>
+                    • Chiều rộng: <span class="highlight">88cm</span> - Tiến bảo<br>
+                    • Chiều sâu: <span class="highlight">61cm</span> - Tài vượng<br>
+                    • Chiều cao: <span class="highlight">127cm</span> - Đại cát<br>
+                    <strong>Bàn thờ lớn:</strong><br>
+                    • Chiều rộng: <span class="highlight">107cm</span> - Tài vượng<br>
+                    • Chiều sâu: <span class="highlight">69cm</span> - Thêm phúc<br>
+                    • Chiều cao: <span class="highlight">153cm</span> - Đại cát<br>
+                    <strong>✨ Kích thước TỐT NHẤT:</strong> <span style="background: #FFE4D6; padding: 5px 10px; border-radius: 5px; font-weight: bold;">88cm × 61cm × 127cm</span>
+                    
                     <h4>📍 Vị trí đặt bàn thờ:</h4>
                     <strong>Vị trí tốt nhất:</strong> Đặt bàn thờ ở phía <span class="highlight">${qd.dirs.good[0]}</span> của nhà (Sinh Khí - vượng phúc lộc)<br>
                     <strong>Vị trí tốt thứ 2:</strong> Đặt bàn thờ ở phía <span class="highlight">${qd.dirs.good[1]}</span> của nhà (Thiên Y - che chở sức khỏe)<br>
@@ -374,8 +453,7 @@
                     <strong>Hướng tốt nhất:</strong> Tượng/ảnh trên bàn thờ nên hướng mặt về <span class="highlight">${qd.dirs.good[0]}</span> (Sinh Khí)<br>
                     <strong>Hướng tốt thứ 2:</strong> Có thể hướng về <span class="highlight">${qd.dirs.good[1]}</span> (Thiên Y)<br>
                     <strong>Hướng thay thế:</strong> Hướng về <span class="highlight">${qd.dirs.good[2]}</span> (Diên Niên) hoặc <span class="highlight">${qd.dirs.good[3]}</span> (Phục Vị)<br>
-                    <em class="direction-note">Lưu ý: "Hướng bàn thờ" là hướng mặt của tượng/ảnh trên bàn thờ nhìn ra, người thờ cúng sẽ đứng đối diện</em><br>
-                    <strong>Truyền thống:</strong> Nhiều gia đình thờ hướng Đông (hướng mặt trời mọc) hoặc Nam (tượng trưng vương khí)
+                    <em class="direction-note">Lưu ý: "Hướng bàn thờ" là hướng mặt của tượng/ảnh trên bàn thờ nhìn ra</em>
                     
                     <h4>⚠️ Lưu ý quan trọng:</h4>
                     <ul style="margin-left: 20px; margin-top: 5px;">
@@ -385,27 +463,124 @@
                         <li>Phía sau bàn thờ nên là tường vững chắc</li>
                         <li>KHÔNG đặt bàn thờ sát cửa ra vào</li>
                         <li>Tránh để bàn thờ dưới gầm cầu thang</li>
-                        <li>Không để bàn thờ ở góc tối, ẩm ướt</li>
                         <li>Luôn giữ bàn thờ sạch sẽ, trang nghiêm</li>
                     </ul>
                 </div>
             </div>
 
             <div class="result-card">
-                <h2>🏡 Phong Thủy Cửa Chính</h2>
+                <h2>🪜 Phong Thủy Cầu Thang</h2>
+                <div class="info-box"><strong>🎯 Nguyên tắc:</strong> Cầu thang nên đặt ở vị trí hướng <span class="highlight">${qd.dirs.bad[0]}</span> hoặc <span class="highlight">${qd.dirs.bad[1]}</span> (hướng xấu)</div>
                 <div class="detail-box">
-                    <h4>🚪 Hướng cửa chính:</h4>
-                    <strong>Hướng tốt nhất:</strong> Cửa chính mở về phía <span class="highlight">${qd.dirs.good[0]}</span> (Sinh Khí - đón tài vận)<br>
-                    <strong>Hướng tốt thứ 2:</strong> Cửa chính mở về phía <span class="highlight">${qd.dirs.good[1]}</span> (Thiên Y - đón quý nhân)<br>
-                    <strong>Hướng tốt thứ 3:</strong> Cửa chính mở về phía <span class="highlight">${qd.dirs.good[2]}</span> (Diên Niên - hòa thuận)<br>
-                    <strong>Tránh:</strong> Cửa chính hướng về ${qd.dirs.bad[3]} (Tuyệt Mệnh - rất xấu)
+                    <h4>📏 Kích Thước Cầu Thang (Theo Lỗ Ban 42.9cm):</h4>
+                    <strong>Chiều rộng (MAY):</strong><br>
+                    • <span class="highlight">85.8cm</span> - Tài lộc<br>
+                    • <span class="highlight">107.2cm</span> - Vượng khí (tốt nhất)<br>
+                    <strong>Chiều cao bậc (MAY):</strong><br>
+                    • <span class="highlight">17.2cm</span> - Tài vượng<br>
+                    • <span class="highlight">21.5cm</span> - Đại cát<br>
+                    <strong>✨ Kích thước TỐT NHẤT:</strong> <span style="background: #e8f5e9; padding: 5px 10px; border-radius: 5px; font-weight: bold;">107.2cm × 21.5cm (bậc)</span>
                     
-                    <h4>⚠️ Lưu ý:</h4>
+                    <h4>📍 Vị trí đặt cầu thang:</h4>
+                    <strong>Tốt nhất:</strong> Cầu thang nên ở hướng <span class="highlight">${qd.dirs.bad[0]}</span> hoặc <span class="highlight">${qd.dirs.bad[1]}</span> để "dẫn" hung khí đi<br>
+                    <strong>Có thể chấp nhận:</strong> Đặt ở góc của nhà, không ở giữa<br>
+                    <strong>Tránh:</strong> KHÔNG đặt cầu thang ở hướng <span class="highlight">${qd.dirs.good[0]}</span> (Sinh Khí) - sẽ rò rỉ tài lộc
+                    
+                    <h4>🔄 Hình dáng & kiểu cầu thang:</h4>
+                    <strong>Tốt nhất:</strong> Cầu thang hình xoắn ốc hoặc hình chữ L<br>
+                    <strong>Có thể chấp nhận:</strong> Cầu thang thẳng (nếu không ở giữa nhà)<br>
+                    <strong>Tránh:</strong> <br>
+                    • Cầu thang lệch lạc, bậc cao thấp không đều<br>
+                    • Cầu thang quá dốc hoặc quá nông<br>
+                    • Cầu thang đối diện trực tiếp với cửa chính<br>
+                    • Cầu thang ở dưới dầm hoặc trong góc tối
+                    
+                    <h4>🎨 Màu sắc cầu thang:</h4>
+                    <strong>Nên chọn:</strong> Màu sáng, ấm áp (trắng, kem, nâu nhạt, xám nhạt)<br>
+                    <strong>Chất liệu:</strong> Gỗ tự nhiên, đá, xi măng - tránh kính trong suốt<br>
+                    <strong>Tránh:</strong> Màu đen, đỏ quá đậm, hoặc kính trong suốt (khí rò rỉ)
+                    
+                    <h4>⚠️ Lưu ý quan trọng:</h4>
                     <ul style="margin-left: 20px; margin-top: 5px;">
-                        <li>Cửa chính là nơi đón khí vào nhà</li>
-                        <li>Nên rộng rãi, sáng sủa, không bị che khuất</li>
-                        <li>Tránh cửa chính thẳng hàng với cửa sau</li>
-                        <li>Không để rác, giày dép lộn xộn ở cửa</li>
+                        <li>KHÔNG đặt cầu thang ở giữa nhà (rất xấu)</li>
+                        <li>KHÔNG đặt bàn thờ dưới gầm cầu thang</li>
+                        <li>Cầu thang đối diện cửa chính = tài lộc rò rỉ</li>
+                        <li>Luôn giữ cầu thang sạch sẽ, không bụi bặm</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="result-card">
+                <h2>🛋️ Phong Thủy Phòng Khách</h2>
+                <div class="info-box"><strong>🎯 Hướng TỐT NHẤT:</strong> <span class="highlight">${qd.dirs.good[0]} (Sinh Khí)</span> - thu hút tài lộc và quý nhân</div>
+                <div class="detail-box">
+                    <h4>📏 Kích Thước Cửa Phòng Khách (Theo Lỗ Ban 52.2cm - Dương Trạch):</h4>
+                    <strong>Chiều rộng (MAY):</strong><br>
+                    • <span class="highlight">78.3cm</span> - Tài vận<br>
+                    • <span class="highlight">104.4cm</span> - Sinh khí (tốt nhất)<br>
+                    <strong>Chiều cao (MAY):</strong><br>
+                    • <span class="highlight">208.8cm</span> - Sinh khí<br>
+                    • <span class="highlight">234.9cm</span> - Phát lộc<br>
+                    <strong>✨ Kích thước TỐT NHẤT:</strong> <span style="background: #e8f5e9; padding: 5px 10px; border-radius: 5px; font-weight: bold;">104.4cm × 208.8cm</span>
+                    
+                    <h4>📍 Vị trí phòng khách:</h4>
+                    <strong>Tốt nhất:</strong> Phòng khách ở phía <span class="highlight">${qd.dirs.good[0]}</span> của nhà (Sinh Khí - vượng tài vận, quý nhân)<br>
+                    <strong>Lựa chọn 2:</strong> Đặt ở phía <span class="highlight">${qd.dirs.good[1]}</span> (Thiên Y - thoáng đãng, sáng sủa)<br>
+                    <strong>Lựa chọn 3:</strong> Đặt ở phía <span class="highlight">${qd.dirs.good[3]}</span> (Phục Vị - bình an, ổn định)
+                    
+                    <h4>🛋️ Hướng bàn ghế phòng khách:</h4>
+                    <strong>Vị trí ghế chủ:</strong> Nên hướng mặt về <span class="highlight">${qd.dirs.good[0]}</span> (Sinh Khí) hoặc <span class="highlight">${qd.dirs.good[1]}</span> (Thiên Y)<br>
+                    <strong>Nguyên tắc:</strong> Người ngồi nên có tường vững chắc ở phía sau lưng, tránh ngồi quay lưng về cửa<br>
+                    
+                    <h4>⚠️ Lưu ý quan trọng:</h4>
+                    <ul style="margin-left: 20px; margin-top: 5px;">
+                        <li>Phòng khách phải rộng rãi, sáng sủa</li>
+                        <li>KHÔNG để gương soi đối diện cửa chính</li>
+                        <li>Luôn giữ phòng khách sạch sẽ, gọn gàng</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="result-card">
+                <h2>🛏️ Phong Thủy Phòng Ngủ</h2>
+                <div class="info-box"><strong>🎯 Hướng TỐT NHẤT:</strong> <span class="highlight">${qd.dirs.good[0]} (Sinh Khí)</span> hoặc <span class="highlight">${qd.dirs.good[1]} (Thiên Y)</span></div>
+                <div class="detail-box">
+                    <h4>📏 Kích Thước Cửa Phòng Ngủ (Theo Lỗ Ban 52.2cm - Dương Trạch):</h4>
+                    <strong>Chiều rộng (MAY):</strong><br>
+                    • <span class="highlight">78.3cm</span> - Tài vận<br>
+                    • <span class="highlight">104.4cm</span> - Sinh khí (tốt nhất)<br>
+                    <strong>Chiều cao (MAY):</strong><br>
+                    • <span class="highlight">208.8cm</span> - Sinh khí<br>
+                    <strong>✨ Kích thước TỐT NHẤT:</strong> <span style="background: #e8f5e9; padding: 5px 10px; border-radius: 5px; font-weight: bold;">104.4cm × 208.8cm</span>
+                    
+                    <h4>📏 Kích Thước Giường Ngủ (Theo Lỗ Ban 42.9cm):</h4>
+                    <strong>Chiều rộng (MAY):</strong><br>
+                    • <span class="highlight">128.7cm</span> - Tài lộc<br>
+                    • <span class="highlight">171.6cm</span> - Vượng khí (tốt nhất)<br>
+                    <strong>Chiều dài (MAY):</strong><br>
+                    • <span class="highlight">193cm</span> - Đại cát<br>
+                    <strong>Chiều cao (MAY):</strong><br>
+                    • <span class="highlight">85.8cm</span> - Tài vượng<br>
+                    <strong>✨ Kích thước TỐT NHẤT:</strong> <span style="background: #e8f5e9; padding: 5px 10px; border-radius: 5px; font-weight: bold;">171.6cm × 193cm × 85.8cm</span>
+                    
+                    <h4>📍 Vị trí đặt phòng ngủ:</h4>
+                    <strong>Hướng ưu tiên 1:</strong> Phòng ngủ đặt ở phía <span class="highlight">${qd.dirs.good[0]}</span> của nhà (Sinh Khí - tốt cho tài lộc, con cái)<br>
+                    <strong>Hướng ưu tiên 2:</strong> Phòng ngủ đặt ở phía <span class="highlight">${qd.dirs.good[1]}</span> của nhà (Thiên Y - tốt cho sức khỏe)<br>
+                    <strong>Hướng thay thế:</strong> Có thể chọn <span class="highlight">${qd.dirs.good[2]}</span> (Diên Niên - tốt cho vợ chồng)
+                    
+                    <h4>🛌 Hướng đầu giường nằm:</h4>
+                    <strong>Tốt nhất:</strong> Đầu giường hướng về <span class="highlight">${qd.dirs.good[0]}</span> (Sinh Khí)<br>
+                    <strong>Lựa chọn 2:</strong> Đầu giường hướng về <span class="highlight">${qd.dirs.good[1]}</span> (Thiên Y)<br>
+                    <strong>Lựa chọn 3:</strong> Đầu giường hướng về <span class="highlight">${qd.dirs.good[2]}</span> (Diên Niên)<br>
+                    <em class="direction-note">Lưu ý: "Hướng đầu giường" là hướng đỉnh đầu bạn hướng về khi nằm trên giường</em>
+                    
+                    <h4>⚠️ Lưu ý quan trọng:</h4>
+                    <ul style="margin-left: 20px; margin-top: 5px;">
+                        <li>Không đặt gương soi trực diện giường</li>
+                        <li>Tránh dầm đè trực tiếp lên đầu giường</li>
+                        <li>Giường không nên chung tường với toilet</li>
+                        <li>Đầu giường nên tựa vào tường vững chắc</li>
+                        <li>Tránh cửa phòng đối thẳng chân giường</li>
                     </ul>
                 </div>
             </div>
@@ -425,34 +600,11 @@
                     <h4>💎 Đá phong thủy & Vị trí đặt:</h4>
                     <strong>${md.stones}</strong><br>
                     <strong>📍 Vị trí đặt đá thạch anh trong nhà:</strong><br>
-                    • <strong>Phòng khách:</strong> Đặt cụm thạch anh ở hướng <span class="highlight">${qd.dirs.good[0]}</span> (Sinh Khí) để thu hút tài lộc<br>
-                    • <strong>Bàn làm việc:</strong> Đặt thạch anh tự nhiên góc trái bàn (tài vận) hoặc trước mặt<br>
-                    • <strong>Phòng ngủ:</strong> Đặt thạch anh hồng/tím gần đầu giường hướng <span class="highlight">${qd.dirs.good[2]}</span> (Diên Niên - tình duyên)<br>
                     • <strong>Cửa chính:</strong> Đặt cụm thạch anh lớn bên trái cửa (nhìn từ trong ra) để trấn trạch<br>
-                    • <strong>Bàn thờ:</strong> Có thể đặt đá quý tự nhiên 2 bên bàn thờ<br>
+                    • <strong>Phòng khách:</strong> Đặt ở hướng <span class="highlight">${qd.dirs.good[0]}</span> (Sinh Khí) để thu hút tài lộc<br>
+                    • <strong>Bàn làm việc:</strong> Đặt ở góc trái bàn (tài vận)<br>
+                    • <strong>Phòng ngủ:</strong> Đặt thạch anh hồng/tím gần đầu giường hướng <span class="highlight">${qd.dirs.good[2]}</span><br>
                     <em style="color: #f44336;">⚠️ Lưu ý: Không đặt thạch anh tại hướng ${qd.dirs.bad[3]} (Tuyệt Mệnh)</em>
-                </div>
-            </div>
-
-            <div class="result-card">
-                <h2>⚠️ Điều Cần Tránh</h2>
-                <div class="info-box" style="border-left-color: #f44336;">
-                    <strong>🚫 Tránh màu sắc tương khắc:</strong><br>
-                    ${mt === 'Kim' ? '• Tránh màu Đỏ, Cam (Hỏa khắc Kim)<br>' : ''}
-                    ${mt === 'Mộc' ? '• Tránh màu Trắng, Vàng kim (Kim khắc Mộc)<br>' : ''}
-                    ${mt === 'Thủy' ? '• Tránh màu Vàng, Nâu đất (Thổ khắc Thủy)<br>' : ''}
-                    ${mt === 'Hỏa' ? '• Tránh màu Đen, Xanh đậm (Thủy khắc Hỏa)<br>' : ''}
-                    ${mt === 'Thổ' ? '• Tránh màu Xanh lá (Mộc khắc Thổ)<br>' : ''}
-                    <strong>🚫 Điều kiêng kỵ khác:</strong>
-                    <ul style="margin-left: 20px; margin-top: 5px;">
-                        <li>Không trồng cây có gai trong nhà (xương rồng ngoại trừ)</li>
-                        <li>Không để đồ vật bể vỡ, hư hỏng lâu ngày</li>
-                        <li>Không để giày dép lộn xộn ở cửa ra vào</li>
-                        <li>Không treo tranh mãnh thú, cảnh hoang tàn</li>
-                        <li>Không tích trữ đồ cũ, rác thải quá nhiều</li>
-                        <li>Tránh có gương lớn đối diện cửa chính</li>
-                        <li>Không đặt bàn thờ dưới nhà vệ sinh tầng trên</li>
-                    </ul>
                 </div>
             </div>
 
@@ -460,12 +612,13 @@
                 <h2>💡 Mẹo Tăng Cường Vận May</h2>
                 <div class="detail-box">
                     <ul style="margin-left: 20px;">
-                        <li>✨ Thắp đèn ở hướng <strong>Sinh Khí</strong> để tăng tài vận</li>
-                        <li>🛏️ Đặt giường ở hướng <strong>Thiên Y</strong> nếu ốm yếu</li>
-                        <li>💑 Hướng <strong>Diên Niên</strong> tốt cho vợ chồng hòa thuận</li>
+                        <li>✨ Thắp đèn ở hướng <strong>Sinh Khí</strong> (${qd.dirs.good[0]}) để tăng tài vận</li>
+                        <li>🛏️ Đặt giường ở hướng <strong>Thiên Y</strong> (${qd.dirs.good[1]}) nếu ốm yếu</li>
+                        <li>💑 Hướng <strong>Diên Niên</strong> (${qd.dirs.good[2]}) tốt cho vợ chồng hòa thuận</li>
                         <li>🌿 Đặt cây xanh, bể cá ở hướng tốt</li>
                         <li>🧹 Luôn giữ nhà cửa sạch sẽ, thoáng đãng</li>
                         <li>🗑️ Vứt bỏ đồ cũ, hư hỏng thường xuyên</li>
+                        <li>🚪 Cửa chính đặt ở hướng <span class="highlight">${qd.dirs.good[0]}</span> hoặc <span class="highlight">${qd.dirs.good[1]}</span> để đón khí tốt</li>
                     </ul>
                 </div>
             </div>`;
