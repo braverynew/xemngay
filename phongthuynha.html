@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phong Thủy Nhà Ở</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header { text-align: center; color: white; margin-bottom: 30px; }
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+        }
+        .input-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .form-group { display: flex; flex-direction: column; }
+        label { font-weight: 600; margin-bottom: 8px; color: #333; }
+        input, select {
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        input:focus, select:focus { outline: none; border-color: #667eea; }
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            width: 100%;
+        }
+        .btn:hover { transform: translateY(-2px); }
+        .results { display: none; }
+        .results.show { display: block; }
+        .result-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+        .result-card h2 { color: #667eea; margin-bottom: 15px; font-size: 1.8em; }
+        .result-card h3 { color: #764ba2; margin-top: 20px; margin-bottom: 10px; font-size: 1.3em; }
+        .result-card h4 { color: #555; margin-top: 15px; margin-bottom: 8px; font-size: 1.1em; }
+        .info-box {
+            background: white;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+        }
+        .detail-box {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+        }
+        .highlight { background: #fff3cd; padding: 3px 8px; border-radius: 4px; font-weight: 600; }
+        .element-tag {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin: 5px;
+        }
+        .kim { background: #ffd700; color: #333; }
+        .moc { background: #228B22; color: white; }
+        .thuy { background: #1E90FF; color: white; }
+        .hoa { background: #FF4500; color: white; }
+        .tho { background: #8B4513; color: white; }
+        .direction-note {
+            font-size: 0.95em;
+            color: #666;
+            font-style: italic;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏠 Phong Thủy Nhà Ở 🏠</h1>
+            <p>Bố trí nhà cửa theo phong thủy Đông phương - Lê Tiến Dũng Biên soạn</p>
+        </div>
+
+        <div class="card">
+            <div class="input-section">
+                <div class="form-group">
+                    <label for="year">Năm sinh (Dương lịch):</label>
+                    <input type="number" id="year" placeholder="Ví dụ: 1975" min="1900" max="2100">
+                </div>
+                <div class="form-group">
+                    <label for="gender">Giới tính:</label>
+                    <select id="gender">
+                        <option value="">Chọn giới tính</option>
+                        <option value="nam">Nam</option>
+                        <option value="nu">Nữ</option>
+                    </select>
+                </div>
+            </div>
+            <button class="btn" onclick="calculateFengShui()">Xem</button>
+        </div>
+
+        <div class="results" id="results"></div>
+    </div>
+
+    <script>
+        const DATA = {
+            menh: {
+                'Kim': { colors: 'Trắng, Vàng, Nâu, Xám bạc', items: 'Đồ kim loại (đồng hồ, tượng đồng), chuông gió kim loại, tranh núi đá', plants: 'Kim ngân, lưỡi hổ, cây lá bạc', stones: 'Thạch anh trắng, kim sa, hổ phách trắng', element: 'kim' },
+                'Mộc': { colors: 'Xanh lá cây, Xanh lam, Đen, Xanh ngọc', items: 'Đồ gỗ tự nhiên, tranh cây cối, tượng gỗ, bonsai', plants: 'Cây phát tài, trúc, phú quý, cây xanh tươi tốt', stones: 'Ngọc bích, mã não xanh, emerald', element: 'moc' },
+                'Thủy': { colors: 'Đen, Xám, Xanh dương đậm, Xanh navy', items: 'Bể cá, thác nước mini, tranh biển, đài phun nước', plants: 'Cây thủy sinh, sen đá, trầu bà nước, lan ý', stones: 'Thạch anh đen, obsidian, lapis lazuli', element: 'thuy' },
+                'Hỏa': { colors: 'Đỏ, Cam, Hồng, Tím, Đỏ tươi', items: 'Đèn trang trí, nến thơm, tranh mặt trời, đồ điện tử', plants: 'Hoa hồng, phượng, cây lá đỏ, hoa đỏ', stones: 'Mã não đỏ, hồng ngọc, garnet', element: 'hoa' },
+                'Thổ': { colors: 'Vàng, Nâu đất, Cam đất, Be', items: 'Đồ gốm sứ, đá tự nhiên, tượng Phật đất nung, lư hương', plants: 'Xương rồng, sen đá, cây đa, cây lá dày', stones: 'Thạch anh vàng, hổ phách, citrine', element: 'tho' }
+            },
+            quai: {
+                'Càn': { dirs: { good: ['Tây','Đông Bắc','Tây Nam','Tây Bắc'], bad: ['Đông','Đông Nam','Nam','Bắc'] }, group: 'Tứ Trạch Tây', explain: 'Quái Càn tượng trưng cho Trời, kim loại cứng rắn. Người mệnh Càn thích sự vững chắc, trật tự.' },
+                'Khôn': { dirs: { good: ['Đông Bắc','Tây','Tây Bắc','Tây Nam'], bad: ['Đông','Đông Nam','Nam','Bắc'] }, group: 'Tứ Trạch Tây', explain: 'Quái Khôn tượng trưng cho Đất, sự bao dung. Người mệnh Khôn có tính kiên nhẫn, nuôi dưỡng.' },
+                'Đoài': { dirs: { good: ['Tây Bắc','Tây Nam','Đông Bắc','Tây'], bad: ['Đông','Đông Nam','Nam','Bắc'] }, group: 'Tứ Trạch Tây', explain: 'Quái Đoài tượng trưng cho Đầm lầy, kim loại mềm. Người mệnh Đoài vui vẻ, giao tiếp tốt.' },
+                'Cấn': { dirs: { good: ['Đông Bắc','Tây Bắc','Tây','Tây Nam'], bad: ['Đông','Nam','Bắc','Đông Nam'] }, group: 'Tứ Trạch Tây', explain: 'Quái Cấn tượng trưng cho Núi, sự vững chắc. Người mệnh Cấn có tính bền bỉ, kiên định.' },
+                'Chấn': { dirs: { good: ['Nam','Đông Nam','Bắc','Đông'], bad: ['Tây','Tây Bắc','Tây Nam','Đông Bắc'] }, group: 'Tứ Trạch Đông', explain: 'Quái Chấn tượng trưng cho Sấm, sự chuyển động. Người mệnh Chấn năng động, quyết đoán.' },
+                'Tốn': { dirs: { good: ['Bắc','Đông','Nam','Đông Nam'], bad: ['Tây Nam','Đông Bắc','Tây Bắc','Tây'] }, group: 'Tứ Trạch Đông', explain: 'Quái Tốn tượng trưng cho Gió, sự linh hoạt. Người mệnh Tốn khéo léo, thích nghi tốt.' },
+                'Ly': { dirs: { good: ['Đông','Nam','Đông Nam','Bắc'], bad: ['Đông Bắc','Tây Nam','Tây','Tây Bắc'] }, group: 'Tứ Trạch Đông', explain: 'Quái Ly tượng trưng cho Lửa, ánh sáng. Người mệnh Ly nhiệt huyết, sáng tạo, nổi bật.' },
+                'Khảm': { dirs: { good: ['Đông Nam','Bắc','Đông','Nam'], bad: ['Tây Bắc','Tây','Đông Bắc','Tây Nam'] }, group: 'Tứ Trạch Đông', explain: 'Quái Khảm tượng trưng cho Nước, sự thấu hiểu. Người mệnh Khảm thông minh, linh hoạt.' }
+            }
+        };
+
+        const STARS = ['Sinh Khí','Thiên Y','Diên Niên','Phục Vị'];
+        const BAD_STARS = ['Họa Hại','Lục Sát','Ngũ Quỷ','Tuyệt Mệnh'];
+        const STAR_DESC = ['Cực tốt - Vượng về tài lộc, sự nghiệp, con cái khỏe mạnh thông minh','Rất tốt - Sức khỏe dồi dào, gặp quý nhân phù trợ, bệnh tật tiêu tan','Tốt - Hôn nhân hạnh phúc, gia đạo hòa thuận, sống lâu','Khá tốt - Cuộc sống bình an, ổn định, không có biến cố lớn'];
+        const BAD_DESC = ['Xấu - Dễ gặp tai nạn nhỏ, tranh cãi trong gia đình','Rất xấu - Tranh chấp pháp lý, kiện tụng, tiêu tán tài sản','Cực xấu - Bệnh tật nghiêm trọng, hỏa hoạn, mất mát lớn','Hung nhất - Tai họa lớn, nguy hiểm tính mạng, phá sản'];
+
+        function calcMenh(y) {
+            // Tính theo Nạp Âm Ngũ Hành đầy đủ (60 năm một giáp)
+            const napAm = [
+                'Giáp Tý - Hải Trung Kim','Ất Sửu - Hải Trung Kim','Bính Dần - Lư Trung Hỏa','Đinh Mão - Lư Trung Hỏa','Mậu Thìn - Đại Lâm Mộc','Kỷ Tỵ - Đại Lâm Mộc',
+                'Canh Ngọ - Lộ Bàng Thổ','Tân Mùi - Lộ Bàng Thổ','Nhâm Thân - Kiếm Phong Kim','Quý Dậu - Kiếm Phong Kim','Giáp Tuất - Sơn Đầu Hỏa','Ất Hợi - Sơn Đầu Hỏa',
+                'Bính Tý - Giản Hạ Thủy','Đinh Sửu - Giản Hạ Thủy','Mậu Dần - Thành Đầu Thổ','Kỷ Mão - Thành Đầu Thổ','Canh Thìn - Bạch Lạp Kim','Tân Tỵ - Bạch Lạp Kim',
+                'Nhâm Ngọ - Dương Liễu Mộc','Quý Mùi - Dương Liễu Mộc','Giáp Thân - Tuyền Trung Thủy','Ất Dậu - Tuyền Trung Thủy','Bính Tuất -옥 Thượng Thổ','Đinh Hợi - Ốc Thượng Thổ',
+                'Mậu Tý - Tích Lịch Hỏa','Kỷ Sửu - Tích Lịch Hỏa','Canh Dần - Tùng Bách Mộc','Tân Mão - Tùng Bách Mộc','Nhâm Thìn - Trường Lưu Thủy','Quý Tỵ - Trường Lưu Thủy',
+                'Giáp Ngọ - Sa Trung Kim','Ất Mùi - Sa Trung Kim','Bính Thân - Sơn Hạ Hỏa','Đinh Dậu - Sơn Hạ Hỏa','Mậu Tuất - Bình Địa Mộc','Kỷ Hợi - Bình Địa Mộc',
+                'Canh Tý - Bích Thượng Thổ','Tân Sửu - Bích Thượng Thổ','Nhâm Dần - Kim Bạch Kim','Quý Mão - Kim Bạch Kim','Giáp Thìn - Phúc Đăng Hỏa','Ất Tỵ - Phúc Đăng Hỏa',
+                'Bính Ngọ - Thiên Hà Thủy','Đinh Mùi - Thiên Hà Thủy','Mậu Thân - Đại Trạch Thổ','Kỷ Dậu - Đại Trạch Thổ','Canh Tuất - Thoa Xuyến Kim','Tân Hợi - Thoa Xuyến Kim',
+                'Nhâm Tý - Tang Đố Mộc','Quý Sửu - Tang Đố Mộc','Giáp Dần - Đại Khê Thủy','Ất Mão - Đại Khê Thủy','Bính Thìn - Sa Trung Thổ','Đinh Tỵ - Sa Trung Thổ',
+                'Mậu Ngọ - Thiên Thượng Hỏa','Kỷ Mùi - Thiên Thượng Hỏa','Canh Thân - Thạch Lựu Mộc','Tân Dậu - Thạch Lựu Mộc','Nhâm Tuất - Đại Hải Thủy','Quý Hợi - Đại Hải Thủy'
+            ];
+            // Năm 1984 là Giáp Tý (index 0)
+            const baseYear = 1984;
+            let index = (y - baseYear) % 60;
+            if (index < 0) index += 60;
+            return napAm[index];
+        }
+
+        function calcQuai(y, g) {
+            const last = y % 100;
+            let n = g === 'nam' ? (100 - last) % 9 : (last - 4) % 9;
+            if (n === 0) n = 9;
+            if (n < 0) n += 9;
+            if (n === 5) n = g === 'nam' ? 2 : 8;
+            const q = {1:'Khảm',2:'Khôn',3:'Chấn',4:'Tốn',6:'Càn',7:'Đoài',8:'Cấn',9:'Ly'};
+            return q[n];
+        }
+
+        function drawCompass(q) {
+            const dirs = ['Bắc','Đông Bắc','Đông','Đông Nam','Nam','Tây Nam','Tây','Tây Bắc'];
+            const angs = [0,45,90,135,180,225,270,315];
+            const s = 400, cx = s/2, r = s/2-20;
+            let svg = `<svg width="${s}" height="${s}"><circle cx="${cx}" cy="${cx}" r="${r}" fill="#f5f7fa" stroke="#667eea" stroke-width="3"/>`;
+            
+            dirs.forEach((d, i) => {
+                const a = (angs[i]-90)*Math.PI/180;
+                const good = DATA.quai[q].dirs.good.includes(d);
+                const col = good ? '#4CAF50' : '#f44336';
+                const fill = good ? '#e8f5e9' : '#ffebee';
+                
+                const a1 = (angs[i]-22.5-90)*Math.PI/180, a2 = (angs[i]+22.5-90)*Math.PI/180;
+                const x1 = cx+Math.cos(a1)*r, y1 = cx+Math.sin(a1)*r;
+                const x2 = cx+Math.cos(a2)*r, y2 = cx+Math.sin(a2)*r;
+                svg += `<path d="M${cx} ${cx}L${x1} ${y1}A${r} ${r} 0 0 1 ${x2} ${y2}Z" fill="${fill}" stroke="${col}" stroke-width="2" opacity="0.7"/>`;
+                
+                const tx = cx+Math.cos(a)*r*0.75, ty = cx+Math.sin(a)*r*0.75;
+                svg += `<text x="${tx}" y="${ty}" text-anchor="middle" dominant-baseline="middle" font-size="16" font-weight="bold" fill="${col}">${d}</text>`;
+                
+                const ix = cx+Math.cos(a)*r*0.5, iy = cx+Math.sin(a)*r*0.5;
+                svg += `<text x="${ix}" y="${iy}" text-anchor="middle" dominant-baseline="middle" font-size="20" fill="${col}">${good?'★':'✕'}</text>`;
+            });
+            
+            svg += `<circle cx="${cx}" cy="${cx}" r="40" fill="white" stroke="#667eea" stroke-width="3"/>`;
+            svg += `<text x="${cx}" y="${cx}" text-anchor="middle" dominant-baseline="middle" font-size="18" font-weight="bold" fill="#667eea">LA BÀN</text></svg>`;
+            return svg;
+        }
+
+        function calculateFengShui() {
+            const y = parseInt(document.getElementById('year').value);
+            const g = document.getElementById('gender').value;
+            if (!y || !g || y < 1900 || y > 2100) { alert('Vui lòng nhập đầy đủ thông tin hợp lệ!'); return; }
+
+            const m = calcMenh(y);
+            // Tách lấy ngũ hành chính (Kim, Mộc, Thủy, Hỏa, Thổ)
+            let mt = 'Thổ'; // Mặc định
+            if (m.includes('Kim')) mt = 'Kim';
+            else if (m.includes('Mộc')) mt = 'Mộc';
+            else if (m.includes('Thủy')) mt = 'Thủy';
+            else if (m.includes('Hỏa')) mt = 'Hỏa';
+            else if (m.includes('Thổ')) mt = 'Thổ';
+            
+            const q = calcQuai(y, g);
+            const qd = DATA.quai[q];
+            const md = DATA.menh[mt];
+
+            let html = `
+            <div class="result-card">
+                <h2>🌟 Thông Tin Mệnh & Quái Số</h2>
+                <div class="info-box">
+                    <strong>Mệnh của bạn:</strong> <span class="element-tag ${md.element}">${m}</span>
+                    <br><strong>Quái số:</strong> ${q}
+                    <br><strong>Hướng:</strong> ${qd.group}
+                </div>
+                <div class="detail-box"><strong>📖 Giải thích:</strong><br>${qd.explain}</div>
+            </div>
+
+            <div class="result-card">
+                <h2>🧭 La Bàn 8 Hướng</h2>
+                <div style="width: 100%; max-width: 400px; margin: 20px auto;">${drawCompass(q)}</div>
+                <div class="direction-note">★ = Hướng tốt (màu xanh) | ✕ = Hướng xấu (màu đỏ)</div>
+            </div>
+
+            <div class="result-card">
+                <h2>⭐ Bát Trạch 8 Sao Chi Tiết</h2>
+                <h3>🌟 4 Sao Tốt (Tứ Cát Tinh):</h3>`;
+            
+            for (let i=0; i<4; i++) {
+                html += `<div class="info-box" style="background:#f1f8f4;border-left-color:#4CAF50">
+                    <strong>⭐ ${STARS[i]} - Hướng <span class="highlight">${qd.dirs.good[i]}</span></strong><br>${STAR_DESC[i]}
+                </div>`;
+            }
+            
+            html += `<h3>💀 4 Sao Xấu (Tứ Hung Tinh):</h3>`;
+            for (let i=0; i<4; i++) {
+                html += `<div class="info-box" style="background:#fff5f5;border-left-color:#f44336">
+                    <strong>💀 ${BAD_STARS[i]} - Hướng <span class="highlight">${qd.dirs.bad[i]}</span></strong><br>${BAD_DESC[i]}
+                </div>`;
+            }
+            html += `</div>
+
+            <div class="result-card">
+                <h2>🛏️ Phong Thủy Phòng Ngủ</h2>
+                <div class="info-box"><strong>🎯 Hướng TỐT NHẤT:</strong> <span class="highlight">${qd.dirs.good[0]} (Sinh Khí)</span> hoặc <span class="highlight">${qd.dirs.good[1]} (Thiên Y)</span></div>
+                <div class="detail-box">
+                    <h4>📍 Vị trí đặt phòng ngủ:</h4>
+                    <strong>Hướng ưu tiên 1:</strong> Phòng ngủ đặt ở phía <span class="highlight">${qd.dirs.good[0]}</span> của nhà (Sinh Khí - tốt cho tài lộc, con cái)<br>
+                    <strong>Hướng ưu tiên 2:</strong> Phòng ngủ đặt ở phía <span class="highlight">${qd.dirs.good[1]}</span> của nhà (Thiên Y - tốt cho sức khỏe)<br>
+                    <strong>Hướng thay thế:</strong> Có thể chọn <span class="highlight">${qd.dirs.good[2]}</span> (Diên Niên - tốt cho vợ chồng)
+                    
+                    <h4>🛌 Hướng đầu giường nằm:</h4>
+                    <strong>Tốt nhất:</strong> Đầu giường hướng về <span class="highlight">${qd.dirs.good[0]}</span> (Sinh Khí)<br>
+                    <strong>Lựa chọn 2:</strong> Đầu giường hướng về <span class="highlight">${qd.dirs.good[1]}</span> (Thiên Y - nếu thường xuyên ốm đau)<br>
+                    <strong>Lựa chọn 3:</strong> Đầu giường hướng về <span class="highlight">${qd.dirs.good[2]}</span> (Diên Niên - tốt cho hôn nhân)<br>
+                    <em class="direction-note">Lưu ý: "Hướng đầu giường" là hướng đỉnh đầu bạn hướng về khi nằm trên giường</em>
+                    
+                    <h4>⚠️ Lưu ý quan trọng:</h4>
+                    <ul style="margin-left: 20px; margin-top: 5px;">
+                        <li>Không đặt gương soi trực diện giường</li>
+                        <li>Tránh dầm đè trực tiếp lên đầu giường</li>
+                        <li>Giường không nên chung tường với toilet</li>
+                        <li>Đầu giường nên tựa vào tường vững chắc</li>
+                        <li>Tránh cửa phòng đối thẳng chân giường</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="result-card">
+                <h2>🍳 Phong Thủy Phòng Bếp</h2>
+                <div class="info-box"><strong>🎯 Hướng TỐT NHẤT:</strong> Đặt bếp ở hướng <span class="highlight">${qd.dirs.bad[2]}</span> hoặc <span class="highlight">${qd.dirs.bad[3]}</span> để ép hung khí</div>
+                <div class="detail-box">
+                    <h4>📍 Vị trí đặt bếp:</h4>
+                    <strong>Nguyên tắc:</strong> Bếp nên đặt ở hướng XẤU để "đốt cháy" hung khí<br>
+                    <strong>Vị trí tốt nhất:</strong> Phòng bếp ở phía <span class="highlight">${qd.dirs.bad[2]}</span> hoặc <span class="highlight">${qd.dirs.bad[3]}</span> của nhà<br>
+                    <strong>Có thể chấp nhận:</strong> Đặt ở phía <span class="highlight">${qd.dirs.bad[1]}</span>
+                    
+                    <h4>🔥 Hướng miệng bếp khi nấu:</h4>
+                    <strong>Miệng bếp hướng:</strong> <span class="highlight">${qd.dirs.good[1]}</span> (Thiên Y) khi nấu nướng<br>
+                    <em class="direction-note">"Miệng bếp" là hướng mà bạn đứng nấu, nguồn lửa/nhiệt hướng vào</em><br>
+                    <strong>Lưu ý:</strong> Vị trí bếp và hướng miệng bếp là 2 điều khác nhau!
+                    
+                    <h4>⚠️ Lưu ý quan trọng:</h4>
+                    <ul style="margin-left: 20px; margin-top: 5px;">
+                        <li>Bếp KHÔNG được đối diện cửa chính</li>
+                        <li>Tránh đặt bếp dưới nhà vệ sinh tầng trên</li>
+                        <li>Không để bếp đối thẳng phòng ngủ</li>
+                        <li>Bếp không nên nằm giữa nhà</li>
+                        <li>Luôn giữ bếp sạch sẽ, thoáng mát</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="result-card">
+                <h2>🚿 Phong Thủy Phòng Tắm & WC</h2>
+                <div class="info-box"><strong>🎯 Nguyên tắc:</strong> Đặt ở hướng XẤU để hóa giải hung khí</div>
+                <div class="detail-box">
+                    <h4>📍 Vị trí phù hợp:</h4>
+                    <strong>Vị trí tốt nhất:</strong> Đặt toilet/nhà tắm ở phía <span class="highlight">${qd.dirs.bad[2]}</span> hoặc <span class="highlight">${qd.dirs.bad[3]}</span><br>
+                    <strong>Có thể chấp nhận:</strong> Đặt ở phía <span class="highlight">${qd.dirs.bad[0]}</span> hoặc <span class="highlight">${qd.dirs.bad[1]}</span><br>
+                    <strong>Nguyên tắc:</strong> Toilet đặt ở hướng xấu để "xả" hung khí ra ngoài
+                    
+                    <h4>⚠️ Lưu ý quan trọng:</h4>
+                    <ul style="margin-left: 20px; margin-top: 5px;">
+                        <li>LUÔN đóng nắp bồn cầu và cửa toilet</li>
+                        <li>Phải có cửa sổ hoặc hệ thống thông gió tốt</li>
+                        <li>Giữ khô ráo, sạch sẽ thường xuyên</li>
+                        <li>Tuyệt đối KHÔNG để toilet ở trung tâm nhà</li>
+                        <li>Không để toilet đối diện bếp hoặc bàn thờ</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="result-card">
+                <h2>📚 Phong Thủy Phòng Làm Việc</h2>
+                <div class="info-box"><strong>🎯 Hướng TỐT NHẤT:</strong> <span class="highlight">${qd.dirs.good[0]} (Sinh Khí)</span> - tốt nhất cho công việc, tài vận</div>
+                <div class="detail-box">
+                    <h4>📍 Vị trí phòng làm việc:</h4>
+                    <strong>Tốt nhất:</strong> Phòng làm việc ở phía <span class="highlight">${qd.dirs.good[0]}</span> của nhà (Sinh Khí - vượng sự nghiệp)<br>
+                    <strong>Lựa chọn 2:</strong> Đặt ở phía <span class="highlight">${qd.dirs.good[1]}</span> (Thiên Y - tốt nếu công việc áp lực)<br>
+                    <strong>Lựa chọn 3:</strong> Đặt ở phía <span class="highlight">${qd.dirs.good[3]}</span> (Phục Vị - công việc ổn định)
+                    
+                    <h4>💼 Hướng ngồi làm việc:</h4>
+                    <strong>Hướng ngồi tốt nhất:</strong> Ngồi hướng mặt về <span class="highlight">${qd.dirs.good[0]}</span> (Sinh Khí)<br>
+                    <strong>Hướng ngồi thay thế:</strong> Có thể ngồi hướng về <span class="highlight">${qd.dirs.good[1]}</span> hoặc <span class="highlight">${qd.dirs.good[2]}</span><br>
+                    <em class="direction-note">"Hướng ngồi" là hướng bạn nhìn về khi ngồi làm việc</em>
+                    
+                    <h4>⚠️ Lưu ý quan trọng:</h4>
+                    <ul style="margin-left: 20px; margin-top: 5px;">
+                        <li>Bàn làm việc PHẢI tựa lưng vào tường</li>
+                        <li>KHÔNG ngồi quay lưng về phía cửa</li>
+                        <li>Nên có ánh sáng tự nhiên từ bên trái</li>
+                        <li>Tránh ngồi dưới dầm hoặc đèn treo</li>
+                        <li>Bàn làm việc gọn gàng, có cây xanh</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="result-card">
+                <h2>🙏 Phong Thủy Phòng Thờ & Bàn Thờ</h2>
+                <div class="info-box"><strong>🎯 Hướng TỐT NHẤT:</strong> <span class="highlight">${qd.dirs.good[0]} (Sinh Khí)</span> hoặc <span class="highlight">${qd.dirs.good[1]} (Thiên Y)</span></div>
+                <div class="detail-box">
+                    <h4>📍 Vị trí đặt bàn thờ:</h4>
+                    <strong>Vị trí tốt nhất:</strong> Đặt bàn thờ ở phía <span class="highlight">${qd.dirs.good[0]}</span> của nhà (Sinh Khí - vượng phúc lộc)<br>
+                    <strong>Vị trí tốt thứ 2:</strong> Đặt bàn thờ ở phía <span class="highlight">${qd.dirs.good[1]}</span> của nhà (Thiên Y - che chở sức khỏe)<br>
+                    <strong>Vị trí thay thế:</strong> Có thể đặt ở phía <span class="highlight">${qd.dirs.good[3]}</span> (Phục Vị - bình an)<br>
+                    <strong>⚠️ TUYỆT ĐỐI TRÁNH:</strong> Không đặt bàn thờ ở phía <span style="color:#f44336;font-weight:bold">${qd.dirs.bad[3]}</span> (Tuyệt Mệnh) hoặc <span style="color:#f44336;font-weight:bold">${qd.dirs.bad[2]}</span> (Ngũ Quỷ)
+                    
+                    <h4>🧭 Hướng bàn thờ (hướng mặt tượng/ảnh):</h4>
+                    <strong>Hướng tốt nhất:</strong> Tượng/ảnh trên bàn thờ nên hướng mặt về <span class="highlight">${qd.dirs.good[0]}</span> (Sinh Khí)<br>
+                    <strong>Hướng tốt thứ 2:</strong> Có thể hướng về <span class="highlight">${qd.dirs.good[1]}</span> (Thiên Y)<br>
+                    <strong>Hướng thay thế:</strong> Hướng về <span class="highlight">${qd.dirs.good[2]}</span> (Diên Niên) hoặc <span class="highlight">${qd.dirs.good[3]}</span> (Phục Vị)<br>
+                    <em class="direction-note">Lưu ý: "Hướng bàn thờ" là hướng mặt của tượng/ảnh trên bàn thờ nhìn ra, người thờ cúng sẽ đứng đối diện</em><br>
+                    <strong>Truyền thống:</strong> Nhiều gia đình thờ hướng Đông (hướng mặt trời mọc) hoặc Nam (tượng trưng vương khí)
+                    
+                    <h4>⚠️ Lưu ý quan trọng:</h4>
+                    <ul style="margin-left: 20px; margin-top: 5px;">
+                        <li>Bàn thờ PHẢI đặt ở vị trí cao nhất trong nhà</li>
+                        <li>KHÔNG đặt dưới nhà vệ sinh/phòng ngủ tầng trên</li>
+                        <li>KHÔNG để bàn thờ quay về phía toilet</li>
+                        <li>Phía sau bàn thờ nên là tường vững chắc</li>
+                        <li>KHÔNG đặt bàn thờ sát cửa ra vào</li>
+                        <li>Tránh để bàn thờ dưới gầm cầu thang</li>
+                        <li>Không để bàn thờ ở góc tối, ẩm ướt</li>
+                        <li>Luôn giữ bàn thờ sạch sẽ, trang nghiêm</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="result-card">
+                <h2>🏡 Phong Thủy Cửa Chính</h2>
+                <div class="detail-box">
+                    <h4>🚪 Hướng cửa chính:</h4>
+                    <strong>Hướng tốt nhất:</strong> Cửa chính mở về phía <span class="highlight">${qd.dirs.good[0]}</span> (Sinh Khí - đón tài vận)<br>
+                    <strong>Hướng tốt thứ 2:</strong> Cửa chính mở về phía <span class="highlight">${qd.dirs.good[1]}</span> (Thiên Y - đón quý nhân)<br>
+                    <strong>Hướng tốt thứ 3:</strong> Cửa chính mở về phía <span class="highlight">${qd.dirs.good[2]}</span> (Diên Niên - hòa thuận)<br>
+                    <strong>Tránh:</strong> Cửa chính hướng về ${qd.dirs.bad[3]} (Tuyệt Mệnh - rất xấu)
+                    
+                    <h4>⚠️ Lưu ý:</h4>
+                    <ul style="margin-left: 20px; margin-top: 5px;">
+                        <li>Cửa chính là nơi đón khí vào nhà</li>
+                        <li>Nên rộng rãi, sáng sủa, không bị che khuất</li>
+                        <li>Tránh cửa chính thẳng hàng với cửa sau</li>
+                        <li>Không để rác, giày dép lộn xộn ở cửa</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="result-card">
+                <h2>🎨 Vật Phẩm & Màu Sắc Phong Thủy</h2>
+                <div class="detail-box">
+                    <h4>🎨 Màu sắc tương sinh:</h4>
+                    <strong>${md.colors}</strong><br><em class="direction-note">Dùng các màu này cho sơn tường, nội thất, quần áo</em>
+                    
+                    <h4>🏺 Vật phẩm nên đặt:</h4>
+                    <strong>${md.items}</strong><br><em class="direction-note">Đặt ở hướng tốt (${qd.dirs.good[0]}, ${qd.dirs.good[1]}) để tăng vận</em>
+                    
+                    <h4>🌱 Cây phong thủy:</h4>
+                    <strong>${md.plants}</strong><br><em class="direction-note">Đặt cây ở góc phòng khách hoặc hướng Sinh Khí</em>
+                    
+                    <h4>💎 Đá phong thủy & Vị trí đặt:</h4>
+                    <strong>${md.stones}</strong><br>
+                    <strong>📍 Vị trí đặt đá thạch anh trong nhà:</strong><br>
+                    • <strong>Phòng khách:</strong> Đặt cụm thạch anh ở hướng <span class="highlight">${qd.dirs.good[0]}</span> (Sinh Khí) để thu hút tài lộc<br>
+                    • <strong>Bàn làm việc:</strong> Đặt thạch anh tự nhiên góc trái bàn (tài vận) hoặc trước mặt<br>
+                    • <strong>Phòng ngủ:</strong> Đặt thạch anh hồng/tím gần đầu giường hướng <span class="highlight">${qd.dirs.good[2]}</span> (Diên Niên - tình duyên)<br>
+                    • <strong>Cửa chính:</strong> Đặt cụm thạch anh lớn bên trái cửa (nhìn từ trong ra) để trấn trạch<br>
+                    • <strong>Bàn thờ:</strong> Có thể đặt đá quý tự nhiên 2 bên bàn thờ<br>
+                    <em style="color: #f44336;">⚠️ Lưu ý: Không đặt thạch anh tại hướng ${qd.dirs.bad[3]} (Tuyệt Mệnh)</em>
+                </div>
+            </div>
+
+            <div class="result-card">
+                <h2>⚠️ Điều Cần Tránh</h2>
+                <div class="info-box" style="border-left-color: #f44336;">
+                    <strong>🚫 Tránh màu sắc tương khắc:</strong><br>
+                    ${mt === 'Kim' ? '• Tránh màu Đỏ, Cam (Hỏa khắc Kim)<br>' : ''}
+                    ${mt === 'Mộc' ? '• Tránh màu Trắng, Vàng kim (Kim khắc Mộc)<br>' : ''}
+                    ${mt === 'Thủy' ? '• Tránh màu Vàng, Nâu đất (Thổ khắc Thủy)<br>' : ''}
+                    ${mt === 'Hỏa' ? '• Tránh màu Đen, Xanh đậm (Thủy khắc Hỏa)<br>' : ''}
+                    ${mt === 'Thổ' ? '• Tránh màu Xanh lá (Mộc khắc Thổ)<br>' : ''}
+                    <strong>🚫 Điều kiêng kỵ khác:</strong>
+                    <ul style="margin-left: 20px; margin-top: 5px;">
+                        <li>Không trồng cây có gai trong nhà (xương rồng ngoại trừ)</li>
+                        <li>Không để đồ vật bể vỡ, hư hỏng lâu ngày</li>
+                        <li>Không để giày dép lộn xộn ở cửa ra vào</li>
+                        <li>Không treo tranh mãnh thú, cảnh hoang tàn</li>
+                        <li>Không tích trữ đồ cũ, rác thải quá nhiều</li>
+                        <li>Tránh có gương lớn đối diện cửa chính</li>
+                        <li>Không đặt bàn thờ dưới nhà vệ sinh tầng trên</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="result-card">
+                <h2>💡 Mẹo Tăng Cường Vận May</h2>
+                <div class="detail-box">
+                    <ul style="margin-left: 20px;">
+                        <li>✨ Thắp đèn ở hướng <strong>Sinh Khí</strong> để tăng tài vận</li>
+                        <li>🛏️ Đặt giường ở hướng <strong>Thiên Y</strong> nếu ốm yếu</li>
+                        <li>💑 Hướng <strong>Diên Niên</strong> tốt cho vợ chồng hòa thuận</li>
+                        <li>🌿 Đặt cây xanh, bể cá ở hướng tốt</li>
+                        <li>🧹 Luôn giữ nhà cửa sạch sẽ, thoáng đãng</li>
+                        <li>🗑️ Vứt bỏ đồ cũ, hư hỏng thường xuyên</li>
+                    </ul>
+                </div>
+            </div>`;
+
+            document.getElementById('results').innerHTML = html;
+            document.getElementById('results').classList.add('show');
+            document.getElementById('results').scrollIntoView({behavior:'smooth'});
+        }
+    </script>
+</body>
+</html>
