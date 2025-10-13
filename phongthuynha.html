@@ -339,18 +339,262 @@
         }
         
         @media (max-width: 768px) {
+            /* Header */
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .header p {
+                font-size: 14px;
+            }
+            
+            /* Container padding */
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 0;
+            }
+            
+            /* Card padding */
+            .card {
+                padding: 20px 15px;
+                margin-bottom: 15px;
+            }
+            
+            /* Input section */
+            .input-section {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            /* Form elements */
+            input, select {
+                font-size: 16px; /* Quan trọng: tránh zoom khi focus trên iOS */
+                padding: 14px 12px;
+            }
+            
+            label {
+                font-size: 15px;
+            }
+            
+            /* Button */
+            .btn {
+                padding: 14px 30px;
+                font-size: 16px;
+            }
+            
+            /* Result cards */
+            .result-card {
+                padding: 20px 15px;
+                margin-bottom: 15px;
+            }
+            
+            .result-card h2 {
+                font-size: 1.5em;
+                margin-bottom: 12px;
+            }
+            
+            .result-card h3 {
+                font-size: 1.2em;
+                margin-top: 15px;
+                margin-bottom: 8px;
+            }
+            
+            .result-card h4 {
+                font-size: 1em;
+                margin-top: 12px;
+                margin-bottom: 8px;
+            }
+            
+            /* Info boxes */
+            .info-box {
+                padding: 12px;
+                font-size: 14px;
+            }
+            
+            .detail-box {
+                padding: 12px;
+                font-size: 14px;
+            }
+            
+            .detail-box ul {
+                margin-left: 15px;
+            }
+            
+            .detail-box ul li {
+                font-size: 13px;
+                margin-bottom: 5px;
+            }
+            
+            /* Highlight text */
+            .highlight {
+                font-size: 13px;
+                padding: 2px 6px;
+            }
+            
+            /* Element tags */
+            .element-tag {
+                padding: 6px 15px;
+                font-size: 14px;
+                margin: 3px;
+            }
+            
+            /* Direction note */
+            .direction-note {
+                font-size: 12px;
+            }
+            
+            /* ========== LA BÀN ĐIỆN TỬ - MOBILE ========== */
+            
+            /* La bàn live widget */
+            .compass-live-widget {
+                padding: 15px;
+                margin: 15px 0;
+            }
+            
+            .compass-live-widget h4 {
+                font-size: 1em;
+                margin-bottom: 12px;
+            }
+            
+            .compass-live-display {
+                padding: 15px;
+            }
+            
             .compass-container-live {
                 flex-direction: column;
+                gap: 20px;
             }
+            
+            /* La bàn device - nhỏ hơn trên mobile */
             .compass-device {
-                width: 200px;
-                height: 200px;
+                width: 180px;
+                height: 180px;
             }
+            
+            .compass-device-circle {
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15), inset 0 2px 5px rgba(255, 255, 255, 0.5);
+            }
+            
+            .compass-device-inner {
+                top: 10px;
+                left: 10px;
+                right: 10px;
+                bottom: 10px;
+            }
+            
+            .compass-device-center {
+                width: 15px;
+                height: 15px;
+            }
+            
+            .compass-device-needle {
+                width: 3px;
+                height: 65px;
+                margin-left: -1.5px;
+                margin-top: -55px;
+                transform-origin: 1.5px 55px;
+            }
+            
+            .compass-device-needle::before {
+                border-left: 5px solid transparent;
+                border-right: 5px solid transparent;
+                border-bottom: 10px solid #e74c3c;
+                top: -8px;
+            }
+            
+            .compass-device-label.n {
+                font-size: 16px;
+                top: 8px;
+            }
+            
+            .compass-device-label.e,
+            .compass-device-label.s,
+            .compass-device-label.w {
+                font-size: 13px;
+            }
+            
+            .compass-device-label.e {
+                right: 8px;
+            }
+            
+            .compass-device-label.s {
+                bottom: 8px;
+            }
+            
+            .compass-device-label.w {
+                left: 8px;
+            }
+            
+            /* Info live */
+            .compass-info-live {
+                min-width: 100%;
+            }
+            
             .compass-degree-live {
-                font-size: 48px;
+                font-size: 42px;
+                margin-bottom: 8px;
             }
+            
             .compass-direction-live {
-                font-size: 20px;
+                font-size: 18px;
+                margin-bottom: 12px;
+            }
+            
+            /* Buttons */
+            .compass-btn-live {
+                padding: 12px 25px;
+                font-size: 15px;
+                margin-bottom: 8px;
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .compass-use-direction-btn {
+                padding: 10px 20px;
+                font-size: 14px;
+                margin: 12px auto 0;
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            /* Status */
+            .compass-status-live {
+                font-size: 13px;
+                padding: 8px 6px;
+            }
+            
+            .compass-error-live {
+                font-size: 12px;
+                padding: 10px 8px;
+            }
+            
+            /* ========== LA BÀN TĨNH SVG - MOBILE ========== */
+            
+            .compass-section {
+                gap: 15px;
+                margin: 15px 0;
+            }
+            
+            /* SVG compass scaling */
+            .compass-section > div {
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+            
+            .compass-section svg {
+                width: 100% !important;
+                height: auto !important;
+                max-width: 400px;
+                display: block;
+                margin: 0 auto;
+            }
+            
+            /* Quẻ labels trong SVG */
+            .quai-label {
+                font-size: 12px;
             }
         }
     </style>
