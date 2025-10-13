@@ -102,6 +102,257 @@
             gap: 20px;
             margin: 20px 0;
         }
+        .quai-label {
+            font-size: 14px;
+            font-weight: bold;
+            fill: #333;
+        }
+        /* CSS cho la bàn điện tử tích hợp */
+        .compass-live-widget {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+        
+        .compass-live-widget h4 {
+            color: white;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 1.2em;
+        }
+        
+        .compass-live-display {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+        }
+        
+        .compass-container-live {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .compass-device {
+            position: relative;
+            width: 220px;
+            height: 220px;
+            flex-shrink: 0;
+        }
+        
+        .compass-device-circle {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15), inset 0 2px 8px rgba(255, 255, 255, 0.5);
+            position: relative;
+            transition: transform 0.3s ease-out;
+        }
+        
+        .compass-device-inner {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            right: 12px;
+            bottom: 12px;
+            border-radius: 50%;
+            background: white;
+            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .compass-device-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 18px;
+            height: 18px;
+            background: #667eea;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.5);
+            z-index: 10;
+        }
+        
+        .compass-device-needle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 4px;
+            height: 80px;
+            margin-left: -2px;
+            margin-top: -70px;
+            background: linear-gradient(to bottom, #e74c3c 0%, #e74c3c 50%, #95a5a6 50%, #95a5a6 100%);
+            border-radius: 2px;
+            transform-origin: 2px 70px;
+            transition: transform 0.3s ease-out;
+            z-index: 5;
+        }
+        
+        .compass-device-needle::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 7px solid transparent;
+            border-right: 7px solid transparent;
+            border-bottom: 14px solid #e74c3c;
+        }
+        
+        .compass-device-labels {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .compass-device-label {
+            position: absolute;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .compass-device-label.n { 
+            top: 12px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            color: #e74c3c; 
+            font-size: 18px; 
+        }
+        .compass-device-label.e { 
+            top: 50%; 
+            right: 12px; 
+            transform: translateY(-50%); 
+            font-size: 15px; 
+        }
+        .compass-device-label.s { 
+            bottom: 12px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            font-size: 15px; 
+        }
+        .compass-device-label.w { 
+            top: 50%; 
+            left: 12px; 
+            transform: translateY(-50%); 
+            font-size: 15px; 
+        }
+        
+        .compass-info-live {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .compass-degree-live {
+            font-size: 56px;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .compass-direction-live {
+            font-size: 24px;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .compass-btn-live {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 14px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: block;
+            margin: 0 auto 10px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        .compass-btn-live:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .compass-btn-live:active {
+            transform: translateY(0);
+        }
+        
+        .compass-status-live {
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            margin-top: 10px;
+            min-height: 20px;
+            padding: 8px;
+            background: #f5f7fa;
+            border-radius: 6px;
+        }
+        
+        .compass-error-live {
+            color: #f44336;
+            background: rgba(244, 67, 54, 0.1);
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 10px;
+            font-size: 13px;
+            text-align: center;
+            border: 1px solid rgba(244, 67, 54, 0.3);
+        }
+        
+        .compass-use-direction-btn {
+            background: #4CAF50;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: block;
+            margin: 15px auto 0;
+            box-shadow: 0 3px 10px rgba(76, 175, 80, 0.3);
+        }
+        
+        .compass-use-direction-btn:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+        }
+        
+        .compass-use-direction-btn:active {
+            transform: translateY(0);
+        }
+        
+        @media (max-width: 768px) {
+            .compass-container-live {
+                flex-direction: column;
+            }
+            .compass-device {
+                width: 200px;
+                height: 200px;
+            }
+            .compass-degree-live {
+                font-size: 48px;
+            }
+            .compass-direction-live {
+                font-size: 20px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -220,11 +471,46 @@
         }
 
         function drawCompass(q, doorDir) {
+            const s = 500, cx = s/2, r = s/2-40;
             const dirs = ['Bắc','Đông Bắc','Đông','Đông Nam','Nam','Tây Nam','Tây','Tây Bắc'];
             const angs = [0,45,90,135,180,225,270,315];
-            const s = 500, cx = s/2, r = s/2-40;
+            const quai = ['Khảm','Cấn','Chấn','Tốn','Ly','Khôn','Đoài','Càn'];
+        
+            // Tạo phần la bàn điện tử
+            let liveCompass = `
+            <div class="compass-live-widget">
+                <h4>🧭 LA BÀN ĐIỆN TỬ - Xác Định Hướng Thực Tế</h4>
+                <div class="compass-live-display">
+                    <div class="compass-container-live">
+                        <div class="compass-device">
+                            <div class="compass-device-circle" id="compassCircleLive">
+                                <div class="compass-device-inner">
+                                    <div class="compass-device-labels">
+                                        <div class="compass-device-label n">B</div>
+                                        <div class="compass-device-label e">Đ</div>
+                                        <div class="compass-device-label s">N</div>
+                                        <div class="compass-device-label w">T</div>
+                                    </div>
+                                </div>
+                                <div class="compass-device-needle" id="compassNeedleLive"></div>
+                                <div class="compass-device-center"></div>
+                            </div>
+                        </div>
+                        <div class="compass-info-live">
+                            <div class="compass-degree-live" id="compassDegreeLive">0°</div>
+                            <div class="compass-direction-live" id="compassDirectionLive">Bắc</div>
+                            <button class="compass-btn-live" id="compassBtnLive">🧭 Kích Hoạt La Bàn</button>
+                            <button class="compass-use-direction-btn hidden" id="useDirectionBtn">✓ Dùng Hướng Này Cho Cửa Chính</button>
+                            <div class="compass-status-live" id="compassStatusLive">Nhấn nút để xác định hướng cửa chính</div>
+                            <div class="compass-error-live hidden" id="compassErrorLive"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+        
+            // Tạo la bàn SVG tĩnh (giữ nguyên)
             let svg = `<svg width="${s}" height="${s}"><circle cx="${cx}" cy="${cx}" r="${r}" fill="#f5f7fa" stroke="#667eea" stroke-width="3"/>`;
-            
+        
             dirs.forEach((d, i) => {
                 const a = (angs[i]-90)*Math.PI/180;
                 const good = DATA.quai[q].dirs.good.includes(d);
@@ -232,28 +518,38 @@
                 const doorGood = isDoor && good;
                 const col = isDoor ? (doorGood ? '#228B22' : '#f44336') : (good ? '#4CAF50' : '#f44336');
                 const fill = isDoor ? (doorGood ? '#d4edda' : '#f8d7da') : (good ? '#e8f5e9' : '#ffebee');
-                
+        
                 const a1 = (angs[i]-22.5-90)*Math.PI/180, a2 = (angs[i]+22.5-90)*Math.PI/180;
                 const x1 = cx+Math.cos(a1)*r, y1 = cx+Math.sin(a1)*r;
                 const x2 = cx+Math.cos(a2)*r, y2 = cx+Math.sin(a2)*r;
                 svg += `<path d="M${cx} ${cx}L${x1} ${y1}A${r} ${r} 0 0 1 ${x2} ${y2}Z" fill="${fill}" stroke="${col}" stroke-width="3" opacity="0.7"/>`;
-                
-                const tx = cx+Math.cos(a)*r*0.75, ty = cx+Math.sin(a)*r*0.75;
-                svg += `<text x="${tx}" y="${ty}" text-anchor="middle" dominant-baseline="middle" font-size="18" font-weight="bold" fill="${col}">${d}</text>`;
-                
-                const ix = cx+Math.cos(a)*r*0.5, iy = cx+Math.sin(a)*r*0.5;
+        
+                const txQuai = cx + Math.cos(a) * (r * 0.65);
+                const tyQuai = cx + Math.sin(a) * (r * 0.65);
+                svg += `<text x="${txQuai}" y="${tyQuai}" text-anchor="middle" dominant-baseline="middle" class="quai-label">${quai[i]}</text>`;
+        
+                const txDir = cx + Math.cos(a) * (r * 0.85);
+                const tyDir = cx + Math.sin(a) * (r * 0.85);
+                svg += `<text x="${txDir}" y="${tyDir}" text-anchor="middle" dominant-baseline="middle" font-size="18" font-weight="bold" fill="${col}">${d}</text>`;
+        
+                const txStar = cx + Math.cos(a) * (r * 0.5);
+                const tyStar = cx + Math.sin(a) * (r * 0.5);
+                const starIndex = good ? DATA.quai[q].dirs.good.indexOf(d) : DATA.quai[q].dirs.bad.indexOf(d);
+                const star = good ? (starIndex >= 0 ? STARS[starIndex] : '') : (starIndex >= 0 ? BAD_STARS[starIndex] : '');
+                svg += `<text x="${txStar}" y="${tyStar}" text-anchor="middle" dominant-baseline="middle" font-size="14" fill="${col}">${star}</text>`;
+        
                 if (isDoor) {
-                    svg += `<text x="${ix}" y="${iy}" text-anchor="middle" dominant-baseline="middle" font-size="24" fill="${col}">🚪</text>`;
-                } else {
-                    const starIndex = good ? DATA.quai[q].dirs.good.indexOf(d) : DATA.quai[q].dirs.bad.indexOf(d);
-                    const star = good ? (starIndex >= 0 ? STARS[starIndex] : '') : (starIndex >= 0 ? BAD_STARS[starIndex] : '');
-                    svg += `<text x="${ix}" y="${iy}" text-anchor="middle" dominant-baseline="middle" font-size="16" fill="${col}">${star}</text>`;
+                    const txDoor = cx + Math.cos(a) * (r * 0.75);
+                    const tyDoor = cx + Math.sin(a) * (r * 0.75);
+                    svg += `<text x="${txDoor}" y="${tyDoor}" text-anchor="middle" dominant-baseline="middle" font-size="24" fill="${col}">🚪</text>`;
                 }
             });
-            
+        
             svg += `<circle cx="${cx}" cy="${cx}" r="45" fill="white" stroke="#667eea" stroke-width="3"/>`;
             svg += `<text x="${cx}" y="${cx}" text-anchor="middle" dominant-baseline="middle" font-size="16" font-weight="bold" fill="#667eea">LA BÀN</text></svg>`;
-            return svg;
+        
+            // Kết hợp la bàn điện tử + la bàn tĩnh
+            return liveCompass + '<div style="margin-top: 30px;"><h4 style="text-align: center; color: #667eea; margin-bottom: 15px;">📊 Sơ Đồ Hướng Nhà (Tĩnh)</h4><div style="width: 100%; max-width: 500px; margin: 0 auto;">' + svg + '</div></div>';
         }
 
         function getDoorExplanation(q, doorDir) {
@@ -331,12 +627,13 @@
                 </div>
             `));
 
-            // Section La Bàn
+            // Section La Bàn với Lá Bát Quái
             let compassHtml = `
                 <div class="compass-section">
                     <div style="width: 100%; max-width: 500px;">${drawCompass(q, doorDir)}</div>
                     <div class="direction-note">
-                        🚪 = Vị trí cửa chính của bạn | Sinh Khí, Thiên Y, Diên Niên, Phục Vị = Hướng tốt (xanh) | Tuyệt Mệnh, Ngũ Quỷ, Lục Sát, Họa Hại = Hướng xấu (đỏ)
+                        🚪 = Vị trí cửa chính của bạn | Sinh Khí, Thiên Y, Diên Niên, Phục Vị = Hướng tốt (xanh) | Tuyệt Mệnh, Ngũ Quỷ, Lục Sát, Họa Hại = Hướng xấu (đỏ)<br>
+                        Các quẻ (Khảm, Cấn, Chấn, Tốn, Ly, Khôn, Đoài, Càn) thể hiện năng lượng của từng hướng.
                     </div>
                     <h3>🌟 Tứ Cát Tinh (Hướng Tốt):</h3>`;
             for (let i = 0; i < 4; i++) {
@@ -351,7 +648,7 @@
                 </div>`;
             }
             compassHtml += `</div>`;
-            fragment.appendChild(renderSection('🧭 La Bàn 8 Hướng & Vị Trí Cửa Chính', compassHtml));
+            fragment.appendChild(renderSection('🧭 La Bàn 8 Hướng & Lá Bát Quái', compassHtml));
 
             // Section Phòng Bếp
             fragment.appendChild(renderSection('🍳 Phong Thủy Phòng Bếp', `
@@ -709,6 +1006,140 @@
             results.classList.add('show');
             results.scrollIntoView({behavior: 'smooth'});
         }
+        // ========== CODE LA BÀN ĐIỆN TỬ TÍCH HỢP ==========
+        let compassHeadingLive = 0;
+        let isCompassActiveLive = false;
+        let currentDetectedDirection = '';
+        
+        function getDirectionFromDegree(degree) {
+            const directions = [
+                { name: 'Bắc', min: 337.5, max: 22.5 },
+                { name: 'Đông Bắc', min: 22.5, max: 67.5 },
+                { name: 'Đông', min: 67.5, max: 112.5 },
+                { name: 'Đông Nam', min: 112.5, max: 157.5 },
+                { name: 'Nam', min: 157.5, max: 202.5 },
+                { name: 'Tây Nam', min: 202.5, max: 247.5 },
+                { name: 'Tây', min: 247.5, max: 292.5 },
+                { name: 'Tây Bắc', min: 292.5, max: 337.5 }
+            ];
+            
+            for (let dir of directions) {
+                if (degree >= dir.min && degree < dir.max) {
+                    return dir.name;
+                }
+            }
+            return 'Bắc';
+        }
+        
+        function handleDeviceOrientationLive(event) {
+            let heading = null;
+            
+            if (event.webkitCompassHeading !== undefined) {
+                heading = event.webkitCompassHeading;
+            } else if (event.alpha !== null) {
+                heading = 360 - event.alpha;
+            }
+            
+            if (heading !== null) {
+                const compassCircleLive = document.getElementById('compassCircleLive');
+                const compassNeedleLive = document.getElementById('compassNeedleLive');
+                const compassDegreeLive = document.getElementById('compassDegreeLive');
+                const compassDirectionLive = document.getElementById('compassDirectionLive');
+                const compassStatusLive = document.getElementById('compassStatusLive');
+                const useDirectionBtn = document.getElementById('useDirectionBtn');
+                
+                if (compassCircleLive && compassNeedleLive) {
+                    compassHeadingLive = Math.round(heading);
+                    compassCircleLive.style.transform = `rotate(${-compassHeadingLive}deg)`;
+                    compassNeedleLive.style.transform = `rotate(${compassHeadingLive}deg)`;
+                    compassDegreeLive.textContent = compassHeadingLive + '°';
+                    currentDetectedDirection = getDirectionFromDegree(compassHeadingLive);
+                    compassDirectionLive.textContent = currentDetectedDirection;
+                    compassStatusLive.textContent = '✅ Đang theo dõi hướng: ' + currentDetectedDirection;
+                    
+                    if (useDirectionBtn) {
+                        useDirectionBtn.classList.remove('hidden');
+                    }
+                }
+            }
+        }
+        
+        async function activateCompassLive() {
+            const compassErrorLive = document.getElementById('compassErrorLive');
+            const compassStatusLive = document.getElementById('compassStatusLive');
+            const compassBtnLive = document.getElementById('compassBtnLive');
+            
+            if (compassErrorLive) compassErrorLive.classList.add('hidden');
+            
+            try {
+                if (typeof DeviceOrientationEvent !== 'undefined' && 
+                    typeof DeviceOrientationEvent.requestPermission === 'function') {
+                    const permission = await DeviceOrientationEvent.requestPermission();
+                    
+                    if (permission === 'granted') {
+                        window.addEventListener('deviceorientation', handleDeviceOrientationLive);
+                        compassStatusLive.textContent = '✅ La bàn đang hoạt động - Xoay điện thoại để xác định hướng';
+                        if (compassBtnLive) compassBtnLive.classList.add('hidden');
+                        isCompassActiveLive = true;
+                    } else {
+                        throw new Error('Cần cấp quyền truy cập cảm biến để sử dụng la bàn');
+                    }
+                } else if (window.DeviceOrientationEvent) {
+                    window.addEventListener('deviceorientation', handleDeviceOrientationLive);
+                    compassStatusLive.textContent = '✅ La bàn đang hoạt động - Xoay điện thoại để xác định hướng';
+                    if (compassBtnLive) compassBtnLive.classList.add('hidden');
+                    isCompassActiveLive = true;
+                } else {
+                    throw new Error('Thiết bị không hỗ trợ cảm biến la bàn');
+                }
+            } catch (error) {
+                if (compassErrorLive) {
+                    compassErrorLive.textContent = '⚠️ ' + error.message;
+                    compassErrorLive.classList.remove('hidden');
+                }
+                compassStatusLive.textContent = '❌ Không thể kích hoạt la bàn';
+            }
+        }
+        
+        // Gán sự kiện khi calculateFengShui được gọi
+        const originalCalculateFengShui = calculateFengShui;
+        calculateFengShui = function() {
+            originalCalculateFengShui();
+            
+            setTimeout(() => {
+                const compassBtnLive = document.getElementById('compassBtnLive');
+                const useDirectionBtn = document.getElementById('useDirectionBtn');
+                
+                if (compassBtnLive && !isCompassActiveLive) {
+                    compassBtnLive.addEventListener('click', activateCompassLive);
+                    
+                    if (!window.DeviceOrientationEvent) {
+                        const compassErrorLive = document.getElementById('compassErrorLive');
+                        if (compassErrorLive) {
+                            compassErrorLive.textContent = '⚠️ Trình duyệt không hỗ trợ cảm biến la bàn';
+                            compassErrorLive.classList.remove('hidden');
+                        }
+                        compassBtnLive.disabled = true;
+                        compassBtnLive.style.opacity = '0.5';
+                    }
+                }
+                
+                if (useDirectionBtn) {
+                    useDirectionBtn.addEventListener('click', function() {
+                        if (currentDetectedDirection) {
+                            const doorDirSelect = document.getElementById('doorDir');
+                            doorDirSelect.value = currentDetectedDirection;
+                            
+                            // Tự động tính lại
+                            calculateFengShui();
+                            
+                            // Hiển thị thông báo
+                            alert('✓ Đã cập nhật hướng cửa chính: ' + currentDetectedDirection + '\n\nKết quả phong thủy đã được tính lại!');
+                        }
+                    });
+                }
+            }, 100);
+        };
     </script>
 </body>
 </html>
