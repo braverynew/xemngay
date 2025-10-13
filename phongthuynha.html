@@ -597,6 +597,182 @@
                 font-size: 12px;
             }
         }
+        /* ========================================
+           THÊM RESPONSIVE CHO MOBILE NHỎ HƠN
+           Thêm tiếp sau phần @media (max-width: 768px)
+        ======================================== */
+        
+        @media (max-width: 480px) {
+            /* Header nhỏ hơn */
+            .header h1 {
+                font-size: 1.5em;
+            }
+            
+            .header p {
+                font-size: 13px;
+            }
+            
+            /* Card padding nhỏ hơn */
+            .card {
+                padding: 15px 10px;
+                border-radius: 15px;
+            }
+            
+            /* Result card */
+            .result-card {
+                padding: 15px 10px;
+                border-radius: 12px;
+            }
+            
+            .result-card h2 {
+                font-size: 1.3em;
+            }
+            
+            .result-card h3 {
+                font-size: 1.1em;
+            }
+            
+            .result-card h4 {
+                font-size: 0.95em;
+            }
+            
+            /* Info boxes */
+            .info-box,
+            .detail-box {
+                padding: 10px;
+                font-size: 13px;
+            }
+            
+            .detail-box ul li {
+                font-size: 12px;
+            }
+            
+            /* La bàn device - nhỏ nhất */
+            .compass-device {
+                width: 160px;
+                height: 160px;
+            }
+            
+            .compass-device-needle {
+                width: 2.5px;
+                height: 55px;
+                margin-left: -1.25px;
+                margin-top: -48px;
+                transform-origin: 1.25px 48px;
+            }
+            
+            .compass-device-needle::before {
+                border-left: 4px solid transparent;
+                border-right: 4px solid transparent;
+                border-bottom: 8px solid #e74c3c;
+            }
+            
+            .compass-device-label.n {
+                font-size: 14px;
+            }
+            
+            .compass-device-label.e,
+            .compass-device-label.s,
+            .compass-device-label.w {
+                font-size: 11px;
+            }
+            
+            /* Degrees */
+            .compass-degree-live {
+                font-size: 36px;
+            }
+            
+            .compass-direction-live {
+                font-size: 16px;
+            }
+            
+            /* Buttons nhỏ hơn */
+            .compass-btn-live {
+                padding: 11px 20px;
+                font-size: 14px;
+            }
+            
+            .compass-use-direction-btn {
+                padding: 9px 18px;
+                font-size: 13px;
+            }
+            
+            /* SVG compass */
+            .compass-section svg {
+                max-width: 320px;
+            }
+        }
+        
+        /* ========================================
+           THÊM: TOUCH-FRIENDLY IMPROVEMENTS
+           Cải thiện trải nghiệm touch trên mobile
+        ======================================== */
+        
+        @media (max-width: 768px) {
+            /* Tăng kích thước vùng chạm cho buttons */
+            .btn,
+            .compass-btn-live,
+            .compass-use-direction-btn {
+                min-height: 44px; /* iOS recommended touch target */
+                -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+            }
+            
+            /* Select và input dễ chạm hơn */
+            input,
+            select {
+                min-height: 44px;
+                -webkit-tap-highlight-color: transparent;
+            }
+            
+            /* Smooth scrolling */
+            html {
+                scroll-behavior: smooth;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            /* Tránh text selection khi double tap */
+            .compass-device,
+            .compass-info-live {
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+            }
+            
+            /* SVG text dễ đọc hơn */
+            svg text {
+                pointer-events: none;
+            }
+        }
+        
+        /* ========================================
+           LANDSCAPE MODE (Chế độ ngang)
+        ======================================== */
+        
+        @media (max-width: 768px) and (orientation: landscape) {
+            .compass-container-live {
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+            }
+            
+            .compass-device {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .compass-info-live {
+                min-width: 200px;
+            }
+            
+            .compass-degree-live {
+                font-size: 36px;
+            }
+            
+            .compass-direction-live {
+                font-size: 16px;
+            }
+        }
     </style>
 </head>
 <body>
