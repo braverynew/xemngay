@@ -1323,11 +1323,16 @@
                     svg += `<text x="${labelX}" y="${labelY + 9}" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="bold" fill="#FFF">${doorIsGood ? 'CÁT' : 'HUNG'}</text>`;
                 }
                 
-                // KIM LA BÀN TƯƠNG TÁC (ẩn mặc định, hiện khi đo)
+                // KIM LA BÀN TƯƠNG TÁC - MŨI ĐỎ CHỈ HƯỚNG ĐẦU ĐIỆN THOẠI
                 svg += `<g id="interactiveCompassNeedle" class="">
+                    <!-- Phần đuôi xám -->
+                    <line x1="${cx}" y1="${cx}" x2="${cx}" y2="${cx + 60}" stroke="#95a5a6" stroke-width="4" stroke-linecap="round"/>
+                    <!-- Phần mũi đỏ -->
                     <line x1="${cx}" y1="${cx}" x2="${cx}" y2="${cx - (r1 - 220)}" stroke="#e74c3c" stroke-width="4" stroke-linecap="round"/>
                     <polygon points="${cx},${cx - (r1 - 210)} ${cx - 8},${cx - (r1 - 230)} ${cx + 8},${cx - (r1 - 230)}" fill="#e74c3c"/>
-                    <circle cx="${cx}" cy="${cx}" r="10" fill="#e74c3c"/>
+                    <circle cx="${cx}" cy="${cx}" r="10" fill="#333"/>
+                    <!-- Label trên mũi tên -->
+                    <text x="${cx}" y="${cx - (r1 - 190)}" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff" stroke="#e74c3c" stroke-width="3" paint-order="stroke">Đầu DT</text>
                 </g>`;
                 
                 // LABEL ĐỘ TRÊN KIM LA BÀN (ẩn mặc định, hiện khi đo)
@@ -1881,24 +1886,22 @@
                 const degreeText = document.getElementById('needleDegreeText');
                 const applyBtn = document.getElementById('applyDirectionBtn');
                 
-                // Cập nhật text trên label
+                // Cập nhật text
                 if (degreeText) degreeText.textContent = currentCompassHeading + '° - ' + detectedDirection;
-                
-                // Enable nút áp dụng
                 if (applyBtn) applyBtn.disabled = false;
                 
-                // KIM CỐ ĐỊNH (chỉ lên = đầu điện thoại), SVG XOAY
+                // KIM CỐ ĐỊNH (luôn chỉ lên = đầu điện thoại)
                 if (needle) {
-                    needle.style.transform = 'none'; // Kim không xoay
+                    needle.style.transform = 'none';
                 }
                 
-                // SVG xoay ngược với heading để Bắc luôn đúng vị trí
+                // SVG XOAY NGƯỢC để hướng Bắc thực tế nằm đúng vị trí
                 if (compassSVG) {
                     compassSVG.style.transformOrigin = 'center';
                     compassSVG.style.transform = `rotate(${-currentCompassHeading}deg)`;
                 }
                 
-                // Label không xoay (vì kim không xoay)
+                // Label không xoay
                 if (degreeLabel) {
                     degreeLabel.style.transform = 'none';
                 }
