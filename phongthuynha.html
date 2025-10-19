@@ -787,13 +787,11 @@
         
         /* Kim la bàn ẩn mặc định */
         #interactiveCompassNeedle {
-            opacity: 0;
-            pointer-events: none;
+            opacity: 0 !important;
         }
         
         #interactiveCompassNeedle.active {
-            opacity: 1;
-            pointer-events: auto;
+            opacity: 1 !important;
         }
         
         /* Label độ trên mũi tên */
@@ -1323,31 +1321,13 @@
                     svg += `<text x="${labelX}" y="${labelY + 9}" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="bold" fill="#FFF">${doorIsGood ? 'CÁT' : 'HUNG'}</text>`;
                 }
                 
-                // KIM LA BÀN TƯƠNG TÁC - MŨI ĐỎ CHỈ HƯỚNG ĐẦU ĐIỆN THOẠI
-                svg += `<g id="interactiveCompassNeedle" class="">
-                    <!-- Phần đuôi xám -->
-                    <line x1="${cx}" y1="${cx}" x2="${cx}" y2="${cx + 60}" stroke="#95a5a6" stroke-width="4" stroke-linecap="round"/>
-                    <!-- Phần mũi đỏ -->
-                    <line x1="${cx}" y1="${cx}" x2="${cx}" y2="${cx - (r1 - 220)}" stroke="#e74c3c" stroke-width="4" stroke-linecap="round"/>
-                    <polygon points="${cx},${cx - (r1 - 210)} ${cx - 8},${cx - (r1 - 230)} ${cx + 8},${cx - (r1 - 230)}" fill="#e74c3c"/>
-                    <circle cx="${cx}" cy="${cx}" r="10" fill="#333"/>
-                    <!-- Label trên mũi tên -->
-                    <text x="${cx}" y="${cx - (r1 - 190)}" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff" stroke="#e74c3c" stroke-width="3" paint-order="stroke">Đầu DT</text>
-                </g>`;
-                
-                // LABEL ĐỘ TRÊN KIM LA BÀN (ẩn mặc định, hiện khi đo)
-                const labelNeedleX = cx;
-                const labelNeedleY = cx - (r1 - 195);
-                svg += `<g id="compassDegreeLabel" class="">
-                    <text x="${labelNeedleX}" y="${labelNeedleY}" text-anchor="middle" dominant-baseline="middle" font-size="16" font-weight="bold" fill="#e67e22" stroke="white" stroke-width="0.5" id="needleDegreeText">0° - Bắc</text>
-                </g>`;
                 
                 svg += `</svg>`;
             // Chú thích
                 const legend = `
-                <div style="margin-top: 30px;">
-                    <h4 style="text-align: center; color: #667eea; margin-bottom: 10px;">📊 La Bàn Phong Thủy - Quẻ ${q}</h4>
-                    <p style="text-align: center; font-size: 12px; color: #666; margin-bottom: 15px;">
+                    <div style="margin-top: 30px;">
+                        <h4 style="text-align: center; color: #667eea; margin-bottom: 10px;">📊 La Bàn Phong Thủy - Quẻ ${q}</h4>
+                        <p style="text-align: center; font-size: 12px; color: #666; margin-bottom: 15px;">
                         <strong>Vòng 1:</strong> 8 Hướng | <strong>Vòng 2:</strong> 24 Sao Phúc Đức (khởi an tại <strong>${startPos}</strong>) | 
                         <strong>Vòng 3:</strong> 24 Cung (Thiên Can-Địa Chi) | <strong>Vòng 4:</strong> Cát/Hung Tinh | <strong>Vòng 5:</strong> 8 Quẻ | 
                         <strong>Trung Tâm:</strong> ${q}
@@ -1355,9 +1335,84 @@
                         <br><span style="color: #2E7D32;">■ Cát Tinh/Sao</span> | <span style="color: #C62828;">■ Hung Tinh/Sao</span>
                         <br><span style="background: rgba(76, 175, 80, 0.2); padding: 2px 8px;">■ Vùng Cát</span> | <span style="background: rgba(244, 67, 54, 0.2); padding: 2px 8px;">■ Vùng Hung</span>
                         ${doorDeg !== null && doorDeg !== undefined ? `<br><strong style="color: ${doorIsGood ? '#00C853' : '#FF1744'};">→ Hướng cửa chính: ${doorDeg}° (${doorIsGood ? 'CÁT' : 'HUNG'})</strong>` : ''}
-                        <br><strong style="color: #e74c3c;">🧭 Kim đỏ:</strong> Hướng Bắc (kích hoạt la bàn để đo hướng thực tế)
+                        <br><strong style="color: #e74c3c;">🧭 Kim đỏ:</strong> Hướng đang đo (kích hoạt la bàn để đo hướng thực tế)
                     </p>
-                    <div class="compass-svg-container">${svg}</div>
+                    <div class="compass-svg-container" style="position: relative;">
+                        <!-- MŨI TÊN CỐ ĐỊNH NGOÀI SVG -->
+                        <div id="interactiveCompassNeedle" style="
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
+                            width: 0;
+                            height: 0;
+                            opacity: 0;
+                            pointer-events: none;
+                            transition: opacity 0.3s;
+                        ">
+                            <!-- Đuôi xám -->
+                            <div style="
+                                position: absolute;
+                                width: 4px;
+                                height: 60px;
+                                background: #95a5a6;
+                                left: -2px;
+                                top: 0;
+                                border-radius: 2px;
+                            "></div>
+                            <!-- Mũi đỏ -->
+                            <div style="
+                                position: absolute;
+                                width: 4px;
+                                height: 160px;
+                                background: #e74c3c;
+                                left: -2px;
+                                bottom: 0;
+                                border-radius: 2px;
+                            "></div>
+                            <!-- Đầu mũi tên -->
+                            <div style="
+                                position: absolute;
+                                width: 0;
+                                height: 0;
+                                border-left: 8px solid transparent;
+                                border-right: 8px solid transparent;
+                                border-bottom: 14px solid #e74c3c;
+                                left: -8px;
+                                bottom: 160px;
+                            "></div>
+                            <!-- Tâm -->
+                            <div style="
+                                position: absolute;
+                                width: 10px;
+                                height: 10px;
+                                background: #333;
+                                border-radius: 50%;
+                                left: -5px;
+                                top: 55px;
+                            "></div>
+                        </div>
+                        
+                        <!-- LABEL ĐỘ -->
+                        <div id="compassDegreeLabel" style="
+                            position: absolute;
+                            top: calc(50% - 180px);
+                            left: 50%;
+                            transform: translateX(-50%);
+                            opacity: 0;
+                            transition: opacity 0.3s;
+                            background: rgba(230, 126, 34, 0.9);
+                            padding: 5px 12px;
+                            border-radius: 8px;
+                            color: white;
+                            font-weight: bold;
+                            font-size: 14px;
+                            white-space: nowrap;
+                            pointer-events: none;
+                        " id="needleDegreeText">0° - Bắc</div>
+                        
+                        ${svg}
+                    </div>
                     <div class="compass-controls-bottom">
                         <button class="compass-btn-control compass-btn-activate" id="activateCompassBtn">
                             🧭 Kích Hoạt La Bàn
