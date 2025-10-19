@@ -773,7 +773,7 @@
                 font-size: 16px;
             }
         }
-        /* ========== /* ========== LA BÀN TƯƠNG TÁC TÍCH HỢP SVG ========== */
+        /* ========== LA BÀN TƯƠNG TÁC TÍCH HỢP SVG ========== */
         .compass-svg-container {
             position: relative;
             width: 100%;
@@ -781,9 +781,12 @@
             margin: 0 auto;
         }
         
+        #interactiveCompassSVG {
+            transition: transform 0.3s ease-out;
+        }
+        
         /* Kim la bàn ẩn mặc định */
         #interactiveCompassNeedle {
-            transition: transform 0.3s ease-out;
             opacity: 0;
             pointer-events: none;
         }
@@ -1331,7 +1334,7 @@
                 const labelNeedleX = cx;
                 const labelNeedleY = cx - (r1 - 195);
                 svg += `<g id="compassDegreeLabel" class="">
-                    <text x="${labelNeedleX}" y="${labelNeedleY}" text-anchor="middle" dominant-baseline="middle" font-size="18" font-weight="bold" fill="#e67e22" stroke="white" stroke-width="0.5" id="needleDegreeText">0°</text>
+                    <text x="${labelNeedleX}" y="${labelNeedleY}" text-anchor="middle" dominant-baseline="middle" font-size="16" font-weight="bold" fill="#e67e22" stroke="white" stroke-width="0.5" id="needleDegreeText">0° - Bắc</text>
                 </g>`;
                 
                 svg += `</svg>`;
@@ -1872,38 +1875,34 @@
                 currentCompassHeading = Math.round(heading);
                 detectedDirection = getDirectionFromDegree(currentCompassHeading);
                 
+                const compassSVG = document.getElementById('interactiveCompassSVG');
                 const needle = document.getElementById('interactiveCompassNeedle');
                 const degreeLabel = document.getElementById('compassDegreeLabel');
                 const degreeText = document.getElementById('needleDegreeText');
-                const directionText = document.getElementById('needleDirectionText');
                 const applyBtn = document.getElementById('applyDirectionBtn');
                 
                 // Cập nhật text trên label
-                if (degreeText) degreeText.textContent = currentCompassHeading + '°';
-                if (directionText) directionText.textContent = detectedDirection;
+                if (degreeText) degreeText.textContent = currentCompassHeading + '° - ' + detectedDirection;
                 
                 // Enable nút áp dụng
                 if (applyBtn) applyBtn.disabled = false;
                 
-                // Xoay kim la bàn và label cùng nhau
-                if (needle && degreeLabel) {
-                    const rotation = `rotate(${currentCompassHeading}deg)`;
-                    needle.style.transformOrigin = 'center';
-                    needle.style.transform = rotation;
-                    
-                    // Label xoay theo nhưng text không bị nghiêng
-                    degreeLabel.style.transformOrigin = 'center';
-                    degreeLabel.style.transform = rotation;
-                    
-                    // Text trong label xoay ngược lại để luôn đọc được
-                    if (degreeText) {
-                        degreeText.style.transformOrigin = 'center';
-                        degreeText.style.transform = `rotate(${-currentCompassHeading}deg)`;
-                    }
-                    if (directionText) {
-                        directionText.style.transformOrigin = 'center';
-                        directionText.style.transform = `rotate(${-currentCompassHeading}deg)`;
-                    }
+                // KIM CỐ ĐỊNH, SVG XOAY NGƯỢC LẠI
+                // Kim luôn chỉ lên (không xoay)
+                if (needle) {
+                    needle.style.transform = 'none';
+                }
+                
+                // SVG xoay ngược với heading để kim luôn chỉ đúng Bắc
+                if (compassSVG) {
+                    // Xoay SVG ngược chiều heading
+                    compassSVG.style.transformOrigin = 'center';
+                    compassSVG.style.transform = `rotate(${-currentCompassHeading}deg)`;
+                }
+                
+                // Label cũng không xoay
+                if (degreeLabel) {
+                    degreeLabel.style.transform = 'none';
                 }
             }
         }
