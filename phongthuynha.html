@@ -1204,7 +1204,7 @@
                 const tx1 = cx + Math.cos(a) * (r1 + 30);
                 const ty1 = cx + Math.sin(a) * (r1 + 30);
                 const dirColor = isGood ? '#008000' : '#C62828';
-                svg += `<text x="${tx1}" y="${ty1}" text-anchor="middle" dominant-baseline="middle" font-size="15" font-weight="bold" fill="${dirColor}">${dir.name}</text>`;
+                svg += `<text x="${tx1}" y="${ty1}" text-anchor="middle" dominant-baseline="middle" font-size="18" font-weight="bold" fill="${dirColor}">${dir.name}</text>`;
             });
             
             // VÒNG 2: 24 Sao Phúc Đức
@@ -1221,7 +1221,7 @@
                 const tx2 = cx + Math.cos(a) * ((rings[0].r + rings[1].r) / 2);
                 const ty2 = cx + Math.sin(a) * ((rings[0].r + rings[1].r) / 2);
                 const starColor = star.type === 'cat' ? '#2E7D32' : '#C62828';
-                svg += `<text x="${tx2}" y="${ty2}" text-anchor="middle" dominant-baseline="middle" font-size="7" font-weight="500" fill="${starColor}">${star.name}</text>`;
+                svg += `<text x="${tx2}" y="${ty2}" text-anchor="middle" dominant-baseline="middle" font-size="12" font-weight="500" fill="${starColor}">${star.name}</text>`;
             });
             
             // VÒNG 3: 24 Cung
@@ -1242,7 +1242,7 @@
                 if (dir.type === 'quai') txtColor = '#8B0000';
                 else if (dir.type === 'can') txtColor = '#00008B';
                 
-                svg += `<text x="${tx3}" y="${ty3}" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="${dir.type === 'quai' ? 'bold' : 'normal'}" fill="${txtColor}">${dir.name}</text>`;
+                svg += `<text x="${tx3}" y="${ty3}" text-anchor="middle" dominant-baseline="middle" font-size="12" font-weight="${dir.type === 'quai' ? 'bold' : 'normal'}" fill="${txtColor}">${dir.name}</text>`;
             });
             
             // VÒNG 4: Cát/Hung Tinh
@@ -1255,7 +1255,7 @@
                 const starIdx = isGood ? goodDirs.indexOf(dir.name) : badDirs.indexOf(dir.name);
                 const star = isGood ? (starIdx >= 0 ? STARS[starIdx] : '') : (starIdx >= 0 ? BAD_STARS[starIdx] : '');
                 const starColor = isGood ? '#2E7D32' : '#C62828';
-                svg += `<text x="${tx4}" y="${ty4}" text-anchor="middle" dominant-baseline="middle" font-size="9" font-weight="600" fill="${starColor}">${star}</text>`;
+                svg += `<text x="${tx4}" y="${ty4}" text-anchor="middle" dominant-baseline="middle" font-size="12" font-weight="600" fill="${starColor}">${star}</text>`;
             });
             
             // VÒNG 5: 8 Quẻ
