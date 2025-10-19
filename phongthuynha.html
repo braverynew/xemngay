@@ -903,7 +903,18 @@
             max-width: 750px;
             margin: 0 auto;
         }
+        /* Kim la bàn ẩn mặc định */
+        #interactiveCompassNeedle {
+            transition: transform 0.3s ease-out;
+            cursor: pointer;
+            opacity: 0;
+            pointer-events: none;
+        }
         
+        #interactiveCompassNeedle.active {
+            opacity: 1;
+            pointer-events: auto;
+        }        
         /* Responsive cho mobile */
         @media (max-width: 768px) {
             .compass-interactive-section {
@@ -1360,7 +1371,7 @@
             }
             
             // KIM LA BÀN TƯƠNG TÁC (có thể xoay)
-            svg += `<g id="interactiveCompassNeedle">
+            svg += `<g id="interactiveCompassNeedle" class="">
                 <line x1="${cx}" y1="${cx}" x2="${cx}" y2="${cx - (r1 - 220)}" stroke="#e74c3c" stroke-width="4" stroke-linecap="round"/>
                 <polygon points="${cx},${cx - (r1 - 210)} ${cx - 8},${cx - (r1 - 230)} ${cx + 8},${cx - (r1 - 230)}" fill="#e74c3c"/>
                 <circle cx="${cx}" cy="${cx}" r="10" fill="#e74c3c"/>
@@ -1861,6 +1872,7 @@
         let currentCompassHeading = 0;
         let isCompassActive = false;
         let detectedDirection = '';
+        let deviceOrientationHandler = null;
         
         function getDirectionFromDegree(degree) {
             const directions = [
@@ -1907,11 +1919,34 @@
                 if (statusText) statusText.textContent = '✅ Đang theo dõi: ' + detectedDirection + ' (' + currentCompassHeading + '°)';
                 if (applyBtn) applyBtn.disabled = false;
                 
-                // Xoay kim la bàn trong SVG
-                if (needle) {
+                // Xoay kim la bàn trong SVG (chỉ khi đang active)
+                if (needle && isCompassActive) {
                     needle.style.transformOrigin = 'center';
                     needle.style.transform = `rotate(${currentCompassHeading}deg)`;
                 }
+            }
+        }
+        
+        function stopCompass() {
+            if (deviceOrientationHandler) {
+                window.removeEventListener('deviceorientation', handleDeviceOrientation);
+                deviceOrientationHandler = null;
+            }
+            
+            isCompassActive = false;
+            
+            // Ẩn kim la bàn
+            const needle = document.getElementById('interactiveCompassNeedle');
+            if (needle) {
+                needle.classList.remove('active');
+            }
+            
+            // Reset nút
+            const activateBtn = document.getElementById('activateCompassBtn');
+            if (activateBtn) {
+                activateBtn.textContent = '🧭 Kích Hoạt La Bàn';
+                activateBtn.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+                activateBtn.disabled = false;
             }
         }
         
@@ -1919,6 +1954,7 @@
             const errorMsg = document.getElementById('compassErrorMsg');
             const statusText = document.getElementById('compassStatusText');
             const activateBtn = document.getElementById('activateCompassBtn');
+            const needle = document.getElementById('interactiveCompassNeedle');
             
             if (errorMsg) errorMsg.classList.add('hidden');
             
@@ -1928,22 +1964,30 @@
                     const permission = await DeviceOrientationEvent.requestPermission();
                     
                     if (permission === 'granted') {
-                        window.addEventListener('deviceorientation', handleDeviceOrientation);
+                        deviceOrientationHandler = handleDeviceOrientation;
+                        window.addEventListener('deviceorientation', deviceOrientationHandler);
                         statusText.textContent = '✅ La bàn đang hoạt động - Xoay thiết bị để xác định hướng';
-                        activateBtn.textContent = '✓ Đang Hoạt Động';
+                        activateBtn.textContent = '⏸ Đang Đo...';
                         activateBtn.style.background = '#4CAF50';
                         activateBtn.disabled = true;
                         isCompassActive = true;
+                        
+                        // Hiện kim la bàn
+                        if (needle) needle.classList.add('active');
                     } else {
                         throw new Error('Cần cấp quyền truy cập cảm biến để sử dụng la bàn');
                     }
                 } else if (window.DeviceOrientationEvent) {
-                    window.addEventListener('deviceorientation', handleDeviceOrientation);
+                    deviceOrientationHandler = handleDeviceOrientation;
+                    window.addEventListener('deviceorientation', deviceOrientationHandler);
                     statusText.textContent = '✅ La bàn đang hoạt động - Xoay thiết bị để xác định hướng';
-                    activateBtn.textContent = '✓ Đang Hoạt Động';
+                    activateBtn.textContent = '⏸ Đang Đo...';
                     activateBtn.style.background = '#4CAF50';
                     activateBtn.disabled = true;
                     isCompassActive = true;
+                    
+                    // Hiện kim la bàn
+                    if (needle) needle.classList.add('active');
                 } else {
                     throw new Error('Thiết bị không hỗ trợ cảm biến la bàn');
                 }
@@ -1964,6 +2008,15 @@
                 // Lưu độ chính xác
                 preciseDoorDegree = currentCompassHeading;
                 
+                // Dừng đo và ẩn kim la bàn
+                stopCompass();
+                
+                // Cập nhật status
+                const statusText = document.getElementById('compassStatusText');
+                if (statusText) {
+                    statusText.textContent = '✓ Đã áp dụng: ' + detectedDirection + ' (' + currentCompassHeading + '°)';
+                }
+                
                 // Tự động tính lại
                 calculateFengShui();
                 
@@ -1981,8 +2034,12 @@
                 const activateBtn = document.getElementById('activateCompassBtn');
                 const applyBtn = document.getElementById('applyDirectionBtn');
                 
-                if (activateBtn && !isCompassActive) {
-                    activateBtn.addEventListener('click', activateInteractiveCompass);
+                if (activateBtn) {
+                    // Xóa event listener cũ để tránh trùng lặp
+                    const newActivateBtn = activateBtn.cloneNode(true);
+                    activateBtn.parentNode.replaceChild(newActivateBtn, activateBtn);
+                    
+                    newActivateBtn.addEventListener('click', activateInteractiveCompass);
                     
                     // Kiểm tra hỗ trợ
                     if (!window.DeviceOrientationEvent) {
@@ -1991,13 +2048,17 @@
                             errorMsg.textContent = '⚠️ Trình duyệt không hỗ trợ cảm biến la bàn';
                             errorMsg.classList.remove('hidden');
                         }
-                        activateBtn.disabled = true;
-                        activateBtn.style.opacity = '0.5';
+                        newActivateBtn.disabled = true;
+                        newActivateBtn.style.opacity = '0.5';
                     }
                 }
                 
                 if (applyBtn) {
-                    applyBtn.addEventListener('click', applyCompassDirection);
+                    // Xóa event listener cũ
+                    const newApplyBtn = applyBtn.cloneNode(true);
+                    applyBtn.parentNode.replaceChild(newApplyBtn, applyBtn);
+                    
+                    newApplyBtn.addEventListener('click', applyCompassDirection);
                 }
             }, 100);
         };
@@ -2005,6 +2066,7 @@
         // Reset khi chọn hướng thủ công
         document.getElementById('doorDir').addEventListener('change', function() {
             preciseDoorDegree = null;
+            stopCompass(); // Dừng la bàn nếu đang đo
         });
             </script>
 </body>
