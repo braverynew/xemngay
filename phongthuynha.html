@@ -1887,20 +1887,18 @@
                 // Enable nút áp dụng
                 if (applyBtn) applyBtn.disabled = false;
                 
-                // KIM CỐ ĐỊNH, SVG XOAY NGƯỢC LẠI
-                // Kim luôn chỉ lên (không xoay)
+                // KIM CỐ ĐỊNH (chỉ lên = đầu điện thoại), SVG XOAY
                 if (needle) {
-                    needle.style.transform = 'none';
+                    needle.style.transform = 'none'; // Kim không xoay
                 }
                 
-                // SVG xoay ngược với heading để kim luôn chỉ đúng Bắc
+                // SVG xoay ngược với heading để Bắc luôn đúng vị trí
                 if (compassSVG) {
-                    // Xoay SVG ngược chiều heading
                     compassSVG.style.transformOrigin = 'center';
                     compassSVG.style.transform = `rotate(${-currentCompassHeading}deg)`;
                 }
                 
-                // Label cũng không xoay
+                // Label không xoay (vì kim không xoay)
                 if (degreeLabel) {
                     degreeLabel.style.transform = 'none';
                 }
