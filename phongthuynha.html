@@ -900,87 +900,31 @@
         }
         /* ========== MŨI TÊN LA BÀN RESPONSIVE ========== */
         @media (max-width: 768px) {
-            #interactiveCompassNeedle {
-                width: 6px !important;
-                height: 180px !important;
-                margin-left: -3px !important;
-                margin-top: -90px !important;
-                transform-origin: 3px 90px !important;
+            #arrowGroup polygon {
+                transform: scale(1.3);
+                transform-origin: center top;
+                transform-box: fill-box;
             }
             
-            #interactiveCompassNeedle > div:nth-child(1) {
-                /* Đuôi xám */
-                width: 6px !important;
-                height: 50px !important;
-            }
-            
-            #interactiveCompassNeedle > div:nth-child(2) {
-                /* Mũi đỏ */
-                width: 6px !important;
-                height: 90px !important;
-            }
-            
-            #interactiveCompassNeedle > div:nth-child(3) {
-                /* Đầu mũi tên */
-                border-left: 10px solid transparent !important;
-                border-right: 10px solid transparent !important;
-                border-bottom: 16px solid #e74c3c !important;
-                left: -7px !important;
-                top: -16px !important;
-            }
-            
-            #interactiveCompassNeedle > div:nth-child(4) {
-                /* Tâm */
-                width: 14px !important;
-                height: 14px !important;
-                left: -4px !important;
-                top: 83px !important;
-            }
-            
-            #compassDegreeLabel {
-                font-size: 14px !important;
-                padding: 6px 12px !important;
+            #compassDegreeLabel text {
+                font-size: 16px !important;
             }
         }
         
         @media (max-width: 480px) {
-            #interactiveCompassNeedle {
-                width: 5px !important;
-                height: 140px !important;
-                margin-left: -2.5px !important;
-                margin-top: -70px !important;
-                transform-origin: 2.5px 70px !important;
+            #arrowGroup polygon {
+                transform: scale(1.5);
+                transform-origin: center top;
+                transform-box: fill-box;
             }
             
-            #interactiveCompassNeedle > div:nth-child(1) {
-                width: 5px !important;
-                height: 40px !important;
+            #compassDegreeLabel text {
+                font-size: 15px !important;
             }
             
-            #interactiveCompassNeedle > div:nth-child(2) {
-                width: 5px !important;
-                height: 70px !important;
-            }
-            
-            #interactiveCompassNeedle > div:nth-child(3) {
-                border-left: 8px solid transparent !important;
-                border-right: 8px solid transparent !important;
-                border-bottom: 12px solid #e74c3c !important;
-                left: -5.5px !important;
-                top: -12px !important;
-            }
-            
-            #interactiveCompassNeedle > div:nth-child(4) {
-                width: 12px !important;
-                height: 12px !important;
-                left: -3.5px !important;
-                top: 64px !important;
-            }
-            
-            #compassDegreeLabel {
-                font-size: 12px !important;
-                padding: 5px 10px !important;
-                top: 5% !important;
+            #compassDegreeLabel rect {
+                width: 110 !important;
+                height: 38 !important;
             }
         }
     </style>
@@ -1426,82 +1370,53 @@
                         <br><strong style="color: #e74c3c;">🧭 Kim đỏ:</strong> Hướng đang đo (kích hoạt la bàn để đo hướng thực tế)
                     </p>
                     <div class="compass-svg-container" style="position: relative;">
-                        <!-- MŨI TÊN CỐ ĐỊNH NGOÀI SVG -->
-                        <div id="interactiveCompassNeedle" style="
+                        <!-- CHỈ CÓ TAM GIÁC CHỈ HƯỚNG -->
+                        <svg id="interactiveCompassNeedle" style="
                             position: absolute;
-                            top: 50%;
-                            left: 50%;
-                            width: 4px;
-                            height: 220px;
-                            margin-left: -2px;
-                            margin-top: -110px;
+                            top: 0;
+                            left: 0;
+                            width: 100%;
+                            height: 100%;
                             opacity: 0;
                             pointer-events: none;
                             transition: opacity 0.3s;
-                            transform-origin: 2px 110px;
-                        ">
-                            <!-- Đuôi xám -->
-                            <div style="
-                                position: absolute;
-                                width: 4px;
-                                height: 60px;
-                                background: #95a5a6;
-                                left: 0;
-                                top: 110px;
-                                border-radius: 2px;
-                            "></div>
-                            <!-- Mũi đỏ -->
-                            <div style="
-                                position: absolute;
-                                width: 4px;
-                                height: 110px;
-                                background: #e74c3c;
-                                left: 0;
-                                top: 0;
-                                border-radius: 2px;
-                            "></div>
-                            <!-- Đầu mũi tên -->
-                            <div style="
-                                position: absolute;
-                                width: 0;
-                                height: 0;
-                                border-left: 10px solid transparent;
-                                border-right: 10px solid transparent;
-                                border-bottom: 16px solid #e74c3c;
-                                left: -8px;
-                                top: -16px;
-                            "></div>
-                            <!-- Tâm -->
-                            <div style="
-                                position: absolute;
-                                width: 12px;
-                                height: 12px;
-                                background: #333;
-                                border-radius: 50%;
-                                left: -4px;
-                                top: 104px;
-                                box-shadow: 0 0 0 2px white;
-                            "></div>
-                        </div>
-                        
-                        <!-- LABEL ĐỘ -->
-                        <div id="compassDegreeLabel" style="
-                            position: absolute;
-                            top: 10%;
-                            left: 50%;
-                            transform: translateX(-50%);
-                            opacity: 0;
-                            transition: opacity 0.3s;
-                            background: rgba(231, 76, 60, 0.9);
-                            padding: 8px 16px;
-                            border-radius: 8px;
-                            color: white;
-                            font-weight: bold;
-                            font-size: 16px;
-                            white-space: nowrap;
-                            pointer-events: none;
-                            z-index: 100;
-                        " id="needleDegreeText">0° - Bắc</div>
+                            z-index: 10;
+                        " viewBox="0 0 ${s} ${s}">
+                            <defs>
+                                <filter id="arrowShadow" x="-50%" y="-50%" width="200%" height="200%">
+                                    <feGaussianBlur in="SourceAlpha" stdDeviation="4"/>
+                                    <feOffset dx="0" dy="2" result="offsetblur"/>
+                                    <feComponentTransfer>
+                                        <feFuncA type="linear" slope="0.6"/>
+                                    </feComponentTransfer>
+                                    <feMerge>
+                                        <feMergeNode/>
+                                        <feMergeNode in="SourceGraphic"/>
+                                    </feMerge>
+                                </filter>
+                            </defs>
+                            
+                            <!-- Nhóm tam giác (sẽ xoay theo heading) -->
+                            <g id="arrowGroup" transform="rotate(0 ${cx} ${cx})">
+                                <!-- Tam giác chỉ hướng (ở vòng ngoài cùng) -->
+                                <polygon points="${cx},${50} ${cx - 25},${90} ${cx + 25},${90}" 
+                                         fill="#e74c3c"
+                                         stroke="white"
+                                         stroke-width="3"
+                                         filter="url(#arrowShadow)"/>
+                            </g>
+                            
+                            <!-- Label độ (cố định, không xoay) -->
+                            <g id="compassDegreeLabel" opacity="0" style="transition: opacity 0.3s;">
+                                <rect x="${cx - 60}" y="110" width="120" height="40" 
+                                      fill="rgba(231, 76, 60, 0.95)" rx="10" 
+                                      stroke="white" stroke-width="2"/>
+                                <text id="needleDegreeText" x="${cx}" y="135" 
+                                      text-anchor="middle" font-size="18" font-weight="bold" fill="white">
+                                    0° - Bắc
+                                </text>
+                            </g>
+                        </svg>
                         
                         ${svg}
                     </div>
@@ -2028,29 +1943,31 @@
                 detectedDirection = getDirectionFromDegree(currentCompassHeading);
                 
                 const compassSVG = document.getElementById('interactiveCompassSVG');
-                const needle = document.getElementById('interactiveCompassNeedle');
-                const degreeLabel = document.getElementById('compassDegreeLabel');
+                const arrowGroup = document.getElementById('arrowGroup'); // THAY ĐỔI
+                const degreeLabel = document.querySelector('#compassDegreeLabel');
                 const degreeText = document.getElementById('needleDegreeText');
                 const applyBtn = document.getElementById('applyDirectionBtn');
                 
                 // Cập nhật text
-                if (degreeText) degreeText.textContent = currentCompassHeading + '° - ' + detectedDirection;
+                if (degreeText) {
+                    degreeText.textContent = currentCompassHeading + '° - ' + detectedDirection;
+                }
                 if (applyBtn) applyBtn.disabled = false;
                 
-                // KIM CỐ ĐỊNH (luôn chỉ lên = đầu điện thoại)
-                if (needle) {
-                    needle.style.transform = 'none';
-                }
-                
-                // SVG XOAY NGƯỢC để hướng Bắc thực tế nằm đúng vị trí
+                // La bàn xoay ngược
                 if (compassSVG) {
                     compassSVG.style.transformOrigin = 'center';
                     compassSVG.style.transform = `rotate(${-currentCompassHeading}deg)`;
                 }
                 
-                // Label không xoay
+                // Tam giác xoay cùng chiều để luôn chỉ lên (bù lại sự xoay của la bàn)
+                if (arrowGroup) {
+                    arrowGroup.setAttribute('transform', `rotate(${currentCompassHeading} ${s/2} ${s/2})`);
+                }
+                
+                // Label giữ nguyên
                 if (degreeLabel) {
-                    degreeLabel.style.transform = 'none';
+                    degreeLabel.setAttribute('opacity', '1');
                 }
             }
         }
