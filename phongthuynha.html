@@ -779,6 +779,9 @@
             width: 100%;
             max-width: 750px;
             margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         
         #interactiveCompassSVG {
@@ -1204,7 +1207,7 @@
                 const tx1 = cx + Math.cos(a) * (r1 + 30);
                 const ty1 = cx + Math.sin(a) * (r1 + 30);
                 const dirColor = isGood ? '#008000' : '#C62828';
-                svg += `<text x="${tx1}" y="${ty1}" text-anchor="middle" dominant-baseline="middle" font-size="18" font-weight="bold" fill="${dirColor}">${dir.name}</text>`;
+                svg += `<text x="${tx1}" y="${ty1}" text-anchor="middle" dominant-baseline="middle" font-size="15" font-weight="bold" fill="${dirColor}">${dir.name}</text>`;
             });
             
             // VÒNG 2: 24 Sao Phúc Đức
@@ -1343,12 +1346,14 @@
                             position: absolute;
                             top: 50%;
                             left: 50%;
-                            transform: translate(-50%, -50%);
-                            width: 0;
-                            height: 0;
+                            width: 4px;
+                            height: 220px;
+                            margin-left: -2px;
+                            margin-top: -110px;
                             opacity: 0;
                             pointer-events: none;
                             transition: opacity 0.3s;
+                            transform-origin: 2px 110px;
                         ">
                             <!-- Đuôi xám -->
                             <div style="
@@ -1356,18 +1361,18 @@
                                 width: 4px;
                                 height: 60px;
                                 background: #95a5a6;
-                                left: -2px;
-                                top: 0;
+                                left: 0;
+                                top: 110px;
                                 border-radius: 2px;
                             "></div>
                             <!-- Mũi đỏ -->
                             <div style="
                                 position: absolute;
                                 width: 4px;
-                                height: 160px;
+                                height: 110px;
                                 background: #e74c3c;
-                                left: -2px;
-                                bottom: 0;
+                                left: 0;
+                                top: 0;
                                 border-radius: 2px;
                             "></div>
                             <!-- Đầu mũi tên -->
@@ -1378,37 +1383,39 @@
                                 border-left: 8px solid transparent;
                                 border-right: 8px solid transparent;
                                 border-bottom: 14px solid #e74c3c;
-                                left: -8px;
-                                bottom: 160px;
+                                left: -6px;
+                                top: -14px;
                             "></div>
                             <!-- Tâm -->
                             <div style="
                                 position: absolute;
-                                width: 10px;
-                                height: 10px;
+                                width: 12px;
+                                height: 12px;
                                 background: #333;
                                 border-radius: 50%;
-                                left: -5px;
-                                top: 55px;
+                                left: -4px;
+                                top: 104px;
+                                box-shadow: 0 0 0 2px white;
                             "></div>
                         </div>
                         
                         <!-- LABEL ĐỘ -->
                         <div id="compassDegreeLabel" style="
                             position: absolute;
-                            top: calc(50% - 180px);
+                            top: 10%;
                             left: 50%;
                             transform: translateX(-50%);
                             opacity: 0;
                             transition: opacity 0.3s;
-                            background: rgba(230, 126, 34, 0.9);
-                            padding: 5px 12px;
+                            background: rgba(231, 76, 60, 0.9);
+                            padding: 8px 16px;
                             border-radius: 8px;
                             color: white;
                             font-weight: bold;
-                            font-size: 14px;
+                            font-size: 16px;
                             white-space: nowrap;
                             pointer-events: none;
+                            z-index: 100;
                         " id="needleDegreeText">0° - Bắc</div>
                         
                         ${svg}
