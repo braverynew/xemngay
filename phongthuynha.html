@@ -891,12 +891,109 @@
         }
 
         function drawCompass(q, doorDir) {
-            const s = 500, cx = s/2, r = s/2-40;
-            const dirs = ['Bắc','Đông Bắc','Đông','Đông Nam','Nam','Tây Nam','Tây','Tây Bắc'];
-            const angs = [0,45,90,135,180,225,270,315];
-            const quai = ['Khảm','Cấn','Chấn','Tốn','Ly','Khôn','Đoài','Càn'];
+            const s = 750, cx = s/2, r1 = s/2-50;
+            
+            // 24 hướng theo La Kinh (mỗi hướng 15 độ)
+            const dirs24 = [
+                {name: 'Tý', deg: 0, type: 'chi'},
+                {name: 'Quý', deg: 15, type: 'can'},
+                {name: 'Sửu', deg: 30, type: 'chi'},
+                {name: 'Cấn', deg: 45, type: 'quai'},
+                {name: 'Dần', deg: 60, type: 'chi'},
+                {name: 'Giáp', deg: 75, type: 'can'},
+                {name: 'Mão', deg: 90, type: 'chi'},
+                {name: 'Ất', deg: 105, type: 'can'},
+                {name: 'Thìn', deg: 120, type: 'chi'},
+                {name: 'Tốn', deg: 135, type: 'quai'},
+                {name: 'Tỵ', deg: 150, type: 'chi'},
+                {name: 'Bính', deg: 165, type: 'can'},
+                {name: 'Ngọ', deg: 180, type: 'chi'},
+                {name: 'Đinh', deg: 195, type: 'can'},
+                {name: 'Mùi', deg: 210, type: 'chi'},
+                {name: 'Khôn', deg: 225, type: 'quai'},
+                {name: 'Thân', deg: 240, type: 'chi'},
+                {name: 'Canh', deg: 255, type: 'can'},
+                {name: 'Dậu', deg: 270, type: 'chi'},
+                {name: 'Tân', deg: 285, type: 'can'},
+                {name: 'Tuất', deg: 300, type: 'chi'},
+                {name: 'Càn', deg: 315, type: 'quai'},
+                {name: 'Hợi', deg: 330, type: 'chi'},
+                {name: 'Nhâm', deg: 345, type: 'can'}
+            ];
+            
+            // 24 Sao Phúc Đức (thứ tự cố định)
+            const phucDucStars = [
+                {name: 'Phúc Đức', type: 'cat'},
+                {name: 'Ôn Hoàng', type: 'hung'},
+                {name: 'Tấn Tài', type: 'cat'},
+                {name: 'Trường Bệnh', type: 'hung'},
+                {name: 'Tố Tụng', type: 'hung'},
+                {name: 'Quan Tước', type: 'cat'},
+                {name: 'Quan Quý', type: 'cat'},
+                {name: 'Tự Ải', type: 'hung'},
+                {name: 'Vượng Trang', type: 'cat'},
+                {name: 'Hưng Phước', type: 'cat'},
+                {name: 'Pháp Trường', type: 'hung'},
+                {name: 'Điên Cuồng', type: 'hung'},
+                {name: 'Khẩu Thiệt', type: 'hung'},
+                {name: 'Vượng Tâm', type: 'cat'},
+                {name: 'Tấn Điền', type: 'cat'},
+                {name: 'Khốc Khấp', type: 'hung'},
+                {name: 'Cô Quả', type: 'hung'},
+                {name: 'Vinh Phú', type: 'cat'},
+                {name: 'Thiếu Vong', type: 'hung'},
+                {name: 'Xương Dâm', type: 'hung'},
+                {name: 'Thân Hôn', type: 'cat'},
+                {name: 'Hoan Lạc', type: 'cat'},
+                {name: 'Bại Tuyệt', type: 'hung'},
+                {name: 'Vượng Tài', type: 'cat'}
+            ];
+            
+            // Xác định vị trí khởi đầu Phúc Đức theo từng quẻ
+            const phucDucStart = {
+                'Khảm': 'Dần', 'Cấn': 'Giáp', 'Chấn': 'Tỵ', 'Tốn': 'Tỵ',
+                'Ly': 'Thân', 'Khôn': 'Hợi', 'Đoài': 'Hợi', 'Càn': 'Thân'
+            };
+            
+            const startPos = phucDucStart[q];
+            const startIdx = dirs24.findIndex(d => d.name === startPos);
+            
+            // Ánh xạ 24 sao vào 24 cung
+            const stars24 = dirs24.map((dir, i) => {
+                const starIdx = (i - startIdx + 24) % 24;
+                return {
+                    ...phucDucStars[starIdx],
+                    position: dir.name,
+                    deg: dir.deg
+                };
+            });
+            
+            // 8 hướng chính và quẻ
+            const mainDirs = [
+                {name: 'Bắc', deg: 0, quai: 'Khảm'},
+                {name: 'Đông Bắc', deg: 45, quai: 'Cấn'},
+                {name: 'Đông', deg: 90, quai: 'Chấn'},
+                {name: 'Đông Nam', deg: 135, quai: 'Tốn'},
+                {name: 'Nam', deg: 180, quai: 'Ly'},
+                {name: 'Tây Nam', deg: 225, quai: 'Khôn'},
+                {name: 'Tây', deg: 270, quai: 'Đoài'},
+                {name: 'Tây Bắc', deg: 315, quai: 'Càn'}
+            ];
+            
+            const quaiColors = {
+                'Khảm': '#1E90FF', 'Cấn': '#8B4513', 'Chấn': '#228B22', 'Tốn': '#90EE90',
+                'Ly': '#FF4500', 'Khôn': '#DAA520', 'Đoài': '#FFD700', 'Càn': '#C0C0C0'
+            };
+            
+            // 5 vòng tròn
+            const rings = [
+                { r: r1, label: '8 Hướng' },
+                { r: r1 - 50, label: '24 Sao Phúc Đức' },
+                { r: r1 - 100, label: '24 Cung (Thiên Can + Địa Chi)' },
+                { r: r1 - 150, label: 'Cát/Hung Tinh' },
+                { r: r1 - 200, label: '8 Quẻ' }
+            ];
         
-            // Tạo phần la bàn điện tử
             let liveCompass = `
             <div class="compass-live-widget">
                 <h4>🧭 LA BÀN ĐIỆN TỬ - Xác Định Hướng Thực Tế</h4>
@@ -928,48 +1025,177 @@
                 </div>
             </div>`;
         
-            // Tạo la bàn SVG tĩnh (giữ nguyên)
-            let svg = `<svg width="${s}" height="${s}"><circle cx="${cx}" cy="${cx}" r="${r}" fill="#f5f7fa" stroke="#667eea" stroke-width="3"/>`;
-        
-            dirs.forEach((d, i) => {
-                const a = (angs[i]-90)*Math.PI/180;
-                const good = DATA.quai[q].dirs.good.includes(d);
-                const isDoor = d === doorDir;
-                const doorGood = isDoor && good;
-                const col = isDoor ? (doorGood ? '#228B22' : '#f44336') : (good ? '#4CAF50' : '#f44336');
-                const fill = isDoor ? (doorGood ? '#d4edda' : '#f8d7da') : (good ? '#e8f5e9' : '#ffebee');
-        
-                const a1 = (angs[i]-22.5-90)*Math.PI/180, a2 = (angs[i]+22.5-90)*Math.PI/180;
-                const x1 = cx+Math.cos(a1)*r, y1 = cx+Math.sin(a1)*r;
-                const x2 = cx+Math.cos(a2)*r, y2 = cx+Math.sin(a2)*r;
-                svg += `<path d="M${cx} ${cx}L${x1} ${y1}A${r} ${r} 0 0 1 ${x2} ${y2}Z" fill="${fill}" stroke="${col}" stroke-width="3" opacity="0.7"/>`;
-        
-                const txQuai = cx + Math.cos(a) * (r * 0.65);
-                const tyQuai = cx + Math.sin(a) * (r * 0.65);
-                svg += `<text x="${txQuai}" y="${tyQuai}" text-anchor="middle" dominant-baseline="middle" class="quai-label">${quai[i]}</text>`;
-        
-                const txDir = cx + Math.cos(a) * (r * 0.85);
-                const tyDir = cx + Math.sin(a) * (r * 0.85);
-                svg += `<text x="${txDir}" y="${tyDir}" text-anchor="middle" dominant-baseline="middle" font-size="18" font-weight="bold" fill="${col}">${d}</text>`;
-        
-                const txStar = cx + Math.cos(a) * (r * 0.5);
-                const tyStar = cx + Math.sin(a) * (r * 0.5);
-                const starIndex = good ? DATA.quai[q].dirs.good.indexOf(d) : DATA.quai[q].dirs.bad.indexOf(d);
-                const star = good ? (starIndex >= 0 ? STARS[starIndex] : '') : (starIndex >= 0 ? BAD_STARS[starIndex] : '');
-                svg += `<text x="${txStar}" y="${tyStar}" text-anchor="middle" dominant-baseline="middle" font-size="14" fill="${col}">${star}</text>`;
-        
+            let svg = `<svg width="${s}" height="${s}" viewBox="0 0 ${s} ${s}">`;
+            
+            // Nền gradient
+            svg += `<defs>
+                <radialGradient id="bgGrad">
+                    <stop offset="0%" style="stop-color:#FFF8DC;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#F5DEB3;stop-opacity:1" />
+                </radialGradient>
+            </defs>`;
+            svg += `<circle cx="${cx}" cy="${cx}" r="${r1}" fill="url(#bgGrad)"/>`;
+            
+            // Vẽ 5 vòng tròn
+            rings.forEach((ring, idx) => {
+                const strokeW = idx === 0 ? 4 : 2;
+                svg += `<circle cx="${cx}" cy="${cx}" r="${ring.r}" fill="none" stroke="#333" stroke-width="${strokeW}"/>`;
+            });
+            
+            // Vẽ theo 4 Cát + 4 Hung
+            const goodDirs = DATA.quai[q].dirs.good;
+            const badDirs = DATA.quai[q].dirs.bad;
+            
+            // Vẽ màu nền cho các hướng Cát/Hung (vòng 2, 3, 4)
+            mainDirs.forEach((dir) => {
+                const isGood = goodDirs.includes(dir.name);
+                const a1 = (dir.deg - 22.5 - 90) * Math.PI / 180;
+                const a2 = (dir.deg + 22.5 - 90) * Math.PI / 180;
+                
+                const sectorColor = isGood ? 'rgba(76, 175, 80, 0.2)' : 'rgba(244, 67, 54, 0.2)';
+                
+                // Tô màu cho vòng 2, 3, 4
+                const x1 = cx + Math.cos(a1) * rings[0].r;
+                const y1 = cx + Math.sin(a1) * rings[0].r;
+                const x2 = cx + Math.cos(a2) * rings[0].r;
+                const y2 = cx + Math.sin(a2) * rings[0].r;
+                const x3 = cx + Math.cos(a2) * rings[3].r;
+                const y3 = cx + Math.sin(a2) * rings[3].r;
+                const x4 = cx + Math.cos(a1) * rings[3].r;
+                const y4 = cx + Math.sin(a1) * rings[3].r;
+                
+                svg += `<path d="M${x1} ${y1}A${rings[0].r} ${rings[0].r} 0 0 1 ${x2} ${y2}L${x3} ${y3}A${rings[3].r} ${rings[3].r} 0 0 0 ${x4} ${y4}Z" fill="${sectorColor}"/>`;
+            });
+            
+            // Vẽ đường chia theo Cát/Hung kéo dài đến vòng ngoài cùng
+            mainDirs.forEach((dir) => {
+                const a1 = (dir.deg - 22.5 - 90) * Math.PI / 180;
+                const x1 = cx + Math.cos(a1) * r1;
+                const y1 = cx + Math.sin(a1) * r1;
+                svg += `<line x1="${cx}" y1="${cx}" x2="${x1}" y2="${y1}" stroke="#666" stroke-width="2"/>`;
+            });
+            
+            // VÒNG 1: Tên 8 hướng chính
+            mainDirs.forEach((dir) => {
+                const isGood = goodDirs.includes(dir.name);
+                const isDoor = dir.name === doorDir;
+                const a = (dir.deg - 90) * Math.PI / 180;
+                const tx1 = cx + Math.cos(a) * (r1 + 30);
+                const ty1 = cx + Math.sin(a) * (r1 + 30);
+                const dirColor = isDoor ? '#FF0000' : (isGood ? '#008000' : '#C62828');
+                svg += `<text x="${tx1}" y="${ty1}" text-anchor="middle" dominant-baseline="middle" font-size="15" font-weight="bold" fill="${dirColor}">${dir.name}</text>`;
+            });
+            
+            // VÒNG 2: 24 Sao Phúc Đức
+            stars24.forEach((star) => {
+                const a = (star.deg - 90) * Math.PI / 180;
+                const a1 = (star.deg - 7.5 - 90) * Math.PI / 180;
+                
+                // Vạch chia nhỏ
+                const xInner = cx + Math.cos(a1) * rings[0].r;
+                const yInner = cx + Math.sin(a1) * rings[0].r;
+                const xOuter = cx + Math.cos(a1) * rings[1].r;
+                const yOuter = cx + Math.sin(a1) * rings[1].r;
+                svg += `<line x1="${xInner}" y1="${yInner}" x2="${xOuter}" y2="${yOuter}" stroke="#999" stroke-width="0.5"/>`;
+                
+                // Tên sao
+                const tx2 = cx + Math.cos(a) * ((rings[0].r + rings[1].r) / 2);
+                const ty2 = cx + Math.sin(a) * ((rings[0].r + rings[1].r) / 2);
+                const starColor = star.type === 'cat' ? '#2E7D32' : '#C62828';
+                svg += `<text x="${tx2}" y="${ty2}" text-anchor="middle" dominant-baseline="middle" font-size="7" font-weight="500" fill="${starColor}">${star.name}</text>`;
+            });
+            
+            // VÒNG 3: 24 Cung (Thiên Can + Địa Chi)
+            dirs24.forEach((dir) => {
+                const a = (dir.deg - 90) * Math.PI / 180;
+                const a1 = (dir.deg - 7.5 - 90) * Math.PI / 180;
+                
+                // Vạch chia nhỏ
+                const xInner = cx + Math.cos(a1) * rings[1].r;
+                const yInner = cx + Math.sin(a1) * rings[1].r;
+                const xOuter = cx + Math.cos(a1) * rings[2].r;
+                const yOuter = cx + Math.sin(a1) * rings[2].r;
+                svg += `<line x1="${xInner}" y1="${yInner}" x2="${xOuter}" y2="${yOuter}" stroke="#999" stroke-width="0.5"/>`;
+                
+                // Tên 24 cung
+                const tx3 = cx + Math.cos(a) * ((rings[1].r + rings[2].r) / 2);
+                const ty3 = cx + Math.sin(a) * ((rings[1].r + rings[2].r) / 2);
+                
+                let txtColor = '#333';
+                if (dir.type === 'quai') txtColor = '#8B0000';
+                else if (dir.type === 'can') txtColor = '#00008B';
+                
+                svg += `<text x="${tx3}" y="${ty3}" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="${dir.type === 'quai' ? 'bold' : 'normal'}" fill="${txtColor}">${dir.name}</text>`;
+            });
+            
+            // VÒNG 4: Cát/Hung Tinh
+            mainDirs.forEach((dir) => {
+                const isGood = goodDirs.includes(dir.name);
+                const isDoor = dir.name === doorDir;
+                const a = (dir.deg - 90) * Math.PI / 180;
+                const tx4 = cx + Math.cos(a) * ((rings[2].r + rings[3].r) / 2);
+                const ty4 = cx + Math.sin(a) * ((rings[2].r + rings[3].r) / 2);
+                
+                // Cát/Hung Tinh
+                const starIdx = isGood ? goodDirs.indexOf(dir.name) : badDirs.indexOf(dir.name);
+                const star = isGood ? (starIdx >= 0 ? STARS[starIdx] : '') : (starIdx >= 0 ? BAD_STARS[starIdx] : '');
+                const starColor = isGood ? '#2E7D32' : '#C62828';
+                svg += `<text x="${tx4}" y="${ty4}" text-anchor="middle" dominant-baseline="middle" font-size="9" font-weight="600" fill="${starColor}">${star}</text>`;
+                
+                // Icon cửa
                 if (isDoor) {
-                    const txDoor = cx + Math.cos(a) * (r * 0.75);
-                    const tyDoor = cx + Math.sin(a) * (r * 0.75);
-                    svg += `<text x="${txDoor}" y="${tyDoor}" text-anchor="middle" dominant-baseline="middle" font-size="24" fill="${col}">🚪</text>`;
+                    svg += `<circle cx="${tx4}" cy="${ty4-15}" r="8" fill="#FF0000"/>`;
+                    svg += `<text x="${tx4}" y="${ty4-15}" text-anchor="middle" dominant-baseline="middle" font-size="10" fill="#FFF">🚪</text>`;
                 }
             });
+            
+            // VÒNG 5: 8 Quẻ
+            mainDirs.forEach((dir) => {
+                const a = (dir.deg - 90) * Math.PI / 180;
+                const tx5 = cx + Math.cos(a) * ((rings[3].r + rings[4].r) / 2);
+                const ty5 = cx + Math.sin(a) * ((rings[3].r + rings[4].r) / 2);
+                
+                const qColor = quaiColors[dir.quai];
+                svg += `<rect x="${tx5-20}" y="${ty5-9}" width="40" height="18" fill="${qColor}" opacity="0.7" rx="3"/>`;
+                svg += `<text x="${tx5}" y="${ty5}" text-anchor="middle" dominant-baseline="middle" font-size="12" font-weight="bold" fill="#000">${dir.quai}</text>`;
+            });
+            
+            // TRUNG TÂM: Tên Quẻ Người Xem
+            const centerR = 50;
+            svg += `<circle cx="${cx}" cy="${cx}" r="${centerR}" fill="#FFF8DC" stroke="#8B4513" stroke-width="3"/>`;
+            svg += `<text x="${cx}" y="${cx}" text-anchor="middle" dominant-baseline="middle" font-size="28" font-weight="bold" fill="#8B4513">${q}</text>`;
+            
+            // Vẽ độ số (0-360°)
+            for (let deg = 0; deg < 360; deg++) {
+                const a = (deg - 90) * Math.PI / 180;
+                const xInner = cx + Math.cos(a) * (r1 - 5);
+                const yInner = cx + Math.sin(a) * (r1 - 5);
+                const xOuter = cx + Math.cos(a) * r1;
+                const yOuter = cx + Math.sin(a) * r1;
+                
+                svg += `<line x1="${xInner}" y1="${yInner}" x2="${xOuter}" y2="${yOuter}" stroke="#666" stroke-width="0.3"/>`;
+                
+                if (deg % 10 === 0) {
+                    const tx = cx + Math.cos(a) * (r1 + 15);
+                    const ty = cx + Math.sin(a) * (r1 + 15);
+                    svg += `<text x="${tx}" y="${ty}" text-anchor="middle" dominant-baseline="middle" font-size="9" fill="#444">${deg}°</text>`;
+                }
+            }
+            
+            svg += `</svg>`;
         
-            svg += `<circle cx="${cx}" cy="${cx}" r="45" fill="white" stroke="#667eea" stroke-width="3"/>`;
-            svg += `<text x="${cx}" y="${cx}" text-anchor="middle" dominant-baseline="middle" font-size="16" font-weight="bold" fill="#667eea">LA BÀN</text></svg>`;
-        
-            // Kết hợp la bàn điện tử + la bàn tĩnh
-            return liveCompass + '<div style="margin-top: 30px;"><h4 style="text-align: center; color: #667eea; margin-bottom: 15px;">📊 Sơ Đồ Hướng Nhà (Tĩnh)</h4><div style="width: 100%; max-width: 500px; margin: 0 auto;">' + svg + '</div></div>';
+            return liveCompass + `<div style="margin-top: 30px;">
+                <h4 style="text-align: center; color: #667eea; margin-bottom: 10px;">📊 La Bàn Phong Thủy - Quẻ ${q}</h4>
+                <p style="text-align: center; font-size: 12px; color: #666; margin-bottom: 15px;">
+                    <strong>Vòng 1:</strong> 8 Hướng | <strong>Vòng 2:</strong> 24 Sao Phúc Đức (khởi an tại <strong>${startPos}</strong>) | 
+                    <strong>Vòng 3:</strong> 24 Cung (Thiên Can-Địa Chi) | <strong>Vòng 4:</strong> Cát/Hung Tinh | <strong>Vòng 5:</strong> 8 Quẻ | 
+                    <strong>Trung Tâm:</strong> ${q}
+                    <br><span style="color: #00008B;">■ Thiên Can</span> | <span style="color: #333;">■ Địa Chi</span> | <span style="color: #8B0000;">■ Quẻ</span>
+                    <br><span style="color: #2E7D32;">■ Cát Tinh/Sao</span> | <span style="color: #C62828;">■ Hung Tinh/Sao</span>
+                    <br><span style="background: rgba(76, 175, 80, 0.2); padding: 2px 8px;">■ Vùng Cát</span> | <span style="background: rgba(244, 67, 54, 0.2); padding: 2px 8px;">■ Vùng Hung</span>
+                </p>
+                <div style="width: 100%; max-width: 750px; margin: 0 auto;">${svg}</div>
+            </div>`;
         }
 
         function getDoorExplanation(q, doorDir) {
