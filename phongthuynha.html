@@ -1329,11 +1329,9 @@
                 
                 // LABEL ĐỘ TRÊN KIM LA BÀN (ẩn mặc định, hiện khi đo)
                 const labelNeedleX = cx;
-                const labelNeedleY = cx - (r1 - 180);
+                const labelNeedleY = cx - (r1 - 195);
                 svg += `<g id="compassDegreeLabel" class="">
-                    <circle cx="${labelNeedleX}" cy="${labelNeedleY}" r="30" fill="#e74c3c" opacity="0.95" stroke="white" stroke-width="2"/>
-                    <text x="${labelNeedleX}" y="${labelNeedleY - 6}" text-anchor="middle" dominant-baseline="middle" font-size="14" font-weight="bold" fill="#FFF" id="needleDegreeText">0°</text>
-                    <text x="${labelNeedleX}" y="${labelNeedleY + 10}" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="bold" fill="#FFF" id="needleDirectionText">Bắc</text>
+                    <text x="${labelNeedleX}" y="${labelNeedleY}" text-anchor="middle" dominant-baseline="middle" font-size="18" font-weight="bold" fill="#e67e22" stroke="white" stroke-width="0.5" id="needleDegreeText">0°</text>
                 </g>`;
                 
                 svg += `</svg>`;
