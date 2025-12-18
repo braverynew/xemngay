@@ -927,6 +927,216 @@
                 height: 38 !important;
             }
         }
+        /* ========== THƯỚC LỖ BAN MODULE ========== */
+        .loban-module {
+            margin: 30px 0;
+            padding: 25px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .loban-module h3 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        
+        .loban-controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .loban-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .loban-input-group label {
+            font-weight: 600;
+            color: #333;
+            font-size: 14px;
+        }
+        
+        .loban-input {
+            padding: 10px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            width: 150px;
+            transition: border-color 0.3s;
+        }
+        
+        .loban-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .loban-type-select {
+            padding: 10px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 15px;
+            background: white;
+            cursor: pointer;
+            min-width: 200px;
+        }
+        
+        .loban-calculate-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin-top: 20px;
+        }
+        
+        .loban-calculate-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .loban-ruler-container {
+            margin: 20px 0;
+            overflow-x: auto;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        
+        .loban-ruler {
+            position: relative;
+            height: 180px;
+            background: #fff;
+            border: 2px solid #333;
+            border-radius: 5px;
+            min-width: 800px;
+        }
+        
+        .loban-tick {
+            position: absolute;
+            bottom: 0;
+            width: 1px;
+            background: #666;
+        }
+        
+        .loban-tick.major {
+            height: 40px;
+            width: 2px;
+            background: #000;
+        }
+        
+        .loban-tick.minor {
+            height: 20px;
+        }
+        
+        .loban-label {
+            position: absolute;
+            bottom: 45px;
+            font-size: 12px;
+            font-weight: 600;
+            transform: translateX(-50%);
+            color: #000;
+        }
+        
+        .loban-large-section {
+            position: absolute;
+            top: 50px;
+            height: 60px;
+            display: flex;
+            flex-direction: column;
+            border-right: 2px solid #333;
+            overflow: hidden;
+        }
+        
+        .loban-large-section-label {
+            width: 100%;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+            border-bottom: 2px solid #333;
+            background: rgba(255, 255, 255, 0.9);
+        }
+        
+        .loban-large-section-label.good {
+            color: #2E7D32;
+            background: rgba(76, 175, 80, 0.1);
+        }
+        
+        .loban-large-section-label.bad {
+            color: #C62828;
+            background: rgba(244, 67, 54, 0.1);
+        }
+        
+        .loban-small-sections {
+            display: flex;
+            width: 100%;
+            height: 35px;
+        }
+        
+        .loban-small-section {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 600;
+            border-right: 1px solid #999;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            padding: 2px;
+        }
+        
+        .loban-small-section:last-child {
+            border-right: none;
+        }
+        
+        .loban-small-section.good {
+            background: rgba(76, 175, 80, 0.25);
+            color: #1B5E20;
+        }
+        
+        .loban-small-section.bad {
+            background: rgba(244, 67, 54, 0.25);
+            color: #B71C1C;
+        }
+        
+        @media (max-width: 768px) {
+            .loban-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .loban-input-group {
+                width: 100%;
+            }
+            
+            .loban-input,
+            .loban-type-select {
+                width: 100%;
+            }
+            
+            .loban-ruler-container {
+                padding: 10px;
+            }
+            
+            .loban-segment {
+                font-size: 11px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -935,7 +1145,11 @@
             <h1>🏠 Phong Thủy Nhà Ở 🏠</h1>
             <p>Bố trí nhà cửa theo phong thủy Đông phương</p>
         </div>
-
+        <!-- THƯỚC LỖ BAN - ĐỘC LẬP -->
+        <div class="card">
+            <h2 style="text-align: center; color: #667eea; margin-bottom: 20px;">📏 Thước Lỗ Ban - Đo Kích Thước Phong Thủy</h2>
+            <div id="lobanModuleStandalone"></div>
+        </div>
         <div class="card">
             <div class="input-section">
                 <div class="form-group">
@@ -1883,6 +2097,7 @@
             `));
 
             // Section Mẹo Tăng Cường Vận May
+            // Section Thước Lỗ Ban
             fragment.appendChild(renderSection('💡 Mẹo Tăng Cường Vận May', `
                 <div class="detail-box">
                     <ul style="margin-left: 20px;">
@@ -2102,6 +2317,481 @@
             preciseDoorDegree = null;
             stopCompass();
         });
+        // ========== THƯỚC LỖ BAN MODULE ==========
+        // ========== THƯỚC LỖ BAN MODULE (LOGIC CHUẨN - 32/24/20 SAO) ==========
+        // ========== THƯỚC LỖ BAN MODULE (LOGIC CHUẨN - 8 CUNG LỚN x CUNG NHỎ) ==========
+                const LOBAN_DATA = {
+                    '52.2': { // Thông Thủy - 8 cung lớn x 5 cung nhỏ = 40 sao
+                        name: 'Lỗ Ban 52.2cm (Thông Thủy - Cửa)',
+                        unit: 52.2,
+                        largeSections: 8,
+                        smallSections: 5,
+                        largeSectionSize: 65.25, // 522/8 = 65.25mm
+                        smallSectionSize: 13.05, // 65.25/5 = 13.05mm
+                        sections: [
+                            { name: 'Quý Nhân', type: 'good', subs: [
+                                { name: 'Quyền lộc', type: 'good', meaning: 'Quyền lực tài lộc' },
+                                { name: 'Trung tín', type: 'good', meaning: 'Trung thành tín nghĩa' },
+                                { name: 'Tác quan', type: 'good', meaning: 'Thăng quan tiến chức' },
+                                { name: 'Phát đạt', type: 'good', meaning: 'Phát triển thịnh đạt' },
+                                { name: 'Thông minh', type: 'good', meaning: 'Sáng suốt thông minh' }
+                            ]},
+                            { name: 'Hiểm Họa', type: 'bad', subs: [
+                                { name: 'Án thành', type: 'bad', meaning: 'Bị kết án' },
+                                { name: 'Hỗn nhân', type: 'bad', meaning: 'Người xấu' },
+                                { name: 'Thất hiếu', type: 'bad', meaning: 'Mất hiếu đạo' },
+                                { name: 'Tai họa', type: 'bad', meaning: 'Gặp tai họa' },
+                                { name: 'Thường bệnh', type: 'bad', meaning: 'Hay ốm đau' }
+                            ]},
+                            { name: 'Thiên Tai', type: 'bad', subs: [
+                                { name: 'Hoàn tử', type: 'bad', meaning: 'Mất con' },
+                                { name: 'Quan tài', type: 'bad', meaning: 'Tang tóc' },
+                                { name: 'Thân tàn', type: 'bad', meaning: 'Thân thể tàn tật' },
+                                { name: 'Thất tài', type: 'bad', meaning: 'Mất của' },
+                                { name: 'Hệ quả', type: 'bad', meaning: 'Hậu quả xấu' }
+                            ]},
+                            { name: 'Thiên Tài', type: 'good', subs: [
+                                { name: 'Thi thơ', type: 'good', meaning: 'Văn chương tài hoa' },
+                                { name: 'Văn học', type: 'good', meaning: 'Học vấn cao' },
+                                { name: 'Thanh quý', type: 'good', meaning: 'Thanh cao quý phái' },
+                                { name: 'Tác lộc', type: 'good', meaning: 'Tạo ra tài lộc' },
+                                { name: 'Thiên lộc', type: 'good', meaning: 'Lộc trời ban' }
+                            ]},
+                            { name: 'Nhân Lộc', type: 'good', subs: [
+                                { name: 'Trí tồn', type: 'good', meaning: 'Con cháu trí tuệ' },
+                                { name: 'Phú quý', type: 'good', meaning: 'Giàu có quý phái' },
+                                { name: 'Tiến bửu', type: 'good', meaning: 'Thêm của quý' },
+                                { name: 'Thập thiện', type: 'good', meaning: 'Mười điều lành' },
+                                { name: 'Văn chương', type: 'good', meaning: 'Tài văn cao' }
+                            ]},
+                            { name: 'Cô Độc', type: 'bad', subs: [
+                                { name: 'Bạc nghịch', type: 'bad', meaning: 'Bội bạc phản nghịch' },
+                                { name: 'Vô vọng', type: 'bad', meaning: 'Không hi vọng' },
+                                { name: 'Ly tán', type: 'bad', meaning: 'Chia ly tan tác' },
+                                { name: 'Tửu thục', type: 'bad', meaning: 'Say sưa' },
+                                { name: 'Dâm dục', type: 'bad', meaning: 'Dâm đãng' }
+                            ]},
+                            { name: 'Thiên Tặc', type: 'bad', subs: [
+                                { name: 'Phòng bệnh', type: 'bad', meaning: 'Hay bệnh tật' },
+                                { name: 'Chiêu ôn', type: 'bad', meaning: 'Gặp ôn dịch' },
+                                { name: 'Ôn tài', type: 'bad', meaning: 'Mất tài sản' },
+                                { name: 'Ngục tù', type: 'bad', meaning: 'Vào tù' },
+                                { name: 'Quan tài', type: 'bad', meaning: 'Kiện tụng' }
+                            ]},
+                            { name: 'Tể Tướng', type: 'good', subs: [
+                                { name: 'Đại tài', type: 'good', meaning: 'Tài năng lớn' },
+                                { name: 'Thi thơ', type: 'good', meaning: 'Tài văn' },
+                                { name: 'Hoạch tài', type: 'good', meaning: 'Được tài lộc' },
+                                { name: 'Hiếu tử', type: 'good', meaning: 'Con hiếu thảo' },
+                                { name: 'Quý nhân', type: 'good', meaning: 'Gặp người tốt' }
+                            ]}
+                        ]
+                    },
+                    '42.9': { // Dương Trạch - 8 cung lớn x 4 cung nhỏ = 32 sao
+                        name: 'Lỗ Ban 42.9cm (Dương Trạch - Nội thất)',
+                        unit: 42.9,
+                        largeSections: 8,
+                        smallSections: 4,
+                        largeSectionSize: 53.625, // 429/8 = 53.625mm
+                        smallSectionSize: 13.40625, // 53.625/4 = 13.40625mm
+                        sections: [
+                            { name: 'Tài', type: 'good', subs: [
+                                { name: 'Tài đức', type: 'good', meaning: 'Tài lộc đức hạnh' },
+                                { name: 'Báo khố', type: 'good', meaning: 'Kho báu đầy' },
+                                { name: 'Lục hợp', type: 'good', meaning: 'Sáu hợp hòa thuận' },
+                                { name: 'Nghênh phúc', type: 'good', meaning: 'Đón phúc lộc' }
+                            ]},
+                            { name: 'Bệnh', type: 'bad', subs: [
+                                { name: 'Thoát tài', type: 'bad', meaning: 'Tiêu tán tài sản' },
+                                { name: 'Công sự', type: 'bad', meaning: 'Tranh chấp' },
+                                { name: 'Lao chấp', type: 'bad', meaning: 'Bị giam giữ' },
+                                { name: 'Cô quả', type: 'bad', meaning: 'Cô đơn' }
+                            ]},
+                            { name: 'Ly', type: 'bad', subs: [
+                                { name: 'Trưởng khố', type: 'bad', meaning: 'Kho rỗng' },
+                                { name: 'Kiếp tài', type: 'bad', meaning: 'Mất tài sản' },
+                                { name: 'Quan quỷ', type: 'bad', meaning: 'Quan phi quỷ khốc' },
+                                { name: 'Thất thoát', type: 'bad', meaning: 'Thất thoát của cải' }
+                            ]},
+                            { name: 'Nghĩa', type: 'good', subs: [
+                                { name: 'Thêm đinh', type: 'good', meaning: 'Thêm con' },
+                                { name: 'Ích lợi', type: 'good', meaning: 'Lợi ích tốt' },
+                                { name: 'Quý tử', type: 'good', meaning: 'Con quý' },
+                                { name: 'Đại cát', type: 'good', meaning: 'Rất tốt' }
+                            ]},
+                            { name: 'Quan', type: 'good', subs: [
+                                { name: 'Thuận khoa', type: 'good', meaning: 'Thi cử đỗ đạt' },
+                                { name: 'Hoành tài', type: 'good', meaning: 'Tài lộc bất ngờ' },
+                                { name: 'Tiến ích', type: 'good', meaning: 'Tăng lợi ích' },
+                                { name: 'Phú quý', type: 'good', meaning: 'Giàu sang' }
+                            ]},
+                            { name: 'Kiếp', type: 'bad', subs: [
+                                { name: 'Tử biệt', type: 'bad', meaning: 'Chết xa' },
+                                { name: 'Thoái khẩu', type: 'bad', meaning: 'Thối lui' },
+                                { name: 'Ly hương', type: 'bad', meaning: 'Xa quê' },
+                                { name: 'Tài thất', type: 'bad', meaning: 'Mất của' }
+                            ]},
+                            { name: 'Hại', type: 'bad', subs: [
+                                { name: 'Tai chí', type: 'bad', meaning: 'Tai họa tới' },
+                                { name: 'Tử tuyệt', type: 'bad', meaning: 'Chết dứt dòng' },
+                                { name: 'Bệnh lâm', type: 'bad', meaning: 'Bệnh tật đến' },
+                                { name: 'Khẩu thiệt', type: 'bad', meaning: 'Thị phi' }
+                            ]},
+                            { name: 'Bản (Mạng)', type: 'good', subs: [
+                                { name: 'Tài chí', type: 'good', meaning: 'Tài lộc đến' },
+                                { name: 'Đăng khoa', type: 'good', meaning: 'Thi đỗ' },
+                                { name: 'Tiến bảo', type: 'good', meaning: 'Thêm của quý' },
+                                { name: 'Hưng vượng', type: 'good', meaning: 'Hưng thịnh' }
+                            ]}
+                        ]
+                    },
+                    '38.8': { // Âm Phần - 10 cung lớn x 4 cung nhỏ = 40 sao
+                        name: 'Lỗ Ban 38.8cm (Âm Phần - Bàn thờ, Mộ)',
+                        unit: 38.8,
+                        largeSections: 10,
+                        smallSections: 4,
+                        largeSectionSize: 38.8, // 388/10 = 38.8mm
+                        smallSectionSize: 9.7, // 38.8/4 = 9.7mm
+                        sections: [
+                            { name: 'Đinh', type: 'good', subs: [
+                                { name: 'Phúc tinh', type: 'good', meaning: 'Sao phúc chiếu' },
+                                { name: 'Cấp đệ', type: 'good', meaning: 'Thi cử đỗ đạt' },
+                                { name: 'Tài vượng', type: 'good', meaning: 'Tài lộc vượng' },
+                                { name: 'Đăng khoa', type: 'good', meaning: 'Thi đỗ' }
+                            ]},
+                            { name: 'Hại', type: 'bad', subs: [
+                                { name: 'Khẩu thiệt', type: 'bad', meaning: 'Thị phi' },
+                                { name: 'Lâm bệnh', type: 'bad', meaning: 'Bệnh tật' },
+                                { name: 'Tử tuyệt', type: 'bad', meaning: 'Chết dứt dòng' },
+                                { name: 'Họa chí', type: 'bad', meaning: 'Tai họa tới' }
+                            ]},
+                            { name: 'Vượng', type: 'good', subs: [
+                                { name: 'Thiên đức', type: 'good', meaning: 'Đức trời' },
+                                { name: 'Hỷ sự', type: 'good', meaning: 'Việc vui' },
+                                { name: 'Tiến bảo', type: 'good', meaning: 'Thêm của' },
+                                { name: 'Nạp phúc', type: 'good', meaning: 'Nhận phúc' }
+                            ]},
+                            { name: 'Khổ', type: 'bad', subs: [
+                                { name: 'Thất thoát', type: 'bad', meaning: 'Thất thoát' },
+                                { name: 'Quan quỷ', type: 'bad', meaning: 'Quan phi' },
+                                { name: 'Kiếp tài', type: 'bad', meaning: 'Mất của' },
+                                { name: 'Vô tự', type: 'bad', meaning: 'Không con' }
+                            ]},
+                            { name: 'Nghĩa', type: 'good', subs: [
+                                { name: 'Đại cát', type: 'good', meaning: 'Rất tốt' },
+                                { name: 'Tài vượng', type: 'good', meaning: 'Tài lộc vượng' },
+                                { name: 'Lợi ích', type: 'good', meaning: 'Lợi ích' },
+                                { name: 'Thiên khố', type: 'good', meaning: 'Kho trời' }
+                            ]},
+                            { name: 'Quan', type: 'good', subs: [
+                                { name: 'Phú quý', type: 'good', meaning: 'Giàu sang' },
+                                { name: 'Tiến bảo', type: 'good', meaning: 'Thêm của' },
+                                { name: 'Hoạch tài', type: 'good', meaning: 'Được tài' },
+                                { name: 'Thuận khoa', type: 'good', meaning: 'Thi đỗ' }
+                            ]},
+                            { name: 'Tử', type: 'bad', subs: [
+                                { name: 'Ly hương', type: 'bad', meaning: 'Xa quê' },
+                                { name: 'Tử biệt', type: 'bad', meaning: 'Chết xa' },
+                                { name: 'Thoái đinh', type: 'bad', meaning: 'Mất con' },
+                                { name: 'Thất tài', type: 'bad', meaning: 'Mất của' }
+                            ]},
+                            { name: 'Hưng', type: 'good', subs: [
+                                { name: 'Đăng khoa', type: 'good', meaning: 'Thi đỗ' },
+                                { name: 'Quý tử', type: 'good', meaning: 'Con quý' },
+                                { name: 'Thêm đinh', type: 'good', meaning: 'Thêm con' },
+                                { name: 'Hưng vượng', type: 'good', meaning: 'Hưng thịnh' }
+                            ]},
+                            { name: 'Thất', type: 'bad', subs: [
+                                { name: 'Cô quả', type: 'bad', meaning: 'Cô đơn' },
+                                { name: 'Lao chấp', type: 'bad', meaning: 'Bị giam' },
+                                { name: 'Công sự', type: 'bad', meaning: 'Tranh chấp' },
+                                { name: 'Thoát tài', type: 'bad', meaning: 'Mất của' }
+                            ]},
+                            { name: 'Tài', type: 'good', subs: [
+                                { name: 'Nghênh phúc', type: 'good', meaning: 'Đón phúc' },
+                                { name: 'Lục hợp', type: 'good', meaning: 'Hòa hợp' },
+                                { name: 'Tiến bảo', type: 'good', meaning: 'Thêm của' },
+                                { name: 'Tài đức', type: 'good', meaning: 'Tài lộc' }
+                            ]}
+                        ]
+                    }
+                };
+        
+        function createLobanModule() {
+            return `
+                <div class="loban-module">
+                    
+                    <div class="loban-controls">
+                        <div class="loban-input-group">
+                            <label for="lobanType">Loại thước:</label>
+                            <select id="lobanType" class="loban-type-select" onchange="calculateLoban()">
+                                <option value="52.2">Lỗ Ban 52.2cm (Cửa chính, cửa sổ)</option>
+                                <option value="42.9">Lỗ Ban 42.9cm (Đồ nội thất)</option>
+                                <option value="38.8">Lỗ Ban 38.8cm (Bàn thờ, mộ phần)</option>
+                            </select>
+                        </div>
+                        <div class="loban-input-group">
+                            <label for="lobanMeasure">Kích thước (cm):</label>
+                            <input type="number" id="lobanMeasure" class="loban-input" placeholder="Nhập kích thước" min="0" step="0.1">
+                        </div>
+                    </div>
+                    <div class="loban-result" id="lobanResult"></div>
+                    <div class="loban-info">
+                        <strong>📖 Hướng dẫn sử dụng:</strong>
+                        <ul style="margin: 10px 0 0 20px; line-height: 1.8;">
+                            <li><strong>Lỗ Ban 52.2cm (Thông Thủy):</strong> Dùng cho cửa chính, cửa phòng, cửa sổ </li>
+                            <li><strong>Lỗ Ban 42.9cm (Dương Trạch):</strong> Dùng cho bàn ghế, giường, tủ, đồ nội thất </li>
+                            <li><strong>Lỗ Ban 38.8cm (Âm Phần):</strong> Dùng cho bàn thờ, mộ phần, công trình thờ cúng </li>
+
+
+                        </ul>
+
+                    </div>
+                </div>
+            `;
+        }
+        
+        function calculateLoban() {
+            const type = document.getElementById('lobanType').value;
+            const measure = parseFloat(document.getElementById('lobanMeasure').value);
+            
+            const resultDiv = document.getElementById('lobanResult');
+            
+            // Nếu chưa nhập gì thì không làm gì cả (giữ nguyên giao diện)
+            if (!measure || measure <= 0) {
+                if (resultDiv) {
+                    resultDiv.innerHTML = '';
+                    resultDiv.style.display = 'none';
+                }
+                return;
+            }
+            
+            const data = LOBAN_DATA[type];
+            const C = data.unit;
+            const largeSections = data.largeSections;
+            const smallSections = data.smallSections;
+            const sections = data.sections;
+            
+            // Bước 1: Lấy phần dư theo chu kỳ (cm -> mm)
+            let R_mm = (measure * 10) % (C * 10);
+            if (R_mm === 0) R_mm = C * 10;
+            
+            // Bước 2: Xác định cung lớn
+            const largeSectionSize_mm = data.largeSectionSize;
+            const largeIndex = Math.ceil(R_mm / largeSectionSize_mm) - 1;
+            const currentLargeSection = sections[largeIndex];
+            
+            // Bước 3: Tính phần dư trong cung lớn
+            const R_in_large = R_mm - (largeIndex * largeSectionSize_mm);
+            
+            // Bước 4: Xác định cung nhỏ
+            const smallSectionSize_mm = data.smallSectionSize;
+            const smallIndex = Math.ceil(R_in_large / smallSectionSize_mm) - 1;
+            const currentSmallSection = currentLargeSection.subs[smallIndex];
+            
+            // Vẽ thước
+            //drawLobanRuler(measure, type, R_mm / 10);
+            
+            // Hiển thị kết quả
+
+            const isGood = currentSmallSection.type === 'good';
+            
+            resultDiv.className = 'loban-result show ' + (isGood ? 'loban-result-good' : 'loban-result-bad');
+            resultDiv.innerHTML = `
+                <h4>${isGood ? '✅ KÍCH THƯỚC TỐT' : '⚠️ KÍCH THƯỚC XẤU'}</h4>
+                <p><strong>Kích thước nhập vào:</strong> ${measure}cm (${measure * 10}mm)</p><br>
+                <p><strong>Loại thước:</strong> ${data.name}</p><br>
+                <p><strong>Chu kỳ:</strong> ${C}cm </p><br>
+                <p><strong>Phần dư trong chu kỳ:</strong> ${(R_mm / 10).toFixed(2)}cm (${R_mm.toFixed(1)}mm)</p><br>
+                <p><strong>Cung lớn:</strong> <span class="highlight">${currentLargeSection.name}</span> (Cung ${largeIndex + 1}/${largeSections})</p><br>
+                <p><strong>Cung nhỏ:</strong> <span class="highlight" style="background: ${isGood ? '#e8f5e9' : '#ffebee'};">${currentSmallSection.name}</span> (${currentSmallSection.meaning})</p><br>
+                <p style="margin-top: 15px; padding: 10px; background: ${isGood ? '#f1f8f4' : '#fff5f5'}; border-radius: 5px;">
+                    ${isGood ? 
+                        '✨ Đây là kích thước tốt theo phong thủy. Sử dụng kích thước này sẽ mang lại may mắn, tài lộc và sức khỏe cho gia chủ.' : 
+                        '⚠️ Kích thước này không thuận lợi theo phong thủy. Nên điều chỉnh thêm/bớt vài cm để rơi vào cung nhỏ tốt (màu xanh).'}
+                </p>
+                ${!isGood ? `
+                <div style="margin-top: 15px; padding: 12px; background: #e8f5e9; border-radius: 5px; border-left: 4px solid #4CAF50;">
+                    <strong>💡 Gợi ý kích thước tốt gần nhất:</strong><br>
+                    ${getSuggestedMeasures(measure, type).map(m => {
+                        const info = getStarInfo(m, type);
+                        return `• ${m.toFixed(1)}cm - <strong>${info.small}</strong> (${info.large})`;
+                    }).join('<br>')}
+                </div>` : ''}
+            `;
+        }
+        
+        function drawLobanRuler(measure, type, position) {
+            const container = document.getElementById('lobanRulerContainer');
+            const data = LOBAN_DATA[type];
+            const unit = data.unit;
+            const largeSections = data.largeSections;
+            const smallSections = data.smallSections;
+            const sections = data.sections;
+            
+            const viewRange = 10; // cm
+            const startCm = Math.max(0, measure - viewRange);
+            const endCm = measure + viewRange;
+            const totalWidth = (endCm - startCm) * 10;
+            
+            container.style.display = 'block';
+            container.innerHTML = `<div class="loban-ruler" style="width: ${totalWidth}px;"></div>`;
+            
+            const ruler = container.querySelector('.loban-ruler');
+            
+            // Vẽ vạch chia cm (chỉ trong khoảng hiển thị)
+            for (let i = Math.floor(startCm); i <= Math.ceil(endCm); i++) {
+                const tick = document.createElement('div');
+                tick.className = 'loban-tick ' + (i % 5 === 0 ? 'major' : 'minor');
+                tick.style.left = ((i - startCm) * 10) + 'px';
+                ruler.appendChild(tick);
+                
+                if (i % 5 === 0) {
+                    const label = document.createElement('div');
+                    label.className = 'loban-label';
+                    label.textContent = i + ' cm';
+                    label.style.left = ((i - startCm) * 10) + 'px';
+                    ruler.appendChild(label);
+                }
+            }
+            
+            // Vẽ các cung theo cấu trúc: Cung lớn bao ngoài, cung nhỏ bên trong
+            const largeSectionSize_mm = data.largeSectionSize;
+            
+            // Tính số chu kỳ cần vẽ
+            const startCycle = Math.floor(startCm / unit);
+            const endCycle = Math.ceil(endCm / unit);
+            
+            for (let cycle = startCycle; cycle <= endCycle; cycle++) {
+                for (let i = 0; i < largeSections; i++) {
+                    const largeSection = sections[i];
+                    const absoluteLeftPos = (cycle * unit * 10) + (i * largeSectionSize_mm);
+                    const leftPos = absoluteLeftPos - (startCm * 10);
+                    const width = largeSectionSize_mm;
+                    
+                    // Tạo div cung lớn
+                    const largeSectionDiv = document.createElement('div');
+                    largeSectionDiv.className = 'loban-large-section';
+                    largeSectionDiv.style.left = leftPos + 'px';
+                    largeSectionDiv.style.width = width + 'px';
+                    
+                    // Tên cung lớn
+                    const largeLabel = document.createElement('div');
+                    largeLabel.className = 'loban-large-section-label ' + largeSection.type;
+                    largeLabel.textContent = largeSection.name;
+                    largeSectionDiv.appendChild(largeLabel);
+                    
+                    // Container các cung nhỏ
+                    const smallSectionsContainer = document.createElement('div');
+                    smallSectionsContainer.className = 'loban-small-sections';
+                    
+                    // Vẽ các cung nhỏ
+                    for (let j = 0; j < smallSections; j++) {
+                        const smallSection = largeSection.subs[j];
+                        
+                        const smallSectionDiv = document.createElement('div');
+                        smallSectionDiv.className = 'loban-small-section ' + smallSection.type;
+                        smallSectionDiv.textContent = smallSection.name;
+                        smallSectionDiv.title = `${largeSection.name} - ${smallSection.name}: ${smallSection.meaning}`;
+                        
+                        smallSectionsContainer.appendChild(smallSectionDiv);
+                    }
+                    
+                    largeSectionDiv.appendChild(smallSectionsContainer);
+                    ruler.appendChild(largeSectionDiv);
+                }
+            }
+            
+            // Vẽ marker vị trí đo
+            const marker = document.createElement('div');
+            marker.className = 'loban-marker';
+            marker.style.left = ((measure - startCm) * 10) + 'px';
+            
+            const markerLabel = document.createElement('div');
+            markerLabel.className = 'loban-marker-label';
+            markerLabel.textContent = measure + 'cm';
+            marker.appendChild(markerLabel);
+            
+            ruler.appendChild(marker);
+            
+            // Auto scroll đến vị trí marker
+            // Auto scroll đến giữa thước
+            setTimeout(() => {
+                container.scrollLeft = (totalWidth / 2) - (container.offsetWidth / 2);
+            }, 100);
+        }
+        
+        function getStarInfo(measure, type) {
+            const data = LOBAN_DATA[type];
+            const C = data.unit;
+            const sections = data.sections;
+            
+            let R_mm = (measure * 10) % (C * 10);
+            if (R_mm === 0) R_mm = C * 10;
+            
+            const largeSectionSize_mm = data.largeSectionSize;
+            const largeIndex = Math.ceil(R_mm / largeSectionSize_mm) - 1;
+            const currentLargeSection = sections[largeIndex];
+            
+            const R_in_large = R_mm - (largeIndex * largeSectionSize_mm);
+            const smallSectionSize_mm = data.smallSectionSize;
+            const smallIndex = Math.ceil(R_in_large / smallSectionSize_mm) - 1;
+            const currentSmallSection = currentLargeSection.subs[smallIndex];
+            
+            return {
+                large: currentLargeSection.name,
+                small: currentSmallSection.name,
+                type: currentSmallSection.type
+            };
+        }
+        
+        function getSuggestedMeasures(measure, type) {
+            const suggestions = [];
+            
+            // Tìm trong khoảng -20cm đến +20cm
+            for (let i = -200; i <= 200; i += 5) { // Bước 0.5cm
+                const testMeasure = measure + (i / 10);
+                if (testMeasure <= 0) continue;
+                
+                const info = getStarInfo(testMeasure, type);
+                
+                if (info.type === 'good' && !suggestions.some(s => Math.abs(s - testMeasure) < 1)) {
+                    suggestions.push(testMeasure);
+                    if (suggestions.length >= 5) break;
+                }
+            }
+            
+            return suggestions.sort((a, b) => Math.abs(a - measure) - Math.abs(b - measure)).slice(0, 3);
+        }
+        // Tự động tính khi nhập số
+        // Tự động tính khi nhập số VÀ hiển thị module
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hiển thị module Lỗ Ban
+            const lobanContainer = document.getElementById('lobanModuleStandalone');
+            if (lobanContainer) {
+                lobanContainer.innerHTML = createLobanModule();
+            }
+            
+            // Tự động tính khi nhập
+            const lobanInput = document.getElementById('lobanMeasure');
+            const lobanType = document.getElementById('lobanType');
+            
+            if (lobanInput) {
+                lobanInput.addEventListener('input', function() {
+                    if (this.value && parseFloat(this.value) > 0) {
+                        calculateLoban();
+                    }
+                });
+            }
+            
+            if (lobanType) {
+                lobanType.addEventListener('change', function() {
+                    if (lobanInput.value && parseFloat(lobanInput.value) > 0) {
+                        calculateLoban();
+                    }
+                });
+            }
+        });
             </script>
 </body>
-</html>
+    </html>
