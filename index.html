@@ -774,7 +774,7 @@
             // Lấy năm âm lịch của ngày đầu tiên trong tháng để hiển thị
             const firstDayLunar = convertSolar2Lunar(1, month, year);
             const canChiYear = getCanChi(null, 'year', firstDayLunar.year);
-            currentMonth.textContent = `${monthNames[month]} năm ${year} (${canChiYear} - ${firstDayLunar.year})`;
+            currentMonth.textContent = `${monthNames[month]} năm ${year} (${canChiYear})`;
         
             // Create calendar headers
             const daysOfWeek = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
