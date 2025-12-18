@@ -530,7 +530,6 @@
                 return `${thienCan[monthCanIndex]} ${diaChi[monthChiIndex]}`;
             } else if (type === 'year' && year !== null) {
                 // Tính Thiên Can và Địa Chi của năm
-                const yearJd = jdFromDate(1, 1, year);
                 const yearCanIndex = (year + 6) % 10;
                 const yearChiIndex = (year + 8) % 12; // Địa Chi của năm, bắt đầu từ Tý cho năm 1984 (Giáp Tý)
                 return `${thienCan[yearCanIndex]} ${diaChi[yearChiIndex]}`;
@@ -687,10 +686,10 @@
             }
             let a11 = getLunarMonth11(yy, timeZone);
             let b11 = a11;
-            let lunarYear = yy;  // ← THAY ĐỔI: Thêm biến lunarYear riêng
+            let lunarYear = yy;
             if (a11 >= monthStart) {
-                lunarYear = yy - 1;  // ← THAY ĐỔI: Dùng lunarYear thay vì yy
-                a11 = getLunarMonth11(lunarYear, timeZone);
+                lunarYear = yy;  // ← SỬA: Không trừ ở đây
+                a11 = getLunarMonth11(yy - 1, timeZone);  // ← Chỉ thay đổi a11
             } else {
                 b11 = getLunarMonth11(yy + 1, timeZone);
             }
@@ -711,9 +710,9 @@
                 lunarMonth = lunarMonth - 12;
             }
             if (lunarMonth >= 11 && diff < 4) {
-                lunarYear = yy - 1;  // ← THAY ĐỔI: Dùng lunarYear thay vì yy
+                lunarYear = yy - 1;  // ← Giữ nguyên logic này
             }
-            return { day: lunarDay, month: lunarMonth, year: lunarYear, leap: lunarLeap, jd: jd };  // ← THAY ĐỔI: Trả về lunarYear
+            return { day: lunarDay, month: lunarMonth, year: lunarYear, leap: lunarLeap, jd: jd };
         }
         // Hàm hiển thị thông tin ngày và giờ dưới lịch
         function showDayInfo(solarDate, lunarDate, title, dayDescription, lunarDay, lunarMonth, canChiDay, canChiMonth, canChiYear) {
