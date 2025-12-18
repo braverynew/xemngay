@@ -821,11 +821,10 @@
                     `${lunarResult.day}/${lunarResult.month} Nhuận` : 
                     `${lunarResult.day}/${lunarResult.month}`;
                 
-                // Tính Thiên Can và Địa Chi
-                // Tính Thiên Can và Địa Chi
+                // Tính Thiên Can và Địa Chi - QUAN TRỌNG: Phải tính canChiYear trước khi dùng
                 const canChiDay = getCanChi(lunarResult.jd, 'day');
                 const canChiMonth = getCanChi(null, 'month', lunarResult.year, lunarResult.month);
-                const canChiYear = getCanChi(null, 'year', lunarResult.year);
+                const canChiYear = getCanChi(null, 'year', lunarResult.year);  // ← THÊM DÒNG NÀY
                 
                 // Kiểm tra ngày tốt/xấu
                 const goodBadInfo = checkGoodBadDay(lunarResult.day, lunarResult.month, lunarResult.leap);
@@ -840,7 +839,7 @@
                     title = goodBadInfo.name;
                     description = goodBadInfo.description;
                 }
-        
+                
                 div.innerHTML = `
                     <div class="solar-date">${day}</div>
                     <div class="lunar-date ${lunarResult.leap ? 'leap' : ''}">${lunarText}</div>
@@ -866,7 +865,7 @@
                         lunarResult.month,
                         canChiDay,
                         canChiMonth,
-                        canChiYear
+                        canChiYear  // ← Bây giờ biến này đã có giá trị đúng
                     );
                 };
                 
