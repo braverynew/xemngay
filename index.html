@@ -526,7 +526,7 @@
                 // Tính Địa Chi của tháng (bắt đầu từ Dần cho tháng 1 âm lịch)
                 const monthChiIndex = ((month - 1 + 2) % 12 + 12) % 12;
                 // Tính Thiên Can của tháng
-                const monthCanIndex = (2 * yearCanIndex + month + 3) % 10;
+                const monthCanIndex = (2 * yearCanIndex + month + 2) % 10;
                 return `${thienCan[monthCanIndex]} ${diaChi[monthChiIndex]}`;
             } else if (type === 'year' && year !== null) {
                 // Tính Thiên Can và Địa Chi của năm
