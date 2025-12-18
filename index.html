@@ -541,17 +541,12 @@
                 // Tính Thiên Can của tháng
                 const monthCanIndex = (2 * yearCanIndex + month + 3) % 10;
                 return `${thienCan[monthCanIndex]} ${diaChi[monthChiIndex]}`;
-            } else if (type === 'year' && year !== null && month !== null) {
-                // Tính Thiên Can và Địa Chi của năm
-                // Lấy ngày Tết (Mồng 1 tháng 1 âm lịch) của năm dương lịch hiện tại
-                const tetDate = getTetDate(year);
-                
-                // Nếu tháng hiện tại nhỏ hơn tháng Tết, hoặc cùng tháng nhưng ngày nhỏ hơn
-                // thì năm âm lịch vẫn là năm trước
-                let lunarYear = year;
-                if (month < tetDate.month || (month === tetDate.month && 1 < tetDate.day)) {
-                    lunarYear = year - 1;
-                }
+            } else if (type === 'year' && year !== null) {
+                // Tính Thiên Can và Địa Chi của năm âm lịch
+                const yearCanIndex = (year + 6) % 10;
+                const yearChiIndex = (year + 8) % 12;
+                return `${thienCan[yearCanIndex]} ${diaChi[yearChiIndex]}`;
+            }
                 
                 const yearCanIndex = (lunarYear + 6) % 10;
                 const yearChiIndex = (lunarYear + 8) % 12;
@@ -794,7 +789,9 @@
                 '', 'Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6',
                 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'
             ];
-            const canChiYear = getCanChi(null, 'year', year, month);
+            // Tính năm âm lịch cho ngày đầu tháng
+            const firstDayLunar = convertSolar2Lunar(1, month, year);
+            const canChiYear = getCanChi(null, 'year', firstDayLunar.year, null);
             currentMonth.textContent = `${monthNames[month]} năm ${year} (${canChiYear})`;
         
             // Create calendar headers
@@ -843,9 +840,11 @@
                     `${lunarResult.day}/${lunarResult.month}`;
                 
                 // Tính Thiên Can và Địa Chi
+                // Tính Thiên Can và Địa Chi
                 const canChiDay = getCanChi(lunarResult.jd, 'day');
                 const canChiMonth = getCanChi(null, 'month', lunarResult.year, lunarResult.month);
-                const canChiYear = getCanChi(null, 'year', year, month);
+                // Năm âm lịch chính xác từ kết quả convert
+                const canChiYear = getCanChi(null, 'year', lunarResult.year, null);
                 
                 // Kiểm tra ngày tốt/xấu
                 const goodBadInfo = checkGoodBadDay(lunarResult.day, lunarResult.month, lunarResult.leap);
