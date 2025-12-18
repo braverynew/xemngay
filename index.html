@@ -512,27 +512,25 @@
 
         // Hàm tính Thiên Can và Địa Chi
         // Hàm tính Thiên Can và Địa Chi
-        function getCanChi(jd, type = 'day', year = null, month = null) {
+        function getCanChi(jd, type = 'day', year = null, month = null, lunarYear = null) {
             if (type === 'day') {
                 // Tính Thiên Can của ngày
                 const canIndex = (jd + 9) % 10;
                 // Tính Địa Chi của ngày
                 const chiIndex = (jd + 1) % 12;
                 return `${thienCan[canIndex]} ${diaChi[chiIndex]}`;
-            } else if (type === 'month' && year !== null && month !== null) {
-                // Tính Thiên Can của năm
-                const yearJd = jdFromDate(1, 1, year);
-                const yearCanIndex = (yearJd + 9) % 10;
+            } else if (type === 'month' && lunarYear !== null && month !== null) {
+                // Tính Thiên Can của năm âm lịch
+                const yearCanIndex = (lunarYear + 6) % 10;
                 // Tính Địa Chi của tháng (bắt đầu từ Dần cho tháng 1 âm lịch)
                 const monthChiIndex = ((month - 1 + 2) % 12 + 12) % 12;
                 // Tính Thiên Can của tháng
                 const monthCanIndex = (2 * yearCanIndex + month + 3) % 10;
                 return `${thienCan[monthCanIndex]} ${diaChi[monthChiIndex]}`;
-            } else if (type === 'year' && year !== null) {
-                // Tính Thiên Can và Địa Chi của năm
-                const yearJd = jdFromDate(1, 1, year);
-                const yearCanIndex = (year + 6) % 10;
-                const yearChiIndex = (year + 8) % 12; // Địa Chi của năm, bắt đầu từ Tý cho năm 1984 (Giáp Tý)
+            } else if (type === 'year' && lunarYear !== null) {
+                // Tính Thiên Can và Địa Chi của năm âm lịch
+                const yearCanIndex = (lunarYear + 6) % 10;
+                const yearChiIndex = (lunarYear + 8) % 12;
                 return `${thienCan[yearCanIndex]} ${diaChi[yearChiIndex]}`;
             }            
             return 'Không xác định';
@@ -772,7 +770,7 @@
                 '', 'Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6',
                 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'
             ];
-            const canChiYear = getCanChi(null, 'year', year);
+            const canChiYear = getCanChi(null, 'year', null, null, year);
             currentMonth.textContent = `${monthNames[month]} năm ${year} (${canChiYear})`;
         
             // Create calendar headers
@@ -822,8 +820,9 @@
                 
                 // Tính Thiên Can và Địa Chi
                 const canChiDay = getCanChi(lunarResult.jd, 'day');
-                const canChiMonth = getCanChi(null, 'month', lunarResult.year, lunarResult.month);
-                
+                const canChiMonth = getCanChi(null, 'month', null, lunarResult.month, lunarResult.year);
+                const canChiYear = getCanChi(null, 'year', null, null, lunarResult.year);
+                                
                 // Kiểm tra ngày tốt/xấu
                 const goodBadInfo = checkGoodBadDay(lunarResult.day, lunarResult.month, lunarResult.leap);
                 let starHtml = '';
