@@ -529,9 +529,10 @@
                 const monthCanIndex = (2 * yearCanIndex + month + 3) % 10;
                 return `${thienCan[monthCanIndex]} ${diaChi[monthChiIndex]}`;
             } else if (type === 'year' && year !== null) {
-                // Tính Thiên Can và Địa Chi của năm âm lịch
+                // Tính Thiên Can và Địa Chi của năm
+                const yearJd = jdFromDate(1, 1, year);
                 const yearCanIndex = (year + 6) % 10;
-                const yearChiIndex = (year + 8) % 12;
+                const yearChiIndex = (year + 8) % 12; // Địa Chi của năm, bắt đầu từ Tý cho năm 1984 (Giáp Tý)
                 return `${thienCan[yearCanIndex]} ${diaChi[yearChiIndex]}`;
             }            
             return 'Không xác định';
@@ -686,9 +687,10 @@
             }
             let a11 = getLunarMonth11(yy, timeZone);
             let b11 = a11;
+            let lunarYear = yy;  // ← THAY ĐỔI: Thêm biến lunarYear riêng
             if (a11 >= monthStart) {
-                yy--;
-                a11 = getLunarMonth11(yy, timeZone);
+                lunarYear = yy - 1;  // ← THAY ĐỔI: Dùng lunarYear thay vì yy
+                a11 = getLunarMonth11(lunarYear, timeZone);
             } else {
                 b11 = getLunarMonth11(yy + 1, timeZone);
             }
@@ -709,11 +711,10 @@
                 lunarMonth = lunarMonth - 12;
             }
             if (lunarMonth >= 11 && diff < 4) {
-                yy--;
+                lunarYear = yy - 1;  // ← THAY ĐỔI: Dùng lunarYear thay vì yy
             }
-            return { day: lunarDay, month: lunarMonth, year: yy, leap: lunarLeap, jd: jd };
+            return { day: lunarDay, month: lunarMonth, year: lunarYear, leap: lunarLeap, jd: jd };  // ← THAY ĐỔI: Trả về lunarYear
         }
-
         // Hàm hiển thị thông tin ngày và giờ dưới lịch
         function showDayInfo(solarDate, lunarDate, title, dayDescription, lunarDay, lunarMonth, canChiDay, canChiMonth, canChiYear) {
             const dayInfoContainer = document.getElementById('dayInfo');
@@ -771,9 +772,7 @@
                 '', 'Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6',
                 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'
             ];
-            // Lấy năm âm lịch từ ngày đầu tiên của tháng
-            const firstDayLunar = convertSolar2Lunar(1, month, year);
-            const canChiYear = getCanChi(null, 'year', firstDayLunar.year);
+            const canChiYear = getCanChi(null, 'year', year);
             currentMonth.textContent = `${monthNames[month]} năm ${year} (${canChiYear})`;
         
             // Create calendar headers
@@ -821,10 +820,9 @@
                     `${lunarResult.day}/${lunarResult.month} Nhuận` : 
                     `${lunarResult.day}/${lunarResult.month}`;
                 
-                // Tính Thiên Can và Địa Chi - QUAN TRỌNG: Phải tính canChiYear trước khi dùng
+                // Tính Thiên Can và Địa Chi
                 const canChiDay = getCanChi(lunarResult.jd, 'day');
                 const canChiMonth = getCanChi(null, 'month', lunarResult.year, lunarResult.month);
-                const canChiYear = getCanChi(null, 'year', lunarResult.year);  // ← THÊM DÒNG NÀY
                 
                 // Kiểm tra ngày tốt/xấu
                 const goodBadInfo = checkGoodBadDay(lunarResult.day, lunarResult.month, lunarResult.leap);
@@ -839,7 +837,7 @@
                     title = goodBadInfo.name;
                     description = goodBadInfo.description;
                 }
-                
+        
                 div.innerHTML = `
                     <div class="solar-date">${day}</div>
                     <div class="lunar-date ${lunarResult.leap ? 'leap' : ''}">${lunarText}</div>
@@ -865,7 +863,7 @@
                         lunarResult.month,
                         canChiDay,
                         canChiMonth,
-                        canChiYear  // ← Bây giờ biến này đã có giá trị đúng
+                        canChiYear
                     );
                 };
                 
