@@ -820,8 +820,13 @@
                 
                 // Tính Thiên Can và Địa Chi
                 const canChiDay = getCanChi(lunarResult.jd, 'day');
-                const canChiMonth = getCanChi(null, 'month', null, lunarResult.month, lunarResult.year);
-                const canChiYear = getCanChi(null, 'year', null, null, lunarResult.year);
+                // Xác định năm âm lịch thực tế
+                let actualLunarYear = lunarResult.year;
+                if (lunarResult.month >= 11 && month <= 2) {
+                    actualLunarYear = year - 1;
+                }
+                const canChiMonth = getCanChi(null, 'month', actualLunarYear, lunarResult.month);
+                const canChiYear = getCanChi(null, 'year', actualLunarYear);
                                 
                 // Kiểm tra ngày tốt/xấu
                 const goodBadInfo = checkGoodBadDay(lunarResult.day, lunarResult.month, lunarResult.leap);
