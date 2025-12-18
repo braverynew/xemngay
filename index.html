@@ -514,28 +514,26 @@
         // Hàm tính Thiên Can và Địa Chi
         function getCanChi(jd, type = 'day', year = null, month = null) {
             if (type === 'day') {
-                // Tính Thiên Can của ngày
                 const canIndex = (jd + 9) % 10;
-                // Tính Địa Chi của ngày
                 const chiIndex = (jd + 1) % 12;
                 return `${thienCan[canIndex]} ${diaChi[chiIndex]}`;
-            } else if (type === 'month' && year !== null && month !== null) {
-                // Tính Thiên Can của năm
-                const yearJd = jdFromDate(1, 1, year);
-                const yearCanIndex = (yearJd + 6) % 10;
-                // Tính Địa Chi của tháng (bắt đầu từ Dần cho tháng 1 âm lịch)
-                const monthChiIndex = ((month - 1 + 2) % 12 + 12) % 12;
-                // Tính Thiên Can của tháng
-                const monthCanIndex = (2 * yearCanIndex + month + 2) % 10;
-                return `${thienCan[monthCanIndex]} ${diaChi[monthChiIndex]}`;
-            } else if (type === 'year' && year !== null) {
-                // Tính Thiên Can và Địa Chi của năm
+            } 
+            else if (type === 'month' && year !== null && month !== null) {
                 const yearCanIndex = (year + 6) % 10;
-                const yearChiIndex = (year + 8) % 12; // Địa Chi của năm, bắt đầu từ Tý cho năm 1984 (Giáp Tý)
+        
+                const monthChiIndex = (month + 1) % 12;
+                const monthCanIndex = (yearCanIndex * 2 + month + 1) % 10;
+        
+                return `${thienCan[monthCanIndex]} ${diaChi[monthChiIndex]}`;
+            } 
+            else if (type === 'year' && year !== null) {
+                const yearCanIndex = (year + 6) % 10;
+                const yearChiIndex = (year + 8) % 12;
                 return `${thienCan[yearCanIndex]} ${diaChi[yearChiIndex]}`;
-            }            
-            return 'Không xác định';
+            }
+            return 'Khong xac dinh';
         }
+
 
         // Hàm kiểm tra ngày tốt/xấu
         function checkGoodBadDay(lunarDay, lunarMonth, lunarLeap) {
