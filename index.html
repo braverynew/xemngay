@@ -856,6 +856,8 @@
                     // Thêm lớp selected cho ngày hiện tại
                     div.classList.add('selected');
                     selectedDayElement = div;
+                    const canChiYearForDay = getCanChi(null, 'year', lunarResult.year);
+                    
                     showDayInfo(
                         `${day}/${month}/${year}`, 
                         lunarText, 
@@ -865,7 +867,7 @@
                         lunarResult.month,
                         canChiDay,
                         canChiMonth,
-                        canChiYear
+                        canChiYearForDay  // ← Dùng Can Chi năm của ngày đó, không phải của đầu tháng
                     );
                 };
                 
