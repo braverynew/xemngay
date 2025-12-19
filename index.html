@@ -1188,6 +1188,7 @@
                 <p class="day-info"><strong>Mệnh ngày:</strong> ${napAmDay} (${nguHanhDay})</p>
                 <p class="day-info">${title ? `<strong>${title}:</strong> ${dayDescription}` : dayDescription}</p>
                 ${menhAnalysisHtml}
+                <h4 style="margin-top: 20px; color: #667eea;">⏰ Bảng Giờ Tốt/Xấu${userMenh ? ' (có phân tích hợp xung với tuổi)' : ''}</h4>
                 <table class="hours-table">
                     <thead>
                         <tr>
@@ -1215,8 +1216,35 @@
                 const hourInfo = getHourInfo(soDu);
                 const row = document.createElement('tr');
                 row.className = hourInfo.isGood ? 'good-hour' : 'bad-hour';
+                
+                // Phân tích giờ với tuổi gia chủ
+                let hourAnalysis = '';
+                if (userMenh) {
+                    const hourChi1 = hour.names[0];
+                    const hourChi2 = hour.names[1];
+                    const chiYear = userMenh.chiYear;
+                    
+                    // Kiểm tra xung
+                    if (lucXung[hourChi1] === chiYear || lucXung[hourChi2] === chiYear) {
+                        hourAnalysis = ' <span style="color: #e74c3c; font-weight: bold;">⚠️ Xung tuổi</span>';
+                    }
+                    // Kiểm tra hại
+                    else if (lucHai[hourChi1] === chiYear || lucHai[hourChi2] === chiYear) {
+                        hourAnalysis = ' <span style="color: #e67e22; font-weight: bold;">⚠️ Hại tuổi</span>';
+                    }
+                    // Kiểm tra tam hợp
+                    else if ((tamHop[hourChi1] && tamHop[hourChi1].includes(chiYear)) || 
+                             (tamHop[hourChi2] && tamHop[hourChi2].includes(chiYear))) {
+                        hourAnalysis = ' <span style="color: #27ae60; font-weight: bold;">✅ Tam hợp</span>';
+                    }
+                    // Kiểm tra lục hợp
+                    else if (lucHop[hourChi1] === chiYear || lucHop[hourChi2] === chiYear) {
+                        hourAnalysis = ' <span style="color: #2ecc71; font-weight: bold;">✅ Lục hợp</span>';
+                    }
+                }
+                
                 row.innerHTML = `
-                    <td>${hour.names[0]} (${hour.times[0]}), ${hour.names[1]} (${hour.times[1]})</td>
+                    <td>${hour.names[0]} (${hour.times[0]}), ${hour.names[1]} (${hour.times[1]})${hourAnalysis}</td>
                     <td>${hourInfo.name}</td>
                     <td>${hourInfo.explanation}</td>
                 `;
