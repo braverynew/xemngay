@@ -129,7 +129,7 @@
             border-radius: 8px;
             padding: 8px 4px;
             text-align: center;
-            min-height: 90px; /* Tăng chiều cao để chứa thêm Thiên Can, Địa Chi */
+            min-height: 90px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -435,6 +435,127 @@
         .calendar-day:nth-child(12) { animation-delay: 0.5s; }
         .calendar-day:nth-child(13) { animation-delay: 0.6s; }
         .calendar-day:nth-child(14) { animation-delay: 0.7s; }
+        
+        .birth-input-section {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            margin: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .birth-input-section h3 {
+            font-size: 1.3rem;
+            color: #333;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .birth-form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .birth-form select {
+            padding: 10px;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            font-size: 1rem;
+            background: white;
+            min-width: 100px;
+        }
+        
+        .birth-form input[type="number"] {
+            padding: 10px;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            font-size: 1rem;
+            background: white;
+            width: 120px;
+            text-align: center;
+        }
+        
+        .birth-form button {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .birth-form button:hover {
+            transform: translateY(-2px);
+        }
+        
+        .menh-info {
+            margin-top: 15px;
+            padding: 15px;
+            background: linear-gradient(135deg, #ffeaa7, #fdcb6e);
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .menh-info p {
+            margin: 5px 0;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .analysis-section {
+            margin-top: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            border: 2px solid #667eea;
+        }
+        
+        .analysis-section h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .analysis-item {
+            margin: 10px 0;
+            padding: 10px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .analysis-item.warning {
+            background: rgba(231, 76, 60, 0.1);
+            border-left-color: #e74c3c;
+        }
+        
+        .analysis-item.good {
+            background: rgba(46, 204, 113, 0.1);
+            border-left-color: #2ecc71;
+        }
+
+        .analysis-item.neutral {
+            background: rgba(149, 165, 166, 0.1);
+            border-left-color: #95a5a6;
+        }
+        
+        .analysis-item strong {
+            color: #333;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .analysis-item span {
+            color: #666;
+            font-size: 0.9rem;
+        }
     </style>
 </head>
 <body>
@@ -468,7 +589,23 @@
                 <input type="number" id="year" value="" min="1900" max="2100" onchange="renderCalendar()">
             </div>
         </div>
-            
+        
+        <div class="birth-input-section">
+            <h3>🎂 Nhập Ngày Sinh Gia Chủ (để xem phân tích chi tiết)</h3>
+            <div class="birth-form">
+                <select id="birthDay">
+                    <option value="">Chọn ngày</option>
+                </select>
+                <select id="birthMonth">
+                    <option value="">Chọn tháng</option>
+                </select>
+                <input type="number" id="birthYear" placeholder="Năm" min="1900" max="2100">
+                <button onclick="calculateMenh()">Tính Mệnh</button>
+                <button onclick="clearMenh()">Xóa</button>
+            </div>
+            <div id="menhDisplay" style="display: none;" class="menh-info"></div>
+        </div>            
+        
         <div class="calendar-container">
             <div class="current-month" id="currentMonth"></div>
             <div class="calendar" id="calendar"></div>
@@ -510,7 +647,93 @@
         const thienCan = ['Giáp', 'Ất', 'Bính', 'Đinh', 'Mậu', 'Kỷ', 'Canh', 'Tân', 'Nhâm', 'Quý'];
         const diaChi = ['Tý', 'Sửu', 'Dần', 'Mão', 'Thìn', 'Tỵ', 'Ngọ', 'Mùi', 'Thân', 'Dậu', 'Tuất', 'Hợi'];
 
-        // Hàm tính Thiên Can và Địa Chi
+        // Dữ liệu Ngũ Hành
+        const nguHanhData = {
+            'Giáp': 'Mộc', 'Ất': 'Mộc',
+            'Bính': 'Hỏa', 'Đinh': 'Hỏa',
+            'Mậu': 'Thổ', 'Kỷ': 'Thổ',
+            'Canh': 'Kim', 'Tân': 'Kim',
+            'Nhâm': 'Thủy', 'Quý': 'Thủy'
+        };
+
+        const nguHanhChi = {
+            'Tý': 'Thủy', 'Sửu': 'Thổ', 'Dần': 'Mộc', 'Mão': 'Mộc',
+            'Thìn': 'Thổ', 'Tỵ': 'Hỏa', 'Ngọ': 'Hỏa', 'Mùi': 'Thổ',
+            'Thân': 'Kim', 'Dậu': 'Kim', 'Tuất': 'Thổ', 'Hợi': 'Thủy'
+        };
+
+        // Quan hệ Ngũ Hành
+        const nguHanhRelation = {
+            'Mộc': { sinh: 'Hỏa', khac: 'Thổ', khacBoi: 'Kim', sinhBoi: 'Thủy' },
+            'Hỏa': { sinh: 'Thổ', khac: 'Kim', khacBoi: 'Thủy', sinhBoi: 'Mộc' },
+            'Thổ': { sinh: 'Kim', khac: 'Thủy', khacBoi: 'Mộc', sinhBoi: 'Hỏa' },
+            'Kim': { sinh: 'Thủy', khac: 'Mộc', khacBoi: 'Hỏa', sinhBoi: 'Thổ' },
+            'Thủy': { sinh: 'Mộc', khac: 'Hỏa', khacBoi: 'Thổ', sinhBoi: 'Kim' }
+        };
+
+        // Lục Xung (Địa Chi xung nhau)
+        const lucXung = {
+            'Tý': 'Ngọ', 'Ngọ': 'Tý',
+            'Sửu': 'Mùi', 'Mùi': 'Sửu',
+            'Dần': 'Thân', 'Thân': 'Dần',
+            'Mão': 'Dậu', 'Dậu': 'Mão',
+            'Thìn': 'Tuất', 'Tuất': 'Thìn',
+            'Tỵ': 'Hợi', 'Hợi': 'Tỵ'
+        };
+
+        // Lục Hại
+        const lucHai = {
+            'Tý': 'Mùi', 'Mùi': 'Tý',
+            'Sửu': 'Ngọ', 'Ngọ': 'Sửu',
+            'Dần': 'Tỵ', 'Tỵ': 'Dần',
+            'Mão': 'Thìn', 'Thìn': 'Mão',
+            'Thân': 'Hợi', 'Hợi': 'Thân',
+            'Dậu': 'Tuất', 'Tuất': 'Dậu'
+        };
+
+        // Thiên Can Xung
+        const thienCanXung = {
+            'Giáp': 'Canh', 'Canh': 'Giáp',
+            'Ất': 'Tân', 'Tân': 'Ất',
+            'Bính': 'Nhâm', 'Nhâm': 'Bính',
+            'Đinh': 'Quý', 'Quý': 'Đinh'
+        };
+
+        // Thiên Can Hợp
+        const thienCanHop = {
+            'Giáp': 'Kỷ', 'Kỷ': 'Giáp',
+            'Ất': 'Canh', 'Canh': 'Ất',
+            'Bính': 'Tân', 'Tân': 'Bính',
+            'Đinh': 'Nhâm', 'Nhâm': 'Đinh',
+            'Mậu': 'Quý', 'Quý': 'Mậu'
+        };
+
+        // Tam Hợp Địa Chi
+        const tamHop = {
+            'Tý': ['Thìn', 'Thân'],
+            'Sửu': ['Tỵ', 'Dậu'],
+            'Dần': ['Ngọ', 'Tuất'],
+            'Mão': ['Mùi', 'Hợi'],
+            'Thìn': ['Tý', 'Thân'],
+            'Tỵ': ['Sửu', 'Dậu'],
+            'Ngọ': ['Dần', 'Tuất'],
+            'Mùi': ['Mão', 'Hợi'],
+            'Thân': ['Tý', 'Thìn'],
+            'Dậu': ['Sửu', 'Tỵ'],
+            'Tuất': ['Dần', 'Ngọ'],
+            'Hợi': ['Mão', 'Mùi']
+        };
+
+        // Lục Hợp Địa Chi
+        const lucHop = {
+            'Tý': 'Sửu', 'Sửu': 'Tý',
+            'Dần': 'Hợi', 'Hợi': 'Dần',
+            'Mão': 'Tuất', 'Tuất': 'Mão',
+            'Thìn': 'Dậu', 'Dậu': 'Thìn',
+            'Tỵ': 'Thân', 'Thân': 'Tỵ',
+            'Ngọ': 'Mùi', 'Mùi': 'Ngọ'
+        };
+
         // Hàm tính Thiên Can và Địa Chi
         function getCanChi(jd, type = 'day', year = null, month = null) {
             if (type === 'day') {
@@ -520,10 +743,8 @@
             } 
             else if (type === 'month' && year !== null && month !== null) {
                 const yearCanIndex = (year + 6) % 10;
-        
                 const monthChiIndex = (month + 1) % 12;
                 const monthCanIndex = (yearCanIndex * 2 + month + 1) % 10;
-        
                 return `${thienCan[monthCanIndex]} ${diaChi[monthChiIndex]}`;
             } 
             else if (type === 'year' && year !== null) {
@@ -531,9 +752,8 @@
                 const yearChiIndex = (year + 8) % 12;
                 return `${thienCan[yearCanIndex]} ${diaChi[yearChiIndex]}`;
             }
-            return 'Khong xac dinh';
+            return 'Không xác định';
         }
-
 
         // Hàm kiểm tra ngày tốt/xấu
         function checkGoodBadDay(lunarDay, lunarMonth, lunarLeap) {
@@ -594,6 +814,53 @@
                     break;
             }
             return { name, explanation, isGood };
+        }
+
+        // Hàm tính Nạp Âm (mệnh)
+        function getNapAm(canChi) {
+            const napAmTable = {
+                'Giáp Tý': 'Hải Trung Kim', 'Ất Sửu': 'Hải Trung Kim',
+                'Bính Dần': 'Lư Trung Hỏa', 'Đinh Mão': 'Lư Trung Hỏa',
+                'Mậu Thìn': 'Đại Lâm Mộc', 'Kỷ Tỵ': 'Đại Lâm Mộc',
+                'Canh Ngọ': 'Lộ Bàng Thổ', 'Tân Mùi': 'Lộ Bàng Thổ',
+                'Nhâm Thân': 'Kiếm Phong Kim', 'Quý Dậu': 'Kiếm Phong Kim',
+                'Giáp Tuất': 'Sơn Đầu Hỏa', 'Ất Hợi': 'Sơn Đầu Hỏa',
+                'Bính Tý': 'Giản Hạ Thủy', 'Đinh Sửu': 'Giản Hạ Thủy',
+                'Mậu Dần': 'Thành Đầu Thổ', 'Kỷ Mão': 'Thành Đầu Thổ',
+                'Canh Thìn': 'Bạch Lạp Kim', 'Tân Tỵ': 'Bạch Lạp Kim',
+                'Nhâm Ngọ': 'Dương Liễu Mộc', 'Quý Mùi': 'Dương Liễu Mộc',
+                'Giáp Thân': 'Tuyền Trung Thủy', 'Ất Dậu': 'Tuyền Trung Thủy',
+                'Bính Tuất': 'Ốc Thượng Thổ', 'Đinh Hợi': 'Ốc Thượng Thổ',
+                'Mậu Tý': 'Tích Lịch Hỏa', 'Kỷ Sửu': 'Tích Lịch Hỏa',
+                'Canh Dần': 'Tùng Bá Mộc', 'Tân Mão': 'Tùng Bá Mộc',
+                'Nhâm Thìn': 'Trường Lưu Thủy', 'Quý Tỵ': 'Trường Lưu Thủy',
+                'Giáp Ngọ': 'Sa Trung Kim', 'Ất Mùi': 'Sa Trung Kim',
+                'Bính Thân': 'Sơn Hạ Hỏa', 'Đinh Dậu': 'Sơn Hạ Hỏa',
+                'Mậu Tuất': 'Bình Địa Mộc', 'Kỷ Hợi': 'Bình Địa Mộc',
+                'Canh Tý': 'Bích Thượng Thổ', 'Tân Sửu': 'Bích Thượng Thổ',
+                'Nhâm Dần': 'Kim Bạc Kim', 'Quý Mão': 'Kim Bạc Kim',
+                'Giáp Thìn': 'Phúc Đăng Hỏa', 'Ất Tỵ': 'Phúc Đăng Hỏa',
+                'Bính Ngọ': 'Thiên Hà Thủy', 'Đinh Mùi': 'Thiên Hà Thủy',
+                'Mậu Thân': 'Đại Trạch Thổ', 'Kỷ Dậu': 'Đại Trạch Thổ',
+                'Canh Tuất': 'Thoa Xuyến Kim', 'Tân Hợi': 'Thoa Xuyến Kim',
+                'Nhâm Tý': 'Tang Đố Mộc', 'Quý Sửu': 'Tang Đố Mộc',
+                'Giáp Dần': 'Đại Khê Thủy', 'Ất Mão': 'Đại Khê Thủy',
+                'Bính Thìn': 'Sa Trung Thổ', 'Đinh Tỵ': 'Sa Trung Thổ',
+                'Mậu Ngọ': 'Thiên Thượng Hỏa', 'Kỷ Mùi': 'Thiên Thượng Hỏa',
+                'Canh Thân': 'Thạch Lựu Mộc', 'Tân Dậu': 'Thạch Lựu Mộc',
+                'Nhâm Tuất': 'Đại Hải Thủy', 'Quý Hợi': 'Đại Hải Thủy'
+            };
+            return napAmTable[canChi] || 'Không xác định';
+        }
+
+        // Hàm lấy ngũ hành từ Nạp Âm
+        function getNguHanhFromNapAm(napAm) {
+            if (napAm.includes('Kim')) return 'Kim';
+            if (napAm.includes('Mộc')) return 'Mộc';
+            if (napAm.includes('Thủy')) return 'Thủy';
+            if (napAm.includes('Hỏa')) return 'Hỏa';
+            if (napAm.includes('Thổ')) return 'Thổ';
+            return 'Không xác định';
         }
 
         // Thuật toán của Hồ Ngọc Đức
@@ -686,8 +953,8 @@
             let b11 = a11;
             let lunarYear = yy;
             if (a11 >= monthStart) {
-                lunarYear = yy;  // ← SỬA: Không trừ ở đây
-                a11 = getLunarMonth11(yy - 1, timeZone);  // ← Chỉ thay đổi a11
+                lunarYear = yy;
+                a11 = getLunarMonth11(yy - 1, timeZone);
             } else {
                 b11 = getLunarMonth11(yy + 1, timeZone);
             }
@@ -708,18 +975,219 @@
                 lunarMonth = lunarMonth - 12;
             }
             if (lunarMonth >= 11 && diff < 4) {
-                lunarYear = yy - 1;  // ← Giữ nguyên logic này
+                lunarYear = yy - 1;
             }
             return { day: lunarDay, month: lunarMonth, year: lunarYear, leap: lunarLeap, jd: jd };
         }
+
+        // Biến lưu trữ thông tin mệnh gia chủ
+        let userMenh = null;
+
+        // Khởi tạo dropdown ngày sinh
+        function initBirthDropdowns() {
+            const birthDaySelect = document.getElementById('birthDay');
+            const birthMonthSelect = document.getElementById('birthMonth');
+
+            // Populate days (1-31)
+            for (let i = 1; i <= 31; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = i;
+                birthDaySelect.appendChild(option);
+            }
+
+            // Populate months (1-12)
+            const monthNames = ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6',
+                                'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'];
+            for (let i = 1; i <= 12; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = monthNames[i - 1];
+                birthMonthSelect.appendChild(option);
+            }
+        }
+
+        // Hàm tính mệnh
+        function calculateMenh() {
+            const day = parseInt(document.getElementById('birthDay').value);
+            const month = parseInt(document.getElementById('birthMonth').value);
+            const year = parseInt(document.getElementById('birthYear').value);
+
+            if (!day || !month || !year) {
+                alert('Vui lòng chọn đầy đủ ngày, tháng, năm sinh!');
+                return;
+            }
+
+            const lunarResult = convertSolar2Lunar(day, month, year);
+            const canChiYear = getCanChi(null, 'year', lunarResult.year);
+            const napAm = getNapAm(canChiYear);
+            const nguHanh = getNguHanhFromNapAm(napAm);
+
+            userMenh = {
+                solarDate: `${day}/${month}/${year}`,
+                lunarDate: `${lunarResult.day}/${lunarResult.month}/${lunarResult.year}`,
+                canChiYear: canChiYear,
+                napAm: napAm,
+                nguHanh: nguHanh,
+                canYear: canChiYear.split(' ')[0],
+                chiYear: canChiYear.split(' ')[1]
+            };
+
+            const menhDisplay = document.getElementById('menhDisplay');
+            menhDisplay.innerHTML = `
+                <p><strong>📅 Ngày sinh:</strong> ${userMenh.solarDate} (Dương lịch)</p>
+                <p><strong>🌙 Âm lịch:</strong> ${userMenh.lunarDate}</p>
+                <p><strong>🎋 Can Chi năm sinh:</strong> ${userMenh.canChiYear}</p>
+                <p><strong>⭐ Mệnh:</strong> ${userMenh.napAm} (${userMenh.nguHanh})</p>
+            `;
+            menhDisplay.style.display = 'block';
+
+            renderCalendar();
+        }
+
+        // Hàm xóa mệnh
+        function clearMenh() {
+            userMenh = null;
+            document.getElementById('birthDay').value = '';
+            document.getElementById('birthMonth').value = '';
+            document.getElementById('birthYear').value = '';
+            document.getElementById('menhDisplay').style.display = 'none';
+            renderCalendar();
+        }
+
+        // Hàm phân tích ngày với mệnh gia chủ (CẢI TIẾN)
+        function analyzeDayWithMenh(canChiDay) {
+            if (!userMenh) return null;
+
+            const [canDay, chiDay] = canChiDay.split(' ');
+            const analyses = [];
+
+            // Tính Nạp Âm và Ngũ Hành của ngày
+            const napAmDay = getNapAm(canChiDay);
+            const nguHanhDay = getNguHanhFromNapAm(napAmDay);
+
+            // 1. Phân tích Ngũ Hành (Nạp Âm của Tuổi và Ngày)
+            if (nguHanhDay === userMenh.nguHanh) {
+                analyses.push({
+                    type: 'neutral',
+                    title: '⚖️ Ngũ Hành Đồng Nhất',
+                    content: `Ngũ hành ngày <strong>${nguHanhDay}</strong> (${napAmDay}) đồng nhất với mệnh <strong>${userMenh.nguHanh}</strong> (${userMenh.napAm}). Trạng thái cân bằng, phù hợp cho việc duy trì, củng cố.`
+                });
+            } else if (nguHanhRelation[nguHanhDay]?.sinh === userMenh.nguHanh) {
+                analyses.push({
+                    type: 'good',
+                    title: '✅ Ngày Sinh Mệnh',
+                    content: `Ngũ hành ngày <strong>${nguHanhDay}</strong> (${napAmDay}) sinh mệnh <strong>${userMenh.nguHanh}</strong> (${userMenh.napAm}). Ngày rất tốt, thuận lợi cho mọi hoạt động, nhận được nhiều hỗ trợ.`
+                });
+            } else if (nguHanhRelation[userMenh.nguHanh]?.sinh === nguHanhDay) {
+                analyses.push({
+                    type: 'warning',
+                    title: '⚠️ Mệnh Sinh Ngày',
+                    content: `Mệnh <strong>${userMenh.nguHanh}</strong> (${userMenh.napAm}) sinh ngũ hành ngày <strong>${nguHanhDay}</strong> (${napAmDay}). Nên thận trọng, tránh tiêu hao năng lượng, không nên làm việc lớn.`
+                });
+            } else if (nguHanhRelation[nguHanhDay]?.khac === userMenh.nguHanh) {
+                analyses.push({
+                    type: 'warning',
+                    title: '⚠️ Ngày Khắc Mệnh',
+                    content: `Ngũ hành ngày <strong>${nguHanhDay}</strong> (${napAmDay}) khắc mệnh <strong>${userMenh.nguHanh}</strong> (${userMenh.napAm}). Ngày không thuận, nên hạn chế các hoạt động quan trọng, dễ gặp trở ngại.`
+                });
+            } else if (nguHanhRelation[userMenh.nguHanh]?.khac === nguHanhDay) {
+                analyses.push({
+                    type: 'warning',
+                    title: '⚠️ Mệnh Khắc Ngày',
+                    content: `Mệnh <strong>${userMenh.nguHanh}</strong> (${userMenh.napAm}) khắc ngũ hành ngày <strong>${nguHanhDay}</strong> (${napAmDay}). Mệnh đang tiêu hao năng lượng, nên hạn chế các hoạt động lớn, dễ mệt mỏi.`
+                });
+            }
+
+            // 2. Phân tích Thiên Can
+            if (thienCanXung[canDay] === userMenh.canYear) {
+                analyses.push({
+                    type: 'warning',
+                    title: '⚠️ Thiên Can Xung',
+                    content: `Thiên can ngày <strong>${canDay}</strong> xung với thiên can năm sinh <strong>${userMenh.canYear}</strong>. Nên tránh các quyết định lớn, dễ gặp bất đồng.`
+                });
+            } else if (thienCanHop[canDay] === userMenh.canYear) {
+                analyses.push({
+                    type: 'good',
+                    title: '✅ Thiên Can Hợp',
+                    content: `Thiên can ngày <strong>${canDay}</strong> hợp với thiên can năm sinh <strong>${userMenh.canYear}</strong>. Ngày tốt, thuận lợi cho mọi việc, dễ được giúp đỡ.`
+                });
+            } else {
+                analyses.push({
+                    type: 'neutral',
+                    title: '⚖️ Thiên Can Cân Bằng',
+                    content: `Thiên can ngày <strong>${canDay}</strong> không xung không hợp với thiên can năm sinh <strong>${userMenh.canYear}</strong>. Trạng thái cân bằng, bình thường.`
+                });
+            }
+
+            // 3. Phân tích Địa Chi
+            if (lucXung[chiDay] === userMenh.chiYear) {
+                analyses.push({
+                    type: 'warning',
+                    title: '⚠️ Lục Xung (Địa Chi)',
+                    content: `Địa chi ngày <strong>${chiDay}</strong> xung với địa chi năm sinh <strong>${userMenh.chiYear}</strong>. Ngày này không thuận lợi, dễ gặp trở ngại, tranh cãi, nên tránh các việc quan trọng.`
+                });
+            } else if (lucHai[chiDay] === userMenh.chiYear) {
+                analyses.push({
+                    type: 'warning',
+                    title: '⚠️ Lục Hại (Địa Chi)',
+                    content: `Địa chi ngày <strong>${chiDay}</strong> hại với địa chi năm sinh <strong>${userMenh.chiYear}</strong>. Nên thận trọng, tránh các việc quan trọng, dễ gặp phiền phức.`
+                });
+            } else if (tamHop[chiDay] && tamHop[chiDay].includes(userMenh.chiYear)) {
+                analyses.push({
+                    type: 'good',
+                    title: '✅ Tam Hợp (Địa Chi)',
+                    content: `Địa chi ngày <strong>${chiDay}</strong> thuộc tam hợp với địa chi năm sinh <strong>${userMenh.chiYear}</strong>. Ngày rất tốt, thuận lợi, dễ thành công.`
+                });
+            } else if (lucHop[chiDay] === userMenh.chiYear) {
+                analyses.push({
+                    type: 'good',
+                    title: '✅ Lục Hợp (Địa Chi)',
+                    content: `Địa chi ngày <strong>${chiDay}</strong> hợp với địa chi năm sinh <strong>${userMenh.chiYear}</strong>. Ngày tốt, hòa hợp, thuận lợi.`
+                });
+            } else {
+                analyses.push({
+                    type: 'neutral',
+                    title: '⚖️ Địa Chi Bình Thường',
+                    content: `Địa chi ngày <strong>${chiDay}</strong> không có quan hệ đặc biệt với địa chi năm sinh <strong>${userMenh.chiYear}</strong>. Trạng thái bình thường.`
+                });
+            }
+
+            return analyses.length > 0 ? analyses : null;
+        }
+
         // Hàm hiển thị thông tin ngày và giờ dưới lịch
         function showDayInfo(solarDate, lunarDate, title, dayDescription, lunarDay, lunarMonth, canChiDay, canChiMonth, canChiYear) {
             const dayInfoContainer = document.getElementById('dayInfo');
             
+            // Tính Nạp Âm của ngày
+            const napAmDay = getNapAm(canChiDay);
+            const nguHanhDay = getNguHanhFromNapAm(napAmDay);
+            
+            // Phân tích với mệnh gia chủ (nếu có)
+            const menhAnalysis = analyzeDayWithMenh(canChiDay);
+            let menhAnalysisHtml = '';
+            
+            if (menhAnalysis && menhAnalysis.length > 0) {
+                menhAnalysisHtml = `
+                    <div class="analysis-section">
+                        <h4>🔮 Phân Tích Mệnh Gia Chủ với Ngày ${solarDate}</h4>
+                        ${menhAnalysis.map(item => `
+                            <div class="analysis-item ${item.type}">
+                                <strong>${item.title}</strong>
+                                <span>${item.content}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            }
+            
             dayInfoContainer.innerHTML = `
                 <h3>${solarDate} (Âm lịch: ${lunarDate})</h3>
-                <p class="day-info">Ngày: ${canChiDay}, Tháng: ${canChiMonth}, Năm: ${canChiYear}</p>
-                <p class="day-info">${title ? `${title}: ${dayDescription}` : dayDescription}</p>
+                <p class="day-info"><strong>Ngày:</strong> ${canChiDay}, <strong>Tháng:</strong> ${canChiMonth}, <strong>Năm:</strong> ${canChiYear}</p>
+                <p class="day-info"><strong>Mệnh ngày:</strong> ${napAmDay} (${nguHanhDay})</p>
+                <p class="day-info">${title ? `<strong>${title}:</strong> ${dayDescription}` : dayDescription}</p>
+                ${menhAnalysisHtml}
                 <table class="hours-table">
                     <thead>
                         <tr>
@@ -769,11 +1237,10 @@
                 '', 'Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6',
                 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'
             ];
-            // Lấy năm âm lịch của ngày đầu tiên trong tháng để hiển thị
             const firstDayLunar = convertSolar2Lunar(1, month, year);
             const canChiYear = getCanChi(null, 'year', firstDayLunar.year);
             currentMonth.textContent = `${monthNames[month]} năm ${year} (${canChiYear})`;
-        
+
             // Create calendar headers
             const daysOfWeek = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
             daysOfWeek.forEach(day => {
@@ -782,7 +1249,7 @@
                 div.textContent = day;
                 calendar.appendChild(div);
             });
-        
+
             // Calculate calendar data
             const daysInMonth = new Date(year, month, 0).getDate();
             const firstDay = new Date(year, month - 1, 1).getDay();
@@ -794,10 +1261,10 @@
                 div.className = 'calendar-day empty';
                 calendar.appendChild(div);
             }
-        
+
             // Add days of the month
             let selectedDayElement = null;
-        
+
             for (let day = 1; day <= daysInMonth; day++) {
                 const div = document.createElement('div');
                 const dayOfWeek = new Date(year, month - 1, day).getDay();
@@ -819,11 +1286,9 @@
                     `${lunarResult.day}/${lunarResult.month} Nhuận` : 
                     `${lunarResult.day}/${lunarResult.month}`;
                 
-                // Tính Thiên Can và Địa Chi
                 const canChiDay = getCanChi(lunarResult.jd, 'day');
                 const canChiMonth = getCanChi(null, 'month', lunarResult.year, lunarResult.month);
                 
-                // Kiểm tra ngày tốt/xấu
                 const goodBadInfo = checkGoodBadDay(lunarResult.day, lunarResult.month, lunarResult.leap);
                 let starHtml = '';
                 let title = '';
@@ -836,7 +1301,7 @@
                     title = goodBadInfo.name;
                     description = goodBadInfo.description;
                 }
-        
+
                 div.innerHTML = `
                     <div class="solar-date">${day}</div>
                     <div class="lunar-date ${lunarResult.leap ? 'leap' : ''}">${lunarText}</div>
@@ -844,13 +1309,10 @@
                     ${starHtml}
                 `;
                 
-                // Thêm sự kiện nhấp chuột để hiển thị thông tin
                 div.onclick = () => {
-                    // Xóa lớp selected khỏi ngày đã chọn trước đó
                     if (selectedDayElement) {
                         selectedDayElement.classList.remove('selected');
                     }
-                    // Thêm lớp selected cho ngày hiện tại
                     div.classList.add('selected');
                     selectedDayElement = div;
                     const canChiYearForDay = getCanChi(null, 'year', lunarResult.year);
@@ -864,11 +1326,10 @@
                         lunarResult.month,
                         canChiDay,
                         canChiMonth,
-                        canChiYearForDay  // ← Dùng Can Chi năm của ngày đó, không phải của đầu tháng
+                        canChiYearForDay
                     );
                 };
                 
-                // Add stagger animation delay
                 div.style.animationDelay = `${(day - 1) * 0.02}s`;
                 
                 calendar.appendChild(div);
@@ -884,6 +1345,7 @@
             document.getElementById('month').value = currentMonth;
             document.getElementById('year').value = currentYear;
             
+            initBirthDropdowns();
             renderCalendar();
         });
 
